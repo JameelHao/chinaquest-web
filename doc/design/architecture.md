@@ -2,55 +2,63 @@
 
 ## Layer 0: Brand & Visual Identity
 
-### Color Palette
+### Color Palette (from visittheusa.com actual values)
 
-| Role | Color | Hex | Usage |
-|------|-------|-----|-------|
-| Primary | Deep Navy | `#1a365d` | Trust, navigation, headers |
-| Secondary | Warm Gold | `#d69e2e` | Accents, highlights, Chinese cultural touch |
-| Accent | Vibrant Red | `#c53030` | CTAs, urgency, Chinese national color |
-| Background | Off-White | `#f7fafc` | Page background |
-| Surface | Pure White | `#ffffff` | Cards, elevated surfaces |
-| Text Primary | Charcoal | `#1a202c` | Body text |
-| Text Secondary | Gray | `#718096` | Captions, metadata |
-| Border | Light Gray | `#e2e8f0` | Dividers, card borders |
+| Role | Hex | RGB | Usage |
+|------|-----|-----|-------|
+| Primary Dark | `#404650` | `rgb(64, 68, 80)` | Navigation, section backgrounds, body text |
+| Warm Cream | `#f4f2f0` | `rgb(244, 242, 240)` | Page background, hero text on dark |
+| Pure White | `#ffffff` | `rgb(255, 255, 255)` | Cards, text on dark backgrounds |
+| Green Accent | `#37cd8f` | `rgb(55, 205, 143)` | Tags, badges, highlights |
+| Dark Text | `#23282d` | `rgb(35, 40, 45)` | Alternate dark text |
+| Muted Gray | `#d5d5d8` | `rgb(213, 212, 216)` | Secondary/muted text on dark |
+| Sand Accent | `#d5c18f` | `rgb(213, 193, 143)` | Warm accents |
+| Coral | `#fa8072` | `rgb(250, 128, 114)` | Links, interactive elements |
 
-### Typography
+> **ChinaQuest adaptation**: Replace `#404650` with Chinese-red `#c53030` as accent CTA color; use `#1a365d` (deep navy) as primary dark.
 
-| Element | Font | Weight | Size (Desktop) | Size (Mobile) |
-|---------|------|--------|----------------|---------------|
-| Hero H1 | Inter | 800 (Extra Bold) | 56px | 36px |
-| Section H2 | Inter | 700 (Bold) | 40px | 28px |
-| Card H3 | Inter | 600 (Semi-Bold) | 24px | 20px |
-| Body | Inter | 400 (Regular) | 16px | 15px |
-| Caption | Inter | 400 (Regular) | 14px | 13px |
-| Button | Inter | 600 (Semi-Bold) | 15px | 14px |
+### Typography (from visittheusa.com actual values)
 
-**Fallback Stack**: `-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`
+| Element | Font | Weight | Size | Line Height | Letter Spacing | Color |
+|---------|------|--------|------|-------------|----------------|-------|
+| Hero H1 | system-ui | 900 | 158.4px | 126.72px (0.8×) | 2px | `#f4f2f0` |
+| Section H2 (dark bg) | system-ui | 900 | 96px | 96px (1:1) | — | `#ffffff` |
+| Section H2 (light bg) | system-ui | 900 | 48px | 52.8px (1.1×) | — | `#404650` |
+| Category Label | system-ui | 350 | 24px | — | — | `#ffffff` |
+| Card Body | system-ui | 350 | 20px | 30px (1.5×) | — | `#ffffff` |
+| Body Paragraph | system-ui | 350 | 20px | 30px (1.5×) | — | `#404650` |
+| Nav Links | system-ui | 700 | 16px | — | — | `#ffffff` |
+| Footer Links | system-ui | 400 | 16px | — | — | `#404650` |
+| Small Text | system-ui | 400 | 14px | — | — | `#404650` |
+| Button | system-ui | 700 | 16px | — | — | `#404650` |
 
-### Spacing System (8px Grid)
+**Fallback Stack**: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif`
 
-```
-xs:   4px   (0.25rem)
-sm:   8px   (0.5rem)
-md:   16px  (1rem)
-lg:   24px  (1.5rem)
-xl:   32px  (2rem)
-2xl:  48px  (3rem)
-3xl:  64px  (4rem)
-4xl:  96px  (6rem)
-```
+> **ChinaQuest note**: visittheusa uses system-ui (no custom font loaded). ChinaQuest may use Inter for consistency, but match these sizes exactly.
+
+### Spacing System (from visittheusa.com actual values)
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `pd-top-x0` | 0px | No top padding |
+| `pd-bottom-x0` | 0px | No bottom padding |
+| `pd-top-x3` | ~48px | Card/section padding top |
+| `pd-bottom-x3` | ~48px | Card/section padding bottom |
+| `mg-top-x0` | 0px | No top margin |
+| `mg-top-x4` | ~64px | Section margin top |
+| `mg-top-x5` | ~80px | Large section gap |
+| `mg-bot` | ~48px | Bottom margin |
+| `mg-bottom-x4` | ~64px | Section margin bottom |
+| `mg-bottom-x0` | 0px | No bottom margin |
 
 ### Border Radius
 
-```
-none:   0px
-sm:     4px
-md:     8px
-lg:     12px
-xl:     16px
-full:   9999px (pills, avatars)
-```
+| Token | Value | Usage |
+|-------|-------|-------|
+| `sm` | 4px | Buttons |
+| `md` | 8px | Cards, inputs |
+| `pill` | 32px | Nav pills, tab buttons |
+| `circle` | 50% | Avatar, close buttons |
 
 ---
 
@@ -185,15 +193,14 @@ full:   9999px (pills, avatars)
 
 ## Layer 3: Component System
 
-### Navigation Components
+### Navigation Components (from visittheusa.com actual values)
 
-#### TopNav (Sticky)
-- Height: 72px
-- Background: white with subtle shadow on scroll
-- Logo: left-aligned
-- Nav links: center (Destinations, Routes, Experiences, Practical)
-- Right side: Language switcher + Social icons
-- Mobile: Hamburger menu triggers overlay
+#### TopNav
+- Height: **52px** (fixed, transparent)
+- Background: `rgba(0, 0, 0, 0)` (transparent on hero, white on scroll — CSS class `bg-default`)
+- Logo: left-aligned on dark background
+- Nav links: white text, **16px, weight 700**
+- Mobile: Hamburger → full-screen overlay with large touch targets
 
 #### Language Switcher
 - Dropdown with flag icons
@@ -220,24 +227,31 @@ full:   9999px (pills, avatars)
 - Smaller H1 (40px vs 56px)
 - Breadcrumb below
 
-### Card Components
+### Card Components (from visittheusa.com actual values)
 
-#### CategoryCard
+#### HeroCard (full-bleed feature card)
 ```
-┌─────────────────────┐
-│      01/06          │  ← Numbered badge
-│                     │
-│   [Circular Image]  │
-│                     │
-│   Destinations      │  ← Bold title
-│   34 Provinces      │  ← Subtitle
-│                     │
-│   Discover →        │  ← Link
-└─────────────────────┘
+┌────────────────────────────────────────────────────────────────────┐
+│  [FULL-BLEED IMAGE 1440×720px with dark overlay]                  │
+│                                                                    │
+│  padding: 48px                   bg: #404650                       │
+│  height: 720px                   no border-radius                  │
+│                                                                    │
+│  CATEGORY LABEL (24px, 350, white, uppercase)                      │
+│  H2 TITLE (96px, 900, white, line-height 96px)                    │
+│  BODY TEXT (20px, 350, white, line-height 30px)                   │
+│                                                                    │
+│  ← left-aligned content, 768px wide                                 │
+└────────────────────────────────────────────────────────────────────┘
 ```
-- Size: 280px × 320px
-- Border-radius: 12px
-- Hover: translateY(-4px), shadow elevation
+- **Card**: width 1440px, height 720px, bg `#404650`
+- **Content area**: padding 48px, width 768px, height 720px
+- **Image**: fills entire card behind content, `object-fit: cover`
+- **Overlay**: dark gradient at bottom (e.g. `rgba(0,0,0,0.5)` to transparent)
+- **Title**: 96px, weight 900, white, line-height 96px (1:1 ratio)
+- **Category label**: 24px, weight 350, white, uppercase
+- **Body**: 20px, weight 350, line-height 30px
+- **No border-radius** on these full-bleed cards
 
 #### DestinationCard
 ```
