@@ -1,24 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@350;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@350;400;500;600;700;900&display=swap');
 @import "tailwindcss";
 
 /**
  * ChinaQuest Design System
- * Matching visittheusa.com structure exactly
+ * Pixel-perfect match of visittheusa.com
  */
 
 @theme inline {
-  /* Colors — visittheusa exact palette */
-  --color-primary-dark: #404650;
-  --color-warm-cream: #f4f2f0;
+  --color-primary: #404650;
+  --color-cream: #f4f2f0;
   --color-white: #ffffff;
   --color-sand: #D5C18F;
   --color-terra: #D5A58F;
-  --color-green-accent: #37CD8F;
-  --color-dark-text: #404650;
+  --color-green: #37CD8F;
+  --color-muted: #d5d5d8;
+  --color-dark-alt: #23282d;
 
-  /* Typography */
-  --font-family-display: 'Bebas Neue', sans-serif;
-  --font-family-body: 'Inter', sans-serif;
+  --font-display: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
 }
 
 :root {
@@ -26,88 +25,142 @@
   --foreground: #404650;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-family-body);
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
-  margin: 0;
-  padding: 0;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headlines — visittheusa Hype 0900 equivalent */
-.font-display {
-  font-family: var(--font-family-display);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
+/* ========================
+   TYPOGRAPHY SYSTEM
+   ======================== */
 
-/* Hero H1 — 158.4px, 900wt, centered */
+/* Hero H1 — 158.4px */
 .text-hero {
-  font-family: var(--font-family-display);
-  font-size: clamp(4rem, 10vw, 158.4px);
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 10vw, 158.4px);
   font-weight: 900;
   line-height: 0.8;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
-/* Section eyebrow — 48px */
-.text-eyebrow {
-  font-family: var(--font-family-display);
-  font-size: clamp(2rem, 3vw, 48px);
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-/* Section H2 dark bg — 96px white */
-.text-section-dark {
-  font-family: var(--font-family-display);
-  font-size: clamp(3rem, 6vw, 96px);
+/* Section H2 — dark bg, 96px white */
+.text-section-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 96px);
   font-weight: 900;
   line-height: 1;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
-/* CTA Button — terra color, pill shape */
-.btn-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px 32px;
-  background: #D5A58F;
-  color: #404650;
-  font-family: var(--font-family-body);
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 32px;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
+/* Section H2 — light bg, 48px dark */
+.text-section-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 48px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-.btn-cta:hover {
-  opacity: 0.85;
-}
-
-/* Category label — 24px, letter-spaced */
-.text-category-label {
-  font-family: var(--font-family-body);
+/* Category label — 24px, light */
+.text-category {
+  font-family: var(--font-body);
   font-size: 24px;
   font-weight: 350;
   line-height: 36px;
   letter-spacing: 4px;
   text-transform: uppercase;
 }
+
+/* Card body — 20px */
+.text-card-body {
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 350;
+  line-height: 30px;
+}
+
+/* ========================
+   BUTTONS
+   ======================== */
+
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 32px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-pill:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.btn-pill-terra {
+  background: #D5A58F;
+  color: #404650;
+}
+
+.btn-pill-white {
+  background: #ffffff;
+  color: #404650;
+}
+
+.btn-pill-dark {
+  background: #404650;
+  color: #ffffff;
+}
+
+/* ========================
+   CAROUSEL
+   ======================== */
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.carousel-slide {
+  min-width: 100%;
+  position: relative;
+}
+
+/* ========================
+   ACCORDION (FAQ)
+   ======================== */
+
+@keyframes slideDown {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes slideUp {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+.animate-slideDown { animation: slideDown 300ms ease-out; }
+.animate-slideUp { animation: slideUp 300ms ease-out; }

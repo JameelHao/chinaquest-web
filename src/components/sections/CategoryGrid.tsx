@@ -2,112 +2,87 @@ import Link from "next/link";
 
 const categories = [
   {
-    label: "34 Provinces",
-    category: "Explore",
+    category: "EXPLORE",
     title: "Destinations",
-    subtitle: "AMERICAN ORIGINALS",
+    label: "34 Provinces · 500+ Attractions",
     href: "/destinations",
-    img: "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=1920&q=80",
+    img: "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=960&q=80",
   },
   {
-    label: "Curated Itineraries",
-    category: "Featured",
-    title: "Routes",
-    subtitle: "ROAD TRIPS",
-    href: "/trip",
-    img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80",
-  },
-  {
-    label: "Chinese Cuisine",
-    category: "Culinary",
+    category: "CULINARY",
     title: "Food & Drink",
-    subtitle: "CULINARY",
+    label: "Eight Great Cuisines",
     href: "/experience/food",
-    img: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=1920&q=80",
+    img: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=960&q=80",
   },
   {
-    label: "History & Arts",
-    category: "Heritage",
+    category: "HERITAGE",
     title: "Culture",
-    subtitle: "HERITAGE",
+    label: "5,000 Years of History",
     href: "/experience/culture",
-    img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&q=80",
+    img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=960&q=80",
   },
   {
-    label: "Mountains & Rivers",
-    category: "Landscapes",
+    category: "LANDSCAPES",
     title: "Nature",
-    subtitle: "LANDSCAPES",
+    label: "Mountains · Rivers · Deserts",
     href: "/experience/nature",
-    img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+    img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=960&q=80",
   },
   {
-    label: "Visa & Transport",
-    category: "Plan",
+    category: "ROAD TRIPS",
+    title: "Routes",
+    label: "Curated Itineraries",
+    href: "/trip",
+    img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=960&q=80",
+  },
+  {
+    category: "PLAN",
     title: "Practical",
-    subtitle: "PLAN",
+    label: "Visa · Transport · Tips",
     href: "/practical",
-    img: "https://images.unsplash.com/photo-1529926706528-db9e5010cd3e?w=1920&q=80",
+    img: "https://images.unsplash.com/photo-1529926706528-db9e5010cd3e?w=960&q=80",
   },
 ];
 
 export default function CategoryGrid() {
   return (
-    <section
-      className="w-full"
-      style={{ background: "#404650" }}
-    >
+    <section className="w-full" style={{ background: "#404650" }}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {categories.map((cat) => (
           <Link
-            key={cat.label}
+            key={cat.title}
             href={cat.href}
             className="group block relative overflow-hidden"
             style={{ height: 720 }}
           >
-            {/* Background Image — full bleed, object-fit cover */}
+            {/* Background image */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={cat.img}
               alt={cat.title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            {/* Bottom gradient */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)",
+              }}
             />
 
-            {/* Card Content — bottom-left aligned, no overlay needed */}
-            <div
-              className="absolute bottom-0 left-0 right-0 p-12"
-              style={{ zIndex: 10 }}
-            >
-              {/* Category subtitle — 24px, letter-spaced */}
-              <p
-                className="text-category-label mb-3"
-                style={{ color: "#ffffff" }}
-              >
-                {cat.subtitle}
+            {/* Content — bottom left */}
+            <div className="absolute bottom-0 left-0 right-0 p-10 z-10">
+              <p className="text-category mb-3" style={{ color: "#ffffff", fontSize: 18, letterSpacing: 3 }}>
+                {cat.category}
               </p>
-
-              {/* H2 Title — 96px bold white uppercase */}
-              <h2
-                className="text-section-dark"
-                style={{
-                  color: "#ffffff",
-                  marginBottom: 32,
-                  lineHeight: 1,
-                }}
-              >
+              <h2 className="text-section-lg mb-4" style={{ color: "#ffffff", fontSize: "clamp(2rem, 5vw, 72px)" }}>
                 {cat.title}
               </h2>
-
-              {/* Label */}
-              <p
-                className="text-lg font-light"
-                style={{ color: "rgba(255,255,255,0.8)" }}
-              >
+              <p className="text-base font-light mb-6" style={{ color: "rgba(255,255,255,0.75)" }}>
                 {cat.label}
               </p>
-
-              {/* CTA — pill button */}
-              <span className="btn-cta mt-6">
+              <span className="btn-pill btn-pill-terra">
                 Discover
               </span>
             </div>

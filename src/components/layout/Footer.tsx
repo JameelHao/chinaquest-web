@@ -2,195 +2,119 @@
 
 import Link from "next/link";
 
-const footerNavLinks = [
+const footerNav = [
   { href: "/destinations", label: "Destinations" },
-  { href: "/trip", label: "Routes" },
+  { href: "/trip", label: "Road Trips" },
   { href: "/experience/food", label: "Food & Drink" },
   { href: "/experience/culture", label: "Culture" },
   { href: "/experience/nature", label: "Nature" },
-  { href: "/practical", label: "Practical" },
   { href: "/practical/visa", label: "Visa & Entry" },
+  { href: "/practical/transport", label: "Getting Around" },
+];
+
+const socialLinks = [
+  { label: "Instagram", icon: "IG" },
+  { label: "Facebook", icon: "FB" },
+  { label: "YouTube", icon: "YT" },
+  { label: "TikTok", icon: "TT" },
 ];
 
 export default function Footer() {
   return (
-    <footer
-      className="relative w-full"
-      style={{ background: "#ffffff", paddingTop: 250 }}
-    >
-      {/* Footer Background Image — absolute, 550px tall, cover */}
-      <div
-        className="absolute w-full"
-        style={{
-          height: 550,
-          top: 0,
-          left: 0,
-          zIndex: 1,
-          overflow: "hidden",
-        }}
-      >
+    <footer className="relative w-full" style={{ background: "#ffffff" }}>
+      {/* Top section — background image with newsletter overlay */}
+      <div className="relative" style={{ height: 550 }}>
+        {/* Background image */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?q=80&w=1920"
           alt=""
-          className="w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
           style={{ objectPosition: "50% 80%" }}
         />
-      </div>
+        {/* Overlay */}
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)" }}
+        />
 
-      {/* Top Footer — logo left, signup right */}
-      <div
-        className="relative flex items-center justify-between w-full"
-        style={{
-          height: 550,
-          paddingLeft: 48,
-          paddingRight: 48,
-          zIndex: 2,
-        }}
-      >
-        {/* Logo + Nav links — left side */}
-        <div className="flex flex-col justify-end flex-grow-1">
-          <Link
-            href="/"
-            className="font-black tracking-widest mb-8"
+        {/* Content layer */}
+        <div className="relative z-10 h-full flex items-end justify-between" style={{ padding: "0 48px 48px" }}>
+          {/* Left — logo + nav */}
+          <div>
+            <Link
+              href="/"
+              className="block font-black tracking-[0.15em] uppercase mb-6"
+              style={{ color: "#ffffff", fontSize: 18 }}
+            >
+              Visit China
+            </Link>
+            <div className="flex flex-wrap gap-x-1">
+              {footerNav.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium text-white/80 hover:text-white transition-colors px-2 py-1"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — newsletter box */}
+          <div
+            className="hidden lg:flex flex-col justify-center flex-shrink-0"
             style={{
-              color: "#ffffff",
-              fontFamily: "var(--font-family-display)",
-              fontSize: 18,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
+              width: 420,
+              background: "#D5A58F",
+              padding: "40px 36px",
+              borderRadius: 0,
             }}
           >
-            VISIT CHINA
-          </Link>
-          <div className="flex flex-wrap gap-x-4">
-            {footerNavLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium transition-opacity hover:opacity-70"
-                style={{
-                  color: "#ffffff",
-                  fontFamily: "var(--font-family-body)",
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                }}
+            <h3 className="text-3xl font-black uppercase tracking-wide mb-2" style={{ color: "#404650" }}>
+              Ready?
+            </h3>
+            <p className="text-sm mb-5 leading-relaxed" style={{ color: "#404650" }}>
+              Get travel inspiration and planning tips for China delivered to your inbox.
+            </p>
+            <form className="flex" onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="flex-grow px-4 py-3 rounded-l-full text-sm outline-none"
+                style={{ background: "#ffffff", color: "#404650", border: "none" }}
+              />
+              <button
+                type="submit"
+                className="px-5 py-3 rounded-r-full text-sm font-bold hover:opacity-85 transition-opacity"
+                style={{ background: "#404650", color: "#ffffff" }}
               >
-                {link.label}
-              </Link>
-            ))}
+                Subscribe
+              </button>
+            </form>
+            <Link href="/privacy" className="mt-3 text-xs hover:opacity-70 transition-opacity" style={{ color: "#404650" }}>
+              Privacy Policy
+            </Link>
           </div>
         </div>
-
-        {/* Newsletter Signup Box — right side, terracotta bg */}
-        <div
-          className="flex flex-col items-start justify-center"
-          style={{
-            width: 550,
-            height: 550,
-            background: "#D5A58F",
-            paddingLeft: 48,
-            paddingRight: 48,
-          }}
-        >
-          <h3
-            className="font-display mb-2"
-            style={{
-              fontSize: 48,
-              fontWeight: 900,
-              color: "#404650",
-              textTransform: "uppercase",
-              letterSpacing: "0.02em",
-            }}
-          >
-            Ready?
-          </h3>
-          <p
-            className="mb-6"
-            style={{
-              fontFamily: "var(--font-family-body)",
-              fontSize: 16,
-              color: "#404650",
-              lineHeight: 1.5,
-            }}
-          >
-            Get travel inspiration and planning tips for China delivered to your inbox.
-          </p>
-
-          {/* Email form */}
-          <form
-            className="w-full flex"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="flex-grow px-4 py-3 rounded-l-full text-sm"
-              style={{
-                background: "#ffffff",
-                color: "#404650",
-                fontFamily: "var(--font-family-body)",
-                border: "none",
-                outline: "none",
-              }}
-            />
-            <button
-              type="submit"
-              className="px-6 py-3 rounded-r-full text-sm font-bold transition-opacity hover:opacity-80"
-              style={{
-                background: "#404650",
-                color: "#ffffff",
-                fontFamily: "var(--font-family-body)",
-              }}
-            >
-              Subscribe
-            </button>
-          </form>
-
-          <Link
-            href="/privacy"
-            className="mt-4 text-sm transition-opacity hover:opacity-70"
-            style={{ color: "#404650", fontFamily: "var(--font-family-body)" }}
-          >
-            privacy policy
-          </Link>
-        </div>
       </div>
 
-      {/* Bottom Footer — copyright + social */}
+      {/* Bottom bar */}
       <div
-        className="relative flex items-center justify-between w-full"
-        style={{
-          height: 349,
-          paddingLeft: 48,
-          paddingRight: 48,
-          paddingTop: 16,
-          zIndex: 2,
-          background: "#ffffff",
-        }}
+        className="flex flex-col md:flex-row items-center justify-between gap-4"
+        style={{ padding: "24px 48px", background: "#ffffff" }}
       >
-        {/* Copyright */}
-        <p
-          className="text-sm"
-          style={{
-            color: "#404650",
-            fontFamily: "var(--font-family-body)",
-          }}
-        >
-          © 2026 ChinaQuest. All rights reserved.
+        <p className="text-sm" style={{ color: "#404650" }}>
+          &copy; 2026 ChinaQuest. All rights reserved.
         </p>
 
-        {/* Social Icons */}
-        <div className="flex items-center gap-3">
-          {[
-            { label: "Facebook", icon: "F" },
-            { label: "YouTube", icon: "Y" },
-            { label: "Twitter", icon: "T" },
-            { label: "Instagram", icon: "I" },
-          ].map((s) => (
+        {/* Social */}
+        <div className="flex items-center gap-2">
+          {socialLinks.map((s) => (
             <span
               key={s.label}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold cursor-pointer transition-opacity hover:opacity-70"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold cursor-pointer hover:opacity-70 transition-opacity"
               style={{ background: "#f4f2f0", color: "#404650" }}
               title={s.label}
             >
@@ -199,17 +123,14 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Legal Links */}
+        {/* Legal */}
         <div className="flex gap-4 text-sm">
-          {["Privacy Policy", "Terms of Use"].map((label) => (
+          {["Privacy Policy", "Terms of Use", "Cookie Settings"].map((label) => (
             <Link
               key={label}
               href="/privacy"
-              className="transition-opacity hover:opacity-70"
-              style={{
-                color: "#404650",
-                fontFamily: "var(--font-family-body)",
-              }}
+              className="hover:opacity-70 transition-opacity"
+              style={{ color: "#404650" }}
             >
               {label}
             </Link>

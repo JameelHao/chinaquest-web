@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
+
+const topLinks = [
+  { label: "Visa & Entry", href: "/practical/visa" },
+  { label: "Travel Trade", href: "/travel-trade" },
+];
+
+const languages = ["Deutsch", "Español", "Français", "한국어", "日本語"];
 
 const navItems = [
   {
@@ -13,228 +20,183 @@ const navItems = [
       { label: "Shanghai", href: "/destinations/shanghai" },
       { label: "Xi'an", href: "/destinations/xian" },
       { label: "Chengdu", href: "/destinations/chengdu" },
-      { label: "Hangzhou", href: "/destinations/hangzhou" },
       { label: "Guilin", href: "/destinations/guilin" },
+      { label: "Hangzhou", href: "/destinations/hangzhou" },
+      { label: "Yunnan", href: "/destinations/yunnan" },
+      { label: "Tibet", href: "/destinations/tibet" },
     ],
   },
-  { label: "Routes", href: "/trip" },
-  { label: "Visa & Entry", href: "/practical/visa" },
+  { label: "Experiences", href: "/experience" },
+  { label: "Road Trips", href: "/trip" },
+  {
+    label: "Plan a Trip",
+    href: "/practical",
+    children: [
+      { label: "Visa & Entry", href: "/practical/visa" },
+      { label: "Getting Around", href: "/practical/transport" },
+      { label: "Money & Costs", href: "/practical/money" },
+      { label: "Language Tips", href: "/practical/language" },
+      { label: "Health & Safety", href: "/practical/health" },
+    ],
+  },
 ];
 
-const languages = [
-  { code: "en", label: "English" },
-  { code: "zh", label: "中文" },
-  { code: "ja", label: "日本語" },
-  { code: "ko", label: "한국어" },
+const socialIcons = [
+  { label: "Instagram", icon: "IG" },
+  { label: "Facebook", icon: "FB" },
+  { label: "YouTube", icon: "YT" },
+  { label: "TikTok", icon: "TT" },
 ];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("en");
+  const [scrolled, setScrolled] = useState(false);
+
+  if (typeof window !== "undefined") {
+    // Track scroll for header background
+    window.addEventListener("scroll", () => {
+      setScrolled(window.scrollY > 100);
+    }, { passive: true });
+  }
 
   return (
     <>
-      {/* Fixed Top Bar — matches visittheusa #top-bar structure */}
-      <div
-        className="fixed top-0 left-0 right-0 z-[80]"
-        style={{ background: "transparent" }}
+      {/* Fixed Header */}
+      <header
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        style={{
+          background: scrolled ? "rgba(64, 68, 80, 0.95)" : "transparent",
+          backdropFilter: scrolled ? "blur(8px)" : "none",
+        }}
       >
-        {/* very-top-bar — language links, right aligned */}
+        {/* Very Top Bar — language & utility links */}
         <div
-          className="flex items-center justify-end"
-          style={{
-            height: 38,
-            paddingLeft: 16,
-            paddingRight: 16,
-            gap: 16,
-            background: "transparent",
-          }}
+          className="hidden lg:flex items-center justify-end gap-4 px-6"
+          style={{ height: 32, fontSize: 13 }}
         >
-          {["Visa & Entry", "Travel Trade"].map((item) => (
+          {topLinks.map((link) => (
             <Link
-              key={item}
-              href={item === "Visa & Entry" ? "/practical/visa" : "/travel-trade"}
-              className="text-white text-sm font-medium"
-              style={{ fontFamily: "var(--font-family-body)" }}
+              key={link.label}
+              href={link.href}
+              className="text-white/80 hover:text-white transition-colors font-medium"
             >
-              {item}
+              {link.label}
             </Link>
           ))}
-          <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 12 }}>|</span>
-          {["Deutsch", "Español", "Français", "한국어", "日本語"].map((lang) => (
+          <span className="text-white/30">|</span>
+          {languages.map((lang) => (
             <Link
               key={lang}
               href="#"
-              className="text-white text-sm font-medium hover:opacity-80"
-              style={{ fontFamily: "var(--font-family-body)" }}
+              className="text-white/60 hover:text-white transition-colors"
             >
               {lang}
             </Link>
           ))}
         </div>
 
-        {/* top-bar-wrap — logo + nav, centered */}
-        <div
-          className="flex items-center justify-center"
-          style={{
-            height: 87.92,
-            padding: "16px 16px",
-            background: "transparent",
-          }}
-        >
+        {/* Main Nav Bar */}
+        <div className="flex items-center justify-between px-6 lg:px-8" style={{ height: 56 }}>
           {/* Logo */}
           <Link
             href="/"
-            className="absolute left-8 font-black tracking-widest"
-            style={{
-              color: "#ffffff",
-              fontFamily: "var(--font-family-display)",
-              fontSize: 16,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-            }}
+            className="font-black tracking-[0.15em] text-white uppercase"
+            style={{ fontSize: 15, letterSpacing: "0.15em" }}
           >
-            VISIT CHINA
+            Visit China
           </Link>
 
-          {/* Desktop Nav — centered */}
-          <nav className="flex items-center gap-8">
+          {/* Desktop Nav — center */}
+          <nav className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
               <div key={item.label} className="relative group">
-                {item.children ? (
-                  <>
-                    <button
-                      className="text-white text-base font-bold flex items-center gap-1"
-                      style={{ fontFamily: "var(--font-family-body)" }}
-                    >
-                      {item.label}
-                    </button>
-                    {/* Mega Menu */}
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-1 text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-opacity"
+                >
+                  {item.label}
+                  {item.children && <ChevronDown size={14} className="opacity-60" />}
+                </Link>
+
+                {/* Dropdown */}
+                {item.children && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200">
                     <div
-                      className="absolute top-full left-0 pt-4 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-200"
-                      style={{ minWidth: 600 }}
+                      className="rounded-lg overflow-hidden shadow-xl"
+                      style={{ background: "#404650", minWidth: 220 }}
                     >
-                      <div
-                        className="grid grid-cols-3 gap-2 p-4 rounded-lg"
-                        style={{ background: "#404650" }}
-                      >
-                        {item.children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className="px-3 py-2 text-sm font-medium rounded transition-colors hover:bg-white/10 text-white"
-                            style={{ fontFamily: "var(--font-family-body)" }}
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className="block px-5 py-3 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
                     </div>
-                  </>
-                ) : (
-                  <Link
-                    href={item.href}
-                    className="text-white text-base font-bold hover:opacity-80 transition-opacity"
-                    style={{ fontFamily: "var(--font-family-body)" }}
-                  >
-                    {item.label}
-                  </Link>
+                  </div>
                 )}
               </div>
             ))}
           </nav>
 
-          {/* Language switcher — right side */}
-          <div className="absolute right-8 flex items-center gap-4">
-            <div className="relative group">
-              <button
-                className="flex items-center gap-1 text-sm font-bold text-white"
-                style={{ fontFamily: "var(--font-family-body)" }}
-              >
-                <Globe size={16} />
-                <span>{currentLang.toUpperCase()}</span>
-              </button>
-              <div className="absolute right-0 top-full pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
-                <div
-                  className="py-2 rounded-lg shadow-lg min-w-[120px]"
-                  style={{ background: "#404650" }}
-                >
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => setCurrentLang(lang.code)}
-                      className="flex items-center gap-2 w-full px-4 py-2 text-sm font-medium transition-colors hover:bg-white/10 text-white"
-                      style={{ fontFamily: "var(--font-family-body)" }}
-                    >
-                      {lang.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Social icons */}
-            <div className="flex items-center gap-2">
-              {["F", "Y", "T", "I"].map((icon) => (
+          {/* Right side — social + mobile menu */}
+          <div className="flex items-center gap-3">
+            {/* Social icons — desktop */}
+            <div className="hidden lg:flex items-center gap-2">
+              {socialIcons.map((s) => (
                 <span
-                  key={icon}
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold cursor-pointer transition-opacity hover:opacity-80"
-                  style={{
-                    background: "rgba(255,255,255,0.2)",
-                    color: "#ffffff",
-                  }}
+                  key={s.label}
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold cursor-pointer hover:bg-white/30 transition-colors"
+                  style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}
+                  title={s.label}
                 >
-                  {icon}
+                  {s.icon}
                 </span>
               ))}
             </div>
+
+            {/* Mobile menu button */}
+            <button
+              className="lg:hidden text-white p-1"
+              onClick={() => setMobileOpen(true)}
+            >
+              <Menu size={26} />
+            </button>
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Mobile Menu Overlay */}
       {mobileOpen && (
-        <div
-          className="fixed inset-0 z-[100] flex flex-col"
-          style={{ background: "#404650" }}
-        >
-          <div
-            className="flex items-center justify-between px-8"
-            style={{ height: 52 }}
-          >
-            <span
-              className="text-white font-black tracking-widest"
-              style={{ fontFamily: "var(--font-family-display)" }}
-            >
-              VISIT CHINA
+        <div className="fixed inset-0 z-[100] flex flex-col" style={{ background: "#404650" }}>
+          <div className="flex items-center justify-between px-6" style={{ height: 56 }}>
+            <span className="text-white font-black tracking-[0.15em] uppercase" style={{ fontSize: 15 }}>
+              Visit China
             </span>
-            <button
-              onClick={() => setMobileOpen(false)}
-              className="text-white"
-            >
-              <X size={28} />
+            <button onClick={() => setMobileOpen(false)} className="text-white p-1">
+              <X size={26} />
             </button>
           </div>
-          <nav className="flex flex-col gap-6 px-8 py-12">
+          <nav className="flex flex-col gap-1 px-6 py-8 overflow-y-auto flex-1">
             {navItems.map((item) => (
               <div key={item.label}>
                 <Link
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
-                  className="text-white text-2xl font-bold"
-                  style={{ fontFamily: "var(--font-family-display)" }}
+                  className="block py-3 text-white text-2xl font-black uppercase tracking-wide"
                 >
                   {item.label}
                 </Link>
                 {item.children && (
-                  <div className="mt-2 ml-4 flex flex-col gap-1">
+                  <div className="ml-4 mb-4">
                     {item.children.map((child) => (
                       <Link
                         key={child.href}
                         href={child.href}
                         onClick={() => setMobileOpen(false)}
-                        className="text-white/70 text-lg"
-                        style={{ fontFamily: "var(--font-family-body)" }}
+                        className="block py-2 text-white/60 text-lg hover:text-white transition-colors"
                       >
                         {child.label}
                       </Link>
@@ -244,6 +206,18 @@ export default function Header() {
               </div>
             ))}
           </nav>
+          {/* Mobile social */}
+          <div className="flex items-center gap-3 px-6 pb-8">
+            {socialIcons.map((s) => (
+              <span
+                key={s.label}
+                className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
+                style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}
+              >
+                {s.icon}
+              </span>
+            ))}
+          </div>
         </div>
       )}
     </>
