@@ -1,125 +1,91 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function HeroSection() {
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
-
   return (
     <>
-      {/* HERO — Full screen hero with H1 */}
+      {/* HERO — Full-screen hero, 928px height, overlaid on top of top-bar */}
+      {/* Header is transparent and sits at top; hero image fills this section */}
       <section
-        className="relative w-full overflow-hidden"
-        style={{ height: "100vh", minHeight: "600px" }}
+        className="relative w-full"
+        style={{
+          height: "100vh",
+          minHeight: 810,
+          background: "#f4f2f0",
+        }}
       >
-        {/* Background Image */}
+        {/* Hero background image */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1920&q=80"
           alt="China landscape"
           className="absolute inset-0 w-full h-full object-cover"
+          style={{ zIndex: 0 }}
         />
 
-        {/* Dark gradient overlay — bottom up */}
+        {/* Hero Content — centered H1 */}
         <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)",
-          }}
-        />
-
-        {/* Hero Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center h-full px-8 text-center">
+          className="relative flex flex-col items-center justify-center h-full w-full"
+          style={{ zIndex: 10 }}
+        >
           <h1
-            className="max-w-5xl"
+            className="text-hero text-center"
             style={{
-              fontSize: "clamp(3rem, 10vw, 9.9rem)",
-              fontWeight: 900,
-              lineHeight: 0.85,
-              letterSpacing: "2px",
               color: "#f4f2f0",
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? "translateY(0)" : "translateY(30px)",
-              transition: "all 0.7s ease-out",
+              marginBottom: 32,
             }}
           >
             Explore China&apos;s
             <br />
             Wonders
           </h1>
-
-          <p
-            className="mt-6 max-w-xl text-lg md:text-xl font-light leading-relaxed"
-            style={{
-              color: "#ffffff",
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.7s ease-out 0.2s",
-            }}
-          >
-            Discover uniquely Chinese destinations, stories, and experiences
-            that celebrate millennia of history and culture.
-          </p>
-
-          <a
-            href="/destinations"
-            className="mt-10 inline-flex items-center gap-2 px-8 py-4 text-base font-bold rounded transition-all duration-200 hover:opacity-90"
-            style={{
-              background: "#c53030",
-              color: "#ffffff",
-              opacity: loaded ? 1 : 0,
-              transform: loaded ? "translateY(0)" : "translateY(20px)",
-              transition: "all 0.7s ease-out 0.3s",
-            }}
-          >
-            Discover Now
-          </a>
         </div>
       </section>
 
-      {/* INTRO — "THINKING ABOUT A TRIP?" */}
+      {/* INTRO SECTION — "THINKING ABOUT A TRIP?" */}
+      {/* Background: cream #f4f2f0, dark text #404650 */}
       <section
-        className="w-full py-16 px-8 text-center"
-        style={{ background: "#f4f2f0" }}
+        className="w-full flex flex-col items-center justify-center"
+        style={{
+          background: "#f4f2f0",
+          paddingTop: 64,
+          paddingBottom: 64,
+        }}
       >
+        {/* Eyebrow label */}
         <p
-          className="text-xs font-normal tracking-[0.3em] uppercase mb-4"
-          style={{ color: "#404650" }}
-        >
-          Plan Your Journey
-        </p>
-        <h2
-          className="max-w-3xl mx-auto"
+          className="text-eyebrow text-center"
           style={{
-            fontSize: "clamp(2rem, 5vw, 3rem)",
-            fontWeight: 900,
-            lineHeight: 1.1,
             color: "#404650",
+            marginBottom: 0,
+            letterSpacing: "1px",
           }}
         >
           Thinking About a Trip?
-        </h2>
-        <p
-          className="mt-6 max-w-2xl mx-auto text-base md:text-lg font-light leading-relaxed"
-          style={{ color: "#404650" }}
-        >
-          This is a place where travelers can chart their own course, where
-          stories unfold in unexpected places — and where every journey reveals
-          something new about the world&apos;s most fascinating destination.
         </p>
-        <a
-          href="/practical/visa"
-          className="mt-8 inline-flex items-center gap-2 text-sm font-bold transition-opacity hover:opacity-70"
-          style={{ color: "#404650" }}
+
+        {/* Main heading — 96px, dark, left-aligned inside a max-width */}
+        <h2
+          className="text-section-dark mt-4"
+          style={{
+            color: "#404650",
+            textAlign: "center",
+            maxWidth: 900,
+            paddingLeft: 48,
+            paddingRight: 48,
+          }}
         >
-          Visa & Entry Details →
-        </a>
+          Your Next Bold Move?
+        </h2>
+
+        {/* CTA — terra pill button */}
+        <Link
+          href="/practical/visa"
+          className="btn-cta mt-8"
+        >
+          Plan Your Journey
+        </Link>
       </section>
     </>
   );
