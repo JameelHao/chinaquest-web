@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -69,105 +69,180 @@ const slides = [
 
 export default function HeroCarousel() {
   const [current, setCurrent] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const goTo = useCallback((index: number) => {
-    setCurrent((index + slides.length) % slides.length);
-  }, []);
+  const goTo = useCallback(
+    (index: number) => {
+      if (isTransitioning) return;
+      setIsTransitioning(true);
+      setCurrent((index + slides.length) % slides.length);
+      setTimeout(() => setIsTransitioning(false), 700);
+    },
+    [isTransitioning]
+  );
+
+  /* Auto-advance every 6s */
+  useEffect(() => {
+    const timer = setInterval(() => goTo(current + 1), 6000);
+    return () => clearInterval(timer);
+  }, [current, goTo]);
 
   const slide = slides[current];
 
   return (
-    <section className="relative w-full" style={{ background: "#404650" }}>
-      {/* Main carousel area — 720px height like visittheusa */}
-      <div className="relative w-full overflow-hidden" style={{ height: "clamp(500px, 50vw, 720px)" }}>
-        {/* Background image */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          key={slide.img}
-          src={slide.img}
-          alt={slide.title}
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-        />
-        {/* Dark overlay for text readability */}
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(90deg, rgba(64,68,80,0.85) 0%, rgba(64,68,80,0.4) 50%, transparent 100%)" }}
-        />
-
-        {/* Content area — left side, 768px max */}
-        <div
-          className="relative z-10 h-full flex flex-col justify-center"
-          style={{ maxWidth: 768, padding: "48px clamp(24px, 5vw, 48px)" }}
+    <section className="w-full" style={{ background: "#f4f2f0" }}>
+      {/* Section header — matching visittheusa's minimal label above carousel */}
+      <div
+        className="mx-auto"
+        style={{
+          maxWidth: 1400,
+          padding: "60px clamp(16px, 4vw, 48px) 24px",
+        }}
+      >
+        <p
+          className="text-sm font-bold tracking-[4px] uppercase"
+          style={{ color: "#404650", opacity: 0.5 }}
         >
-          {/* Slide counter — 01/06 */}
-          <p
-            className="text-sm font-bold tracking-widest mb-6"
-            style={{ color: "#d5d5d8" }}
+          Featured
+        </p>
+      </div>
+
+      {/* Main carousel — full-width image with left text overlay */}
+      <div
+        className="relative w-full mx-auto overflow-hidden"
+        style={{
+          maxWidth: 1400,
+          height: "clamp(480px, 45vw, 680px)",
+          margin: "0 auto",
+          padding: "0 clamp(16px, 4vw, 48px)",
+        }}
+      >
+        <div className="relative w-full h-full rounded-lg overflow-hidden">
+          {/* Background image with crossfade */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            key={slide.img}
+            src={slide.img}
+            alt={slide.title}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{
+              animation: "fadeIn 0.7s ease-out",
+            }}
+          />
+          {/* Left gradient for text readability */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.35) 45%, transparent 75%)",
+            }}
+          />
+
+          {/* Content — left side */}
+          <div
+            className="relative z-10 h-full flex flex-col justify-center"
+            style={{
+              maxWidth: 560,
+              padding: "48px clamp(24px, 5vw, 56px)",
+            }}
           >
-            {slide.number}/{slide.total}
-          </p>
+            {/* Slide counter — 01/06 */}
+            <p
+              className="text-sm font-bold tracking-widest mb-5"
+              style={{ color: "rgba(255,255,255,0.6)" }}
+            >
+              {slide.number}/{slide.total}
+            </p>
 
-          {/* Category label */}
-          <p className="text-category mb-4" style={{ color: "#ffffff" }}>
-            {slide.category}
-          </p>
+            {/* Category label */}
+            <p
+              className="text-xs font-bold tracking-[3px] uppercase mb-4"
+              style={{ color: "rgba(255,255,255,0.7)" }}
+            >
+              {slide.category}
+            </p>
 
-          {/* Title */}
-          <h2
-            className="text-section-lg mb-6"
-            style={{ color: "#ffffff", whiteSpace: "pre-line" }}
-          >
-            {slide.title}
-          </h2>
+            {/* Title */}
+            <h2
+              className="font-black uppercase tracking-wide mb-5"
+              style={{
+                color: "#ffffff",
+                fontSize: "clamp(1.75rem, 3.5vw, 48px)",
+                lineHeight: 1.05,
+                whiteSpace: "pre-line",
+              }}
+            >
+              {slide.title}
+            </h2>
 
-          {/* Body text */}
-          <p className="text-card-body mb-8" style={{ color: "rgba(255,255,255,0.8)", maxWidth: 520 }}>
-            {slide.body}
-          </p>
+            {/* Body text */}
+            <p
+              className="text-base leading-relaxed mb-7 hidden sm:block"
+              style={{
+                color: "rgba(255,255,255,0.8)",
+                maxWidth: 440,
+              }}
+            >
+              {slide.body}
+            </p>
 
-          {/* CTA */}
-          <div>
-            <Link href={slide.href} className="btn-pill btn-pill-terra">
-              {slide.cta}
-            </Link>
+            {/* CTA */}
+            <div>
+              <Link href={slide.href} className="btn-pill btn-pill-terra">
+                {slide.cta}
+              </Link>
+            </div>
+          </div>
+
+          {/* Navigation arrows — bottom right */}
+          <div className="absolute bottom-5 right-5 z-20 flex items-center gap-2">
+            <button
+              onClick={() => goTo(current - 1)}
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-colors hover:bg-white/30"
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                color: "#fff",
+              }}
+              aria-label="Previous slide"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={() => goTo(current + 1)}
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-colors hover:bg-white/30"
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                color: "#fff",
+              }}
+              aria-label="Next slide"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          {/* Dot indicators — bottom center */}
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className="transition-all duration-300"
+                aria-label={`Go to slide ${i + 1}`}
+                style={{
+                  width: i === current ? 28 : 8,
+                  height: 8,
+                  borderRadius: 4,
+                  background:
+                    i === current ? "#ffffff" : "rgba(255,255,255,0.4)",
+                }}
+              />
+            ))}
           </div>
         </div>
-
-        {/* Navigation arrows */}
-        <div className="absolute bottom-6 right-6 z-20 flex items-center gap-3">
-          <button
-            onClick={() => goTo(current - 1)}
-            className="w-12 h-12 rounded-full flex items-center justify-center transition-colors hover:bg-white/30"
-            style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}
-          >
-            <ChevronLeft size={22} />
-          </button>
-          <button
-            onClick={() => goTo(current + 1)}
-            className="w-12 h-12 rounded-full flex items-center justify-center transition-colors hover:bg-white/30"
-            style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}
-          >
-            <ChevronRight size={22} />
-          </button>
-        </div>
-
-        {/* Dot indicators */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className="transition-all duration-300"
-              style={{
-                width: i === current ? 32 : 8,
-                height: 8,
-                borderRadius: 4,
-                background: i === current ? "#ffffff" : "rgba(255,255,255,0.4)",
-              }}
-            />
-          ))}
-        </div>
       </div>
+
+      {/* Bottom spacing */}
+      <div style={{ height: 60 }} />
     </section>
   );
 }

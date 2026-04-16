@@ -21,9 +21,9 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="relative w-full" style={{ background: "#ffffff" }}>
-      {/* Top section — background image with newsletter overlay */}
-      <div className="relative" style={{ height: 550 }}>
+    <footer className="relative w-full">
+      {/* Top section — background image with content overlay, matching visittheusa */}
+      <div className="relative" style={{ height: 500 }}>
         {/* Background image */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -32,14 +32,20 @@ export default function Footer() {
           className="absolute inset-0 w-full h-full object-cover"
           style={{ objectPosition: "50% 80%" }}
         />
-        {/* Overlay */}
+        {/* Gradient overlay */}
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)" }}
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 50%, transparent 100%)",
+          }}
         />
 
         {/* Content layer */}
-        <div className="relative z-10 h-full flex items-end justify-between" style={{ padding: "0 48px 48px" }}>
+        <div
+          className="relative z-10 h-full flex items-end justify-between"
+          style={{ padding: "0 clamp(24px, 4vw, 48px) 48px" }}
+        >
           {/* Left — logo + nav */}
           <div>
             <Link
@@ -66,24 +72,34 @@ export default function Footer() {
           <div
             className="hidden lg:flex flex-col justify-center flex-shrink-0"
             style={{
-              width: 420,
+              width: 400,
               background: "#D5A58F",
-              padding: "40px 36px",
-              borderRadius: 0,
+              padding: "36px 32px",
             }}
           >
-            <h3 className="text-3xl font-black uppercase tracking-wide mb-2" style={{ color: "#404650" }}>
+            <h3
+              className="text-2xl font-black uppercase tracking-wide mb-2"
+              style={{ color: "#404650" }}
+            >
               Ready?
             </h3>
-            <p className="text-sm mb-5 leading-relaxed" style={{ color: "#404650" }}>
-              Get travel inspiration and planning tips for China delivered to your inbox.
+            <p
+              className="text-sm mb-5 leading-relaxed"
+              style={{ color: "#404650" }}
+            >
+              Get travel inspiration and planning tips for China delivered to
+              your inbox.
             </p>
             <form className="flex" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
                 placeholder="Your email address"
                 className="flex-grow px-4 py-3 rounded-l-full text-sm outline-none"
-                style={{ background: "#ffffff", color: "#404650", border: "none" }}
+                style={{
+                  background: "#ffffff",
+                  color: "#404650",
+                  border: "none",
+                }}
               />
               <button
                 type="submit"
@@ -93,19 +109,23 @@ export default function Footer() {
                 Subscribe
               </button>
             </form>
-            <Link href="/privacy" className="mt-3 text-xs hover:opacity-70 transition-opacity" style={{ color: "#404650" }}>
+            <Link
+              href="/privacy"
+              className="mt-3 text-xs hover:opacity-70 transition-opacity"
+              style={{ color: "#404650" }}
+            >
               Privacy Policy
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Bottom bar */}
+      {/* Bottom bar — white bg matching visittheusa */}
       <div
         className="flex flex-col md:flex-row items-center justify-between gap-4"
-        style={{ padding: "24px 48px", background: "#ffffff" }}
+        style={{ padding: "20px clamp(24px, 4vw, 48px)", background: "#ffffff" }}
       >
-        <p className="text-sm" style={{ color: "#404650" }}>
+        <p className="text-sm" style={{ color: "rgba(64,68,80,0.6)" }}>
           &copy; 2026 ChinaQuest. All rights reserved.
         </p>
 
@@ -125,16 +145,18 @@ export default function Footer() {
 
         {/* Legal */}
         <div className="flex gap-4 text-sm">
-          {["Privacy Policy", "Terms of Use", "Cookie Settings"].map((label) => (
-            <Link
-              key={label}
-              href="/privacy"
-              className="hover:opacity-70 transition-opacity"
-              style={{ color: "#404650" }}
-            >
-              {label}
-            </Link>
-          ))}
+          {["Privacy Policy", "Terms of Use", "Cookie Settings"].map(
+            (label) => (
+              <Link
+                key={label}
+                href="/privacy"
+                className="hover:opacity-70 transition-opacity"
+                style={{ color: "rgba(64,68,80,0.6)" }}
+              >
+                {label}
+              </Link>
+            )
+          )}
         </div>
       </div>
     </footer>

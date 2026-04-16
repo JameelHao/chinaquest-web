@@ -1,8 +1,9 @@
 import HeroSection from "@/components/sections/HeroSection";
 import HeroCarousel from "@/components/sections/HeroCarousel";
+import SocialFollow from "@/components/sections/SocialFollow";
+import ExploreMap from "@/components/sections/ExploreMap";
+import TripGuideCards from "@/components/sections/TripGuideCards";
 import FeaturedDestinations from "@/components/sections/FeaturedDestinations";
-import CategoryGrid from "@/components/sections/CategoryGrid";
-import RouteHighlight from "@/components/sections/RouteHighlight";
 import FAQSection from "@/components/sections/FAQSection";
 
 export default function Home() {
@@ -10,9 +11,10 @@ export default function Home() {
     <>
       <HeroSection />
       <HeroCarousel />
+      <SocialFollow />
+      <ExploreMap />
+      <TripGuideCards />
       <FeaturedDestinations />
-      <RouteHighlight />
-      <CategoryGrid />
       <FAQSection />
     </>
   );
