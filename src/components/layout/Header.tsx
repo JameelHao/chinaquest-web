@@ -4,37 +4,20 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
 
-/* ── visittheusa header structure:
-   Row 1 (utility): LEFT "Visa & Entry" · "Travel Trade"  |  RIGHT "English ▾"
-   Row 2 (main):    LEFT Logo  |  RIGHT Menu · [IG FB YT TT] · Plan a trip
-   Menu overlay:    Destinations · Experiences · Road Trips
-   Plan dropdown:   Destinations · Experiences · Road Trips · Visa & Entry
+/* ── visittheusa header (from screenshot):
+   Single transparent bar overlaying hero:
+   LEFT:   VISIT THE USA logo
+   CENTER: Destinations · Experiences · America250 · Road Trips · Major Events
+   RIGHT:  Visa & Entry · Travel Trade · English
+   Right edge: vertical "Trip Planner" tab
 ── */
 
-const menuItems = [
-  {
-    label: "Destinations",
-    href: "/destinations",
-    children: [
-      { label: "Beijing", href: "/destinations/beijing" },
-      { label: "Shanghai", href: "/destinations/shanghai" },
-      { label: "Xi'an", href: "/destinations/xian" },
-      { label: "Chengdu", href: "/destinations/chengdu" },
-      { label: "Guilin", href: "/destinations/guilin" },
-      { label: "Hangzhou", href: "/destinations/hangzhou" },
-      { label: "Yunnan", href: "/destinations/yunnan" },
-      { label: "Tibet", href: "/destinations/tibet" },
-    ],
-  },
-  { label: "Experiences", href: "/experience" },
-  { label: "Road Trips", href: "/trip" },
-];
-
-const planItems = [
+const navItems = [
   { label: "Destinations", href: "/destinations" },
   { label: "Experiences", href: "/experience" },
+  { label: "China Heritage", href: "/experience/heritage" },
   { label: "Road Trips", href: "/trip" },
-  { label: "Visa & Entry", href: "/practical/visa" },
+  { label: "Major Events", href: "/experience/festivals" },
 ];
 
 const languages = [
@@ -49,9 +32,8 @@ const languages = [
 ];
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [planOpen, setPlanOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -61,181 +43,156 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (!planOpen && !langOpen) return;
-    const close = () => { setPlanOpen(false); setLangOpen(false); };
+    if (!langOpen) return;
+    const close = () => setLangOpen(false);
     document.addEventListener("click", close);
     return () => document.removeEventListener("click", close);
-  }, [planOpen, langOpen]);
-
-  const txt = scrolled ? "text-[#404650]" : "text-white";
-  const txtMuted = scrolled ? "text-[#404650]/60" : "text-white/70";
+  }, [langOpen]);
 
   return (
     <>
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled ? "rgba(255,255,255,0.97)" : "transparent",
-          backdropFilter: scrolled ? "blur(8px)" : "none",
-          boxShadow: scrolled ? "0 1px 0 rgba(0,0,0,0.06)" : "none",
+          background: scrolled ? "rgba(0,0,0,0.85)" : "transparent",
+          backdropFilter: scrolled ? "blur(12px)" : "none",
         }}
       >
-        {/* ═══ Row 1: Utility bar ═══
-            visittheusa: LEFT [Visa & Entry] [Travel Trade]  RIGHT [English ▾]
-        */}
-        <div className="hidden lg:flex items-center justify-between px-8" style={{ height: 34, fontSize: 13 }}>
-          <div className="flex items-center gap-5">
-            <Link href="/practical/visa" className={`${txtMuted} hover:${txt} transition-colors font-medium`}>
-              Visa &amp; Entry
-            </Link>
-            <Link href="/travel-trade" className={`${txtMuted} hover:${txt} transition-colors font-medium`}>
-              Travel Trade
-            </Link>
-          </div>
-          {/* Language — right side */}
-          <div className="relative">
-            <button
-              onClick={(e) => { e.stopPropagation(); setLangOpen(!langOpen); setPlanOpen(false); }}
-              className={`${txtMuted} hover:${txt} transition-colors font-medium cursor-pointer`}
-            >
-              English ▾
-            </button>
-            {langOpen && (
-              <div
-                className="absolute top-full right-0 mt-2 rounded-lg overflow-hidden shadow-xl"
-                style={{ background: "#fff", minWidth: 180, border: "1px solid rgba(0,0,0,0.08)" }}
-              >
-                {languages.map((l) => (
-                  <Link
-                    key={l.code}
-                    href={l.href}
-                    className="block px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors"
-                    style={{ color: "#404650" }}
-                  >
-                    {l.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ═══ Row 2: Main nav ═══
-            visittheusa: LEFT [Logo]  RIGHT [Menu] [IG FB YT TT] [Plan a trip]
-        */}
-        <div className="flex items-center justify-between px-6 lg:px-8" style={{ height: 52 }}>
-          <Link href="/" className={`font-black tracking-[0.15em] uppercase ${txt} transition-colors`} style={{ fontSize: 15 }}>
-            Visit China
+        {/* Single row — matching visittheusa screenshot exactly */}
+        <div
+          className="flex items-center px-6 lg:px-10"
+          style={{ height: 60 }}
+        >
+          {/* Logo — left */}
+          <Link
+            href="/"
+            className="font-black text-white uppercase tracking-wider flex-shrink-0"
+            style={{ fontSize: 13, letterSpacing: "0.15em", lineHeight: 1, marginRight: 32 }}
+          >
+            <span style={{ fontSize: 10, display: "block", fontWeight: 700, letterSpacing: "0.2em", marginBottom: 1 }}>
+              VISIT
+            </span>
+            CHINA
           </Link>
 
-          <div className="flex items-center gap-5">
-            <button
-              onClick={() => { setMenuOpen(true); setPlanOpen(false); }}
-              className={`text-sm font-bold uppercase tracking-wide hover:opacity-70 transition-opacity cursor-pointer ${txt}`}
-            >
-              Menu
-            </button>
-
-            {/* Social — desktop */}
-            <div className="hidden lg:flex items-center gap-1.5">
-              {["IG", "FB", "YT", "TT"].map((icon) => (
-                <span
-                  key={icon}
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold cursor-pointer transition-colors"
-                  style={{
-                    background: scrolled ? "rgba(64,68,80,0.08)" : "rgba(255,255,255,0.15)",
-                    color: scrolled ? "#404650" : "#fff",
-                  }}
-                >
-                  {icon}
-                </span>
-              ))}
-            </div>
-
-            {/* Plan a trip — desktop */}
-            <div className="hidden lg:block relative">
-              <button
-                onClick={(e) => { e.stopPropagation(); setPlanOpen(!planOpen); setLangOpen(false); }}
-                className={`text-sm font-bold uppercase tracking-wide hover:opacity-70 transition-opacity cursor-pointer ${txt}`}
+          {/* Center nav — desktop: Destinations · Experiences · ChinaHeritage · Road Trips · Major Events */}
+          <nav className="hidden lg:flex items-center gap-1 flex-1">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="text-white/80 hover:text-white transition-colors px-3 py-1"
+                style={{ fontSize: 13, fontWeight: 600 }}
               >
-                Plan a trip
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right side — Visa & Entry · Travel Trade · English */}
+          <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
+            <Link
+              href="/practical/visa"
+              className="text-white/70 hover:text-white transition-colors"
+              style={{ fontSize: 12, fontWeight: 600 }}
+            >
+              Visa &amp; Entry
+            </Link>
+            <Link
+              href="/travel-trade"
+              className="text-white/70 hover:text-white transition-colors"
+              style={{ fontSize: 12, fontWeight: 600 }}
+            >
+              Travel Trade
+            </Link>
+            {/* Language selector */}
+            <div className="relative">
+              <button
+                onClick={(e) => { e.stopPropagation(); setLangOpen(!langOpen); }}
+                className="text-white font-bold hover:text-white/80 transition-colors cursor-pointer"
+                style={{ fontSize: 12 }}
+              >
+                English
               </button>
-              {planOpen && (
+              {langOpen && (
                 <div
-                  className="absolute top-full right-0 mt-3 rounded-lg overflow-hidden shadow-xl"
-                  style={{ background: "#fff", minWidth: 200, border: "1px solid rgba(0,0,0,0.08)" }}
+                  className="absolute top-full right-0 mt-2 rounded-lg overflow-hidden shadow-xl"
+                  style={{ background: "#fff", minWidth: 180, border: "1px solid rgba(0,0,0,0.08)" }}
                 >
-                  {planItems.map((item) => (
+                  {languages.map((l) => (
                     <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setPlanOpen(false)}
-                      className="block px-5 py-3 text-sm hover:bg-gray-50 transition-colors"
+                      key={l.code}
+                      href={l.href}
+                      className="block px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors"
                       style={{ color: "#404650" }}
                     >
-                      {item.label}
+                      {l.label}
                     </Link>
                   ))}
                 </div>
               )}
             </div>
           </div>
+
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="lg:hidden text-white text-sm font-bold uppercase tracking-wide ml-auto cursor-pointer"
+          >
+            Menu
+          </button>
         </div>
       </header>
 
-      {/* ═══ Full-screen Menu overlay ═══ */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-[100] flex flex-col" style={{ background: "#404650" }}>
-          <div className="flex items-center justify-between px-6 lg:px-8" style={{ height: 52 }}>
-            <Link href="/" onClick={() => setMenuOpen(false)} className="font-black tracking-[0.15em] text-white uppercase" style={{ fontSize: 15 }}>
-              Visit China
+      {/* ═══ Right edge: "Trip Planner" vertical tab — matching visittheusa ═══ */}
+      <div
+        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:block cursor-pointer"
+        style={{
+          writingMode: "vertical-rl",
+          background: "#D5A58F",
+          color: "#404650",
+          padding: "16px 8px",
+          fontSize: 12,
+          fontWeight: 700,
+          letterSpacing: "0.1em",
+          borderRadius: "6px 0 0 6px",
+          textTransform: "uppercase",
+        }}
+      >
+        Trip Planner
+      </div>
+
+      {/* ═══ Mobile menu overlay ═══ */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-[100] flex flex-col" style={{ background: "#1a1a1a" }}>
+          <div className="flex items-center justify-between px-6" style={{ height: 60 }}>
+            <Link href="/" onClick={() => setMobileMenuOpen(false)}
+              className="font-black text-white uppercase tracking-wider" style={{ fontSize: 13 }}>
+              <span style={{ fontSize: 10, display: "block", fontWeight: 700, letterSpacing: "0.2em", marginBottom: 1 }}>VISIT</span>
+              CHINA
             </Link>
-            <button onClick={() => setMenuOpen(false)} className="text-white p-1 hover:opacity-70 transition-opacity cursor-pointer">
+            <button onClick={() => setMobileMenuOpen(false)} className="text-white p-1 cursor-pointer">
               <X size={26} />
             </button>
           </div>
-
-          <nav className="flex-1 overflow-y-auto px-6 lg:px-8 py-10">
-            <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-2">
-              {menuItems.map((item) => (
-                <div key={item.label}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="block py-3 text-white text-2xl lg:text-3xl font-black uppercase tracking-wide hover:opacity-80 transition-opacity"
-                  >
-                    {item.label}
-                  </Link>
-                  {item.children && (
-                    <div className="ml-1 mb-4">
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          onClick={() => setMenuOpen(false)}
-                          className="block py-1.5 text-white/50 text-base hover:text-white transition-colors"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+          <nav className="flex-1 overflow-y-auto px-6 py-8">
+            {navItems.map((item) => (
+              <Link key={item.label} href={item.href} onClick={() => setMobileMenuOpen(false)}
+                className="block py-3 text-white text-2xl font-black uppercase tracking-wide hover:opacity-80 transition-opacity">
+                {item.label}
+              </Link>
+            ))}
+            <div className="mt-8 pt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+              <Link href="/practical/visa" onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 text-white/60 text-base hover:text-white transition-colors">
+                Visa &amp; Entry
+              </Link>
+              <Link href="/travel-trade" onClick={() => setMobileMenuOpen(false)}
+                className="block py-2 text-white/60 text-base hover:text-white transition-colors">
+                Travel Trade
+              </Link>
             </div>
           </nav>
-
-          <div className="flex items-center gap-3 px-6 lg:px-8 pb-8">
-            {["IG", "FB", "YT", "TT"].map((icon) => (
-              <span
-                key={icon}
-                className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold"
-                style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}
-              >
-                {icon}
-              </span>
-            ))}
-          </div>
         </div>
       )}
     </>
