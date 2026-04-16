@@ -10,6 +10,7 @@
 ── */
 
 import HeroSection from "@/components/sections/HeroSection";
+import TaglineSection from "@/components/sections/TaglineSection";
 import HeroCarousel from "@/components/sections/HeroCarousel";
 import SocialFollow from "@/components/sections/SocialFollow";
 import ExploreMap from "@/components/sections/ExploreMap";
@@ -21,6 +22,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <TaglineSection />
       <HeroCarousel />
       <SocialFollow />
       <ExploreMap />
