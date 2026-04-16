@@ -1,77 +1,68 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 
-/* ── visittheusa hero (from screenshot):
-   - Full-viewport background image
-   - Bottom center: huge ultra-bold title "CHINA THE BEAUTIFUL"
-   - AI travel ideas section with pill buttons
-── */
+const heroImages = [
+  { src: "/images/hero-great-wall.jpg", alt: "Great Wall at sunrise" },
+  { src: "/images/hero-drone-field.jpg", alt: "Drone over karst rice fields" },
+  { src: "/images/hero-tech-lab.jpg", alt: "Students exploring drone technology lab" },
+  { src: "/images/hero-scene4.jpg", alt: "Students walking tree-lined streets in China" },
+];
 
 export default function HeroSection() {
-  const aiButtons = [
-    "Find my family adventure",
-    "Show me incredible views",
-    "Build my family road trip",
-    "See top arts destinations",
-  ];
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % heroImages.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <section
-      className="relative w-full flex flex-col items-center justify-end"
-      style={{ height: "100vh", minHeight: 650 }}
-    >
-      {/* Background image */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1920&q=80"
-        alt="Great Wall of China"
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+    <section className="relative w-full overflow-hidden" style={{ height: "100vh", minHeight: 600 }}>
+      {/* Background images with crossfade */}
+      {heroImages.map((img, i) => (
+        <Image
+          key={img.src}
+          src={img.src}
+          alt={img.alt}
+          fill
+          priority={i === 0}
+          className="object-cover transition-opacity duration-[1500ms] ease-in-out"
+          style={{ opacity: i === current ? 1 : 0 }}
+          sizes="100vw"
+        />
+      ))}
+
       {/* Gradient overlay */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 z-[1]"
         style={{
-          background: "linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%)",
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.12) 40%, rgba(0,0,0,0.45) 100%)",
         }}
       />
 
-      {/* Content Container */}
-      <div className="relative z-10 w-full flex flex-col items-center" style={{ paddingBottom: "clamp(40px, 6vh, 80px)", paddingLeft: 24, paddingRight: 24 }}>
-        {/* Title center */}
+      {/* Title — bottom center, up 10% */}
+      <div
+        className="absolute inset-0 z-[2] flex items-end justify-center"
+        style={{ padding: "0 24px clamp(80px, 28vh, 240px)" }}
+      >
         <h1
-          className="text-white uppercase text-center mb-8"
+          className="text-center uppercase"
           style={{
-            fontFamily: "'Inter', sans-serif",
-            fontWeight: 900,
-            fontSize: "clamp(48px, 10vw, 150px)",
-            lineHeight: 0.9,
-            letterSpacing: "-0.02em",
+            fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+            fontWeight: 400,
+            fontSize: "clamp(52px, 10.4vw, 148px)",
+            lineHeight: 0.88,
+            letterSpacing: "2px",
+            color: "#f4f2f0",
           }}
         >
-          China The Beautiful
+          CHINA QUEST
         </h1>
-
-        {/* AI Travel Ideas Section */}
-        <div className="flex flex-col items-center gap-4 w-full max-w-5xl">
-          <div className="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest mb-1">
-            <Sparkles size={14} className="text-white" />
-            <span>Get travel ideas with AI</span>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-3">
-            {aiButtons.map((text) => (
-              <button
-                key={text}
-                className="bg-white hover:bg-white/90 text-black px-6 py-3 rounded-full flex items-center gap-2 transition-all transform hover:scale-105 cursor-pointer shadow-lg"
-                style={{ fontSize: 13, fontWeight: 700 }}
-              >
-                <Sparkles size={12} className="text-black/70" />
-                {text}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
