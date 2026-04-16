@@ -1,17 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { X } from "lucide-react";
 
-const topLinks = [
-  { label: "Visa & Entry", href: "/practical/visa" },
-  { label: "Travel Trade", href: "/travel-trade" },
-];
-
-const languages = ["Deutsch", "Español", "Français", "한국어", "日本語"];
-
-const navItems = [
+/* ── Menu panel items (shown when "Menu" is clicked) ── */
+const menuItems = [
   {
     label: "Destinations",
     href: "/destinations",
@@ -28,17 +22,17 @@ const navItems = [
   },
   { label: "Experiences", href: "/experience" },
   { label: "Road Trips", href: "/trip" },
-  {
-    label: "Plan a Trip",
-    href: "/practical",
-    children: [
-      { label: "Visa & Entry", href: "/practical/visa" },
-      { label: "Getting Around", href: "/practical/transport" },
-      { label: "Money & Costs", href: "/practical/money" },
-      { label: "Language Tips", href: "/practical/language" },
-      { label: "Health & Safety", href: "/practical/health" },
-    ],
-  },
+  { label: "Visa & Entry", href: "/practical/visa" },
+  { label: "Getting Around", href: "/practical/transport" },
+];
+
+/* ── Plan a trip sub-items ── */
+const planItems = [
+  { label: "Visa & Entry", href: "/practical/visa" },
+  { label: "Getting Around", href: "/practical/transport" },
+  { label: "Money & Costs", href: "/practical/money" },
+  { label: "Language Tips", href: "/practical/language" },
+  { label: "Health & Safety", href: "/practical/health" },
 ];
 
 const socialIcons = [
@@ -49,19 +43,18 @@ const socialIcons = [
 ];
 
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [planOpen, setPlanOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  if (typeof window !== "undefined") {
-    // Track scroll for header background
-    window.addEventListener("scroll", () => {
-      setScrolled(window.scrollY > 100);
-    }, { passive: true });
-  }
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
-      {/* Fixed Header */}
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
@@ -69,81 +62,57 @@ export default function Header() {
           backdropFilter: scrolled ? "blur(8px)" : "none",
         }}
       >
-        {/* Very Top Bar — language & utility links */}
+        {/* ═══ Row 1: Top utility bar ═══
+            visittheusa layout: LEFT-aligned → Visa & Entry · Travel Trade · English
+        */}
         <div
-          className="hidden lg:flex items-center justify-end gap-4 px-6"
-          style={{ height: 32, fontSize: 13 }}
+          className="hidden lg:flex items-center gap-5 px-8"
+          style={{ height: 34, fontSize: 13 }}
         >
-          {topLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="text-white/80 hover:text-white transition-colors font-medium"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <span className="text-white/30">|</span>
-          {languages.map((lang) => (
-            <Link
-              key={lang}
-              href="#"
-              className="text-white/60 hover:text-white transition-colors"
-            >
-              {lang}
-            </Link>
-          ))}
+          <Link
+            href="/practical/visa"
+            className="text-white/80 hover:text-white transition-colors font-medium"
+          >
+            Visa &amp; Entry
+          </Link>
+          <Link
+            href="/travel-trade"
+            className="text-white/80 hover:text-white transition-colors font-medium"
+          >
+            Travel Trade
+          </Link>
+          <span className="text-white font-medium">
+            English
+          </span>
         </div>
 
-        {/* Main Nav Bar */}
-        <div className="flex items-center justify-between px-6 lg:px-8" style={{ height: 56 }}>
-          {/* Logo */}
+        {/* ═══ Row 2: Main nav bar ═══
+            visittheusa layout: LEFT logo — RIGHT menu · social · Plan a trip
+        */}
+        <div
+          className="flex items-center justify-between px-6 lg:px-8"
+          style={{ height: 52 }}
+        >
+          {/* Logo — left */}
           <Link
             href="/"
             className="font-black tracking-[0.15em] text-white uppercase"
-            style={{ fontSize: 15, letterSpacing: "0.15em" }}
+            style={{ fontSize: 15 }}
           >
             Visit China
           </Link>
 
-          {/* Desktop Nav — center */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {navItems.map((item) => (
-              <div key={item.label} className="relative group">
-                <Link
-                  href={item.href}
-                  className="flex items-center gap-1 text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-opacity"
-                >
-                  {item.label}
-                  {item.children && <ChevronDown size={14} className="opacity-60" />}
-                </Link>
+          {/* Right cluster: Menu + Social + Plan a trip */}
+          <div className="flex items-center gap-5">
+            {/* "Menu" text button — like visittheusa */}
+            <button
+              onClick={() => { setMenuOpen(!menuOpen); setPlanOpen(false); }}
+              className="text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-opacity"
+            >
+              Menu
+            </button>
 
-                {/* Dropdown */}
-                {item.children && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200">
-                    <div
-                      className="rounded-lg overflow-hidden shadow-xl"
-                      style={{ background: "#404650", minWidth: 220 }}
-                    >
-                      {item.children.map((child) => (
-                        <Link
-                          key={child.href}
-                          href={child.href}
-                          className="block px-5 py-3 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </nav>
-
-          {/* Right side — social + mobile menu */}
-          <div className="flex items-center gap-3">
-            {/* Social icons — desktop */}
+            {/* Social icons — desktop only */}
             <div className="hidden lg:flex items-center gap-2">
               {socialIcons.map((s) => (
                 <span
@@ -157,57 +126,89 @@ export default function Header() {
               ))}
             </div>
 
-            {/* Mobile menu button */}
-            <button
-              className="lg:hidden text-white p-1"
-              onClick={() => setMobileOpen(true)}
-            >
-              <Menu size={26} />
-            </button>
+            {/* "Plan a trip" — desktop only, with dropdown */}
+            <div className="hidden lg:block relative">
+              <button
+                onClick={() => { setPlanOpen(!planOpen); setMenuOpen(false); }}
+                className="text-white text-sm font-bold uppercase tracking-wide hover:opacity-80 transition-opacity"
+              >
+                Plan a Trip
+              </button>
+
+              {/* Plan dropdown */}
+              {planOpen && (
+                <div
+                  className="absolute top-full right-0 mt-3 rounded-lg overflow-hidden shadow-xl"
+                  style={{ background: "#404650", minWidth: 220 }}
+                >
+                  {planItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setPlanOpen(false)}
+                      className="block px-5 py-3 text-sm text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      {mobileOpen && (
+      {/* ═══ Full-screen Menu overlay ═══ */}
+      {menuOpen && (
         <div className="fixed inset-0 z-[100] flex flex-col" style={{ background: "#404650" }}>
-          <div className="flex items-center justify-between px-6" style={{ height: 56 }}>
-            <span className="text-white font-black tracking-[0.15em] uppercase" style={{ fontSize: 15 }}>
+          {/* Menu header */}
+          <div className="flex items-center justify-between px-6 lg:px-8" style={{ height: 52 }}>
+            <Link
+              href="/"
+              onClick={() => setMenuOpen(false)}
+              className="font-black tracking-[0.15em] text-white uppercase"
+              style={{ fontSize: 15 }}
+            >
               Visit China
-            </span>
-            <button onClick={() => setMobileOpen(false)} className="text-white p-1">
+            </Link>
+            <button onClick={() => setMenuOpen(false)} className="text-white p-1">
               <X size={26} />
             </button>
           </div>
-          <nav className="flex flex-col gap-1 px-6 py-8 overflow-y-auto flex-1">
-            {navItems.map((item) => (
-              <div key={item.label}>
-                <Link
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block py-3 text-white text-2xl font-black uppercase tracking-wide"
-                >
-                  {item.label}
-                </Link>
-                {item.children && (
-                  <div className="ml-4 mb-4">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        onClick={() => setMobileOpen(false)}
-                        className="block py-2 text-white/60 text-lg hover:text-white transition-colors"
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+
+          {/* Menu content */}
+          <nav className="flex-1 overflow-y-auto px-6 lg:px-8 py-10">
+            <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-2">
+              {menuItems.map((item) => (
+                <div key={item.label}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="block py-3 text-white text-2xl lg:text-3xl font-black uppercase tracking-wide hover:opacity-80 transition-opacity"
+                  >
+                    {item.label}
+                  </Link>
+                  {item.children && (
+                    <div className="ml-1 mb-4">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          onClick={() => setMenuOpen(false)}
+                          className="block py-1.5 text-white/50 text-base hover:text-white transition-colors"
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </nav>
-          {/* Mobile social */}
-          <div className="flex items-center gap-3 px-6 pb-8">
+
+          {/* Menu footer — social */}
+          <div className="flex items-center gap-3 px-6 lg:px-8 pb-8">
             {socialIcons.map((s) => (
               <span
                 key={s.label}
