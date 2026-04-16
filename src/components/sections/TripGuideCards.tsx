@@ -1,173 +1,124 @@
 import Link from "next/link";
 
+/* ── visittheusa: 9 article cards in 3-col grid
+   Each card: portrait image (500x670) + category badge + title + desc + "Read Article"
+   Some have duration badge (6-12 days, 14-21 days)
+── */
+
 const guides = [
   {
+    category: "Major Events",
+    title: "Your Guide to China's Top Festival Cities",
+    desc: "Make plans now to explore these exciting host destinations and beyond.",
+    href: "/trip/festival-cities",
+    img: "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=500&q=80",
+  },
+  {
     category: "Road Trips",
-    title: "The Silk Road",
-    desc: "Xi'an to Kashgar — trace the ancient trade route through terracotta warriors, desert caves, and the cultures of western China.",
+    title: "Silk Road: Ancient Trade Routes and Desert Adventures",
+    desc: "Discover an epic journey through Xi'an, Dunhuang, Turpan and Kashgar along the ancient trade route.",
     duration: "14-21 days",
     href: "/trip/silk-road",
     img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&q=80",
   },
   {
+    category: "Arts & Culture",
+    title: "Entertainment Epicenters Across China",
+    desc: "Experience some of the country's best theater, music, family fun and nightlife at these hot spots.",
+    href: "/trip/entertainment-epicenters",
+    img: "https://images.unsplash.com/photo-1537531383496-f4749dc67eee?w=500&q=80",
+  },
+  {
     category: "Road Trips",
-    title: "Yunnan Highway",
-    desc: "Kunming to Shangri-La — rice terraces, Tiger Leaping Gorge, ancient Lijiang, and the foothills of the Himalayas.",
+    title: "Explore the Heart of China on the Yunnan Highway",
+    desc: "Enjoy the journey from Kunming to Shangri-La on this iconic road trip through southwest China.",
     duration: "10-14 days",
     href: "/trip/yunnan-highway",
     img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80",
   },
   {
     category: "Arts & Culture",
-    title: "8 Cultural Celebrations You Can't Miss",
-    desc: "From Chinese New Year to the Lantern Festival, experience China's most vibrant cultural traditions firsthand.",
-    href: "/experience/culture",
-    img: "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=500&q=80",
+    title: "8 Cultural Celebrations That Capture the Spirit of China",
+    desc: "Take a coast-to-coast journey through this heritage-filled festival roadmap.",
+    href: "/trip/cultural-celebrations",
+    img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80",
   },
   {
-    category: "Road Trips",
-    title: "Beijing to Shanghai",
-    desc: "High-speed rail through China's greatest hits — the Great Wall, Nanjing, Suzhou gardens, and the Bund.",
-    duration: "6-10 days",
-    href: "/trip/beijing-shanghai",
-    img: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=500&q=80",
-  },
-  {
-    category: "Culinary",
-    title: "Must-Try Regional Cuisines",
-    desc: "Sichuan, Cantonese, Shandong, Hunan — a food lover's guide to China's eight great culinary traditions.",
-    href: "/experience/food",
+    category: "Arts & Culture",
+    title: "Must-See Music Festivals in China",
+    desc: "Discover some of the top music festivals in China for dancing to the rhythms that move you.",
+    href: "/trip/music-festivals",
     img: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=500&q=80",
   },
   {
     category: "Major Events",
-    title: "Iconic Festivals Across China",
-    desc: "Dragon Boat races, Mid-Autumn mooncakes, Harbin Ice Festival — plan your trip around China's biggest events.",
-    href: "/experience/festivals",
-    img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500&q=80",
+    title: "Iconic Sporting Events of China",
+    desc: "From racing circuits to roaring stadiums, witness China's passion for sports throughout the country.",
+    href: "/trip/sporting-events",
+    img: "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=500&q=80",
+  },
+  {
+    category: "Family",
+    title: "Amazing Family Experiences Across China",
+    desc: "Discover the many fun ways for families to reconnect and create unforgettable memories.",
+    href: "/trip/family-experiences",
+    img: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=500&q=80",
   },
   {
     category: "Nature",
     title: "Big Adventures Across China",
-    desc: "From trekking Tiger Leaping Gorge to cycling along the Yangtze — the ultimate outdoor adventures.",
-    href: "/experience/nature",
+    desc: "If you're seeking wide-open spaces and a little adrenaline, these bucket-list experiences deliver both.",
+    href: "/trip/big-adventures",
     img: "https://images.unsplash.com/photo-1529921879218-f99546d03e27?w=500&q=80",
-  },
-  {
-    category: "Family",
-    title: "Amazing Family Experiences",
-    desc: "Theme parks, panda bases, river cruises, and hands-on workshops — China has something for every age.",
-    href: "/experience/family",
-    img: "https://images.unsplash.com/photo-1529926706528-db9e5010cd3e?w=500&q=80",
-  },
-  {
-    category: "Road Trips",
-    title: "The Tea Horse Road",
-    desc: "Follow the ancient tea trading route from Yunnan through Sichuan into Tibet — a journey through time.",
-    duration: "12-18 days",
-    href: "/trip/tea-horse-road",
-    img: "https://images.unsplash.com/photo-1583417319070-4a69db38a482?w=500&q=80",
   },
 ];
 
-/* Category badge colors matching visittheusa patterns */
-const categoryColors: Record<string, string> = {
-  "Road Trips": "#3b82f6",
-  "Arts & Culture": "#8b5cf6",
-  Culinary: "#ef4444",
-  "Major Events": "#f59e0b",
-  Nature: "#22c55e",
-  Family: "#ec4899",
+const catColor: Record<string, string> = {
+  "Road Trips": "#2563eb",
+  "Arts & Culture": "#7c3aed",
+  "Major Events": "#dc2626",
+  Family: "#db2777",
+  Nature: "#16a34a",
 };
 
 export default function TripGuideCards() {
   return (
-    <section
-      className="w-full"
-      style={{ background: "#f4f2f0", padding: "80px 0" }}
-    >
-      <div
-        className="mx-auto"
-        style={{
-          maxWidth: 1400,
-          padding: "0 clamp(16px, 4vw, 48px)",
-        }}
-      >
-        {/* Section header */}
-        <div className="mb-12">
-          <p
-            className="text-sm font-bold tracking-[4px] uppercase mb-3"
-            style={{ color: "#404650", opacity: 0.5 }}
-          >
-            Trip Guides
-          </p>
-          <h2 className="text-section-md" style={{ color: "#404650" }}>
-            Plan Your Journey
-          </h2>
-        </div>
-
-        {/* Card grid — 3 columns, portrait 5:6.7 ratio like visittheusa (500x670) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-          {guides.map((guide) => (
-            <Link
-              key={guide.title}
-              href={guide.href}
-              className="group block bg-white rounded-lg overflow-hidden transition-shadow duration-300 hover:shadow-lg"
-            >
-              {/* Image — portrait ratio matching visittheusa's 500x670 */}
-              <div
-                className="relative overflow-hidden"
-                style={{ aspectRatio: "500/670" }}
-              >
+    <section className="w-full" style={{ background: "#f4f2f0", padding: "80px 0" }}>
+      <div className="mx-auto" style={{ maxWidth: 1400, padding: "0 clamp(16px, 4vw, 48px)" }}>
+        {/* 3-col grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {guides.map((g) => (
+            <Link key={g.title} href={g.href}
+              className="group block bg-white overflow-hidden transition-shadow duration-300 hover:shadow-lg">
+              {/* Image — portrait 500:670 matching visittheusa */}
+              <div className="relative overflow-hidden" style={{ aspectRatio: "500/670" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={guide.img}
-                  alt={guide.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                {/* Category badge — top left */}
-                <span
-                  className="absolute top-4 left-4 text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wide"
-                  style={{
-                    background: categoryColors[guide.category] || "#404650",
-                    color: "#ffffff",
-                  }}
-                >
-                  {guide.category}
+                <img src={g.img} alt={g.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                {/* Category badge */}
+                <span className="absolute top-4 left-4 text-[11px] font-bold px-3 py-1 rounded-sm uppercase tracking-wide"
+                  style={{ background: catColor[g.category] || "#404650", color: "#fff" }}>
+                  {g.category}
                 </span>
-                {/* Duration badge — top right (if applicable) */}
-                {guide.duration && (
-                  <span
-                    className="absolute top-4 right-4 text-[11px] font-bold px-3 py-1 rounded-full"
-                    style={{
-                      background: "rgba(0,0,0,0.6)",
-                      color: "#ffffff",
-                    }}
-                  >
-                    {guide.duration}
+                {/* Duration badge */}
+                {g.duration && (
+                  <span className="absolute top-4 right-4 text-[11px] font-bold px-3 py-1 rounded-sm"
+                    style={{ background: "rgba(0,0,0,0.6)", color: "#fff" }}>
+                    {g.duration}
                   </span>
                 )}
               </div>
-
-              {/* Text content */}
+              {/* Text */}
               <div className="p-5">
-                <h3
-                  className="text-lg font-bold mb-2 leading-snug"
-                  style={{ color: "#404650" }}
-                >
-                  {guide.title}
+                <h3 className="text-base font-bold mb-2 leading-snug" style={{ color: "#404650" }}>
+                  {g.title}
                 </h3>
-                <p
-                  className="text-sm leading-relaxed mb-4 line-clamp-2"
-                  style={{ color: "rgba(64,68,80,0.65)" }}
-                >
-                  {guide.desc}
+                <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: "rgba(64,68,80,0.55)" }}>
+                  {g.desc}
                 </p>
-                <span
-                  className="text-sm font-bold uppercase tracking-wide transition-colors group-hover:opacity-70"
-                  style={{ color: "#D5A58F" }}
-                >
-                  Read Article &rarr;
+                <span className="text-sm font-bold uppercase tracking-wide group-hover:opacity-70 transition-opacity"
+                  style={{ color: "#D5A58F" }}>
+                  Read Article
                 </span>
               </div>
             </Link>
