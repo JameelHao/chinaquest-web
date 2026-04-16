@@ -144,24 +144,6 @@ export default function Header() {
         </div>
       </header>
 
-      {/* ═══ Right edge: "Trip Planner" vertical tab — matching visittheusa ═══ */}
-      <div
-        className="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:block cursor-pointer"
-        style={{
-          writingMode: "vertical-rl",
-          background: "#D5A58F",
-          color: "#404650",
-          padding: "16px 8px",
-          fontSize: 12,
-          fontWeight: 700,
-          letterSpacing: "0.1em",
-          borderRadius: "6px 0 0 6px",
-          textTransform: "uppercase",
-        }}
-      >
-        Trip Planner
-      </div>
-
       {/* ═══ Mobile menu overlay ═══ */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-[100] flex flex-col" style={{ background: "#1a1a1a" }}>
