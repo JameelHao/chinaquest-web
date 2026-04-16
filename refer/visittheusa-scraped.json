@@ -1,0 +1,118 @@
+{
+  "scraped_at": "2026-04-16",
+  "url": "https://www.visittheusa.com/",
+  "viewport": "1440x900",
+  "html_font_size": "16px",
+  "body": {
+    "font_size": "16px",
+    "background_color": "rgb(244, 242, 240)",
+    "color": "rgb(64, 68, 80)"
+  },
+  "typography": {
+    "h1_hero": {
+      "font_size": "158.4px",
+      "font_weight": "900",
+      "line_height": "126.72px",
+      "letter_spacing": "2px",
+      "color": "rgb(244, 242, 240)"
+    },
+    "h2_section_dark_bg": {
+      "font_size": "96px",
+      "font_weight": "900",
+      "line_height": "96px",
+      "color": "rgb(255, 255, 255)"
+    },
+    "h2_section_light_bg": {
+      "font_size": "48px",
+      "font_weight": "900",
+      "line_height": "52.8px",
+      "color": "rgb(64, 68, 80)"
+    },
+    "category_label": {
+      "font_size": "24px",
+      "font_weight": "350",
+      "color": "rgb(255, 255, 255)"
+    },
+    "card_body": {
+      "font_size": "20px",
+      "font_weight": "350",
+      "line_height": "30px",
+      "color": "rgb(255, 255, 255)"
+    },
+    "body_paragraph": {
+      "font_size": "20px",
+      "font_weight": "350",
+      "line_height": "30px",
+      "color": "rgb(64, 68, 80)"
+    },
+    "nav_links": {
+      "font_size": "16px",
+      "font_weight": "700",
+      "color": "rgb(255, 255, 255)"
+    },
+    "footer_links": {
+      "font_size": "16px",
+      "font_weight": "400",
+      "color": "rgb(64, 68, 80)"
+    },
+    "small_text": {
+      "font_size": "14px",
+      "font_weight": "400",
+      "color": "rgb(64, 68, 80)"
+    },
+    "button": {
+      "font_size": "16px",
+      "font_weight": "700",
+      "color": "rgb(64, 68, 80)"
+    }
+  },
+  "colors": [
+    "rgb(64, 68, 80)",
+    "rgb(244, 242, 240)",
+    "rgb(255, 255, 255)",
+    "rgb(55, 205, 143)",
+    "rgba(0, 0, 0, 0.45)",
+    "rgba(255, 255, 255, 0.5)",
+    "rgb(0, 0, 238)",
+    "rgba(255, 255, 255, 0)",
+    "rgb(51, 51, 51)",
+    "rgb(213, 165, 143)",
+    "rgb(213, 212, 216)",
+    "rgba(63, 68, 81, 0.9)",
+    "rgba(0, 0, 0, 0.5)",
+    "rgb(250, 128, 114)",
+    "rgba(0, 0, 0, 0.75)",
+    "rgb(232, 234, 234)",
+    "rgb(213, 193, 143)",
+    "rgb(35, 40, 45)"
+  ],
+  "cards": {
+    "hero_card": {
+      "width": "1440px",
+      "height": "720px",
+      "background": "rgb(64, 68, 80)",
+      "content_area": {
+        "width": "768px",
+        "height": "720px",
+        "padding": "48px"
+      }
+    }
+  },
+  "sections": [
+    { "class": "shifan-text", "padding": "0px", "margin": "64px 0px", "bg": "rgba(0, 0, 0, 0)" },
+    { "class": "cardstack", "padding": "0px", "margin": "0px", "bg": "rgb(64, 68, 80)" },
+    { "class": "ugc-section", "padding": "0px", "margin": "0px", "bg": "rgba(0, 0, 0, 0)" },
+    { "class": "interactive-map", "padding": "64px 0px", "margin": "0px", "bg": "rgba(0, 0, 0, 0)" },
+    { "class": "common-slider", "padding": "0px", "margin": "80px 0px 0px", "bg": "rgba(0, 0, 0, 0)" },
+    { "class": "faq-section", "padding": "48px 0px", "margin": "0px", "bg": "rgb(64, 68, 80)" }
+  ],
+  "nav": {
+    "height": "52px",
+    "background": "rgba(0, 0, 0, 0)",
+    "padding": "0px"
+  },
+  "footer": {
+    "padding": "250px 0px 0px",
+    "background": "rgb(255, 255, 255)"
+  }
+}
