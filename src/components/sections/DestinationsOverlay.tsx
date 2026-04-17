@@ -34,7 +34,7 @@ export default function DestinationsOverlay({
       }}
     >
       {/* CLOSE — right-aligned, same row as header */}
-      <div className="flex items-center justify-end" style={{ padding: "20px 52px 0" }}>
+      <div className="flex items-center justify-end" style={{ padding: "12px 52px 0" }}>
         <button
           onClick={onClose}
           className="flex items-center gap-2 cursor-pointer hover:opacity-70 transition-all"
@@ -54,7 +54,7 @@ export default function DestinationsOverlay({
       </div>
 
       {/* City grid — centered */}
-      <div className="flex items-center justify-center w-full" style={{ minHeight: "calc(100vh - 140px)", padding: "24px 48px 48px" }}>
+      <div className="flex items-center justify-center w-full" style={{ minHeight: "calc(100vh - 140px)", padding: "16px 48px 48px" }}>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 lg:gap-6 w-full max-w-[1200px]">
           {cities.map((city) => (
             <Link
