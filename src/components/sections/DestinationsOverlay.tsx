@@ -27,7 +27,7 @@ export default function DestinationsOverlay({
     <div
       className="fixed left-0 right-0 bottom-0 z-[9998] overflow-y-auto animate-fadeIn"
       style={{
-        top: 52,
+        top: 88,
         background: "rgba(200, 200, 210, 0.35)",
         backdropFilter: "blur(40px) saturate(1.4)",
         WebkitBackdropFilter: "blur(40px) saturate(1.4)",

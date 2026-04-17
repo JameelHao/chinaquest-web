@@ -156,8 +156,6 @@ export default function Header() {
                     fontSize: 16,
                     fontWeight: 750,
                     color: destinationsOpen ? "#2d3142" : navTextColor,
-                    border: destinationsOpen ? "1.5px solid #2d3142" : "1.5px solid transparent",
-                    borderRadius: 4,
                     padding: "2px 8px",
                     background: "transparent",
                   }}
