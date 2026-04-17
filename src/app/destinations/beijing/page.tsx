@@ -67,9 +67,9 @@ export default function BeijingPage() {
                 key={city.slug}
                 href={`/destinations/beijing/${city.slug}`}
                 className="group block rounded-xl overflow-hidden"
-                style={{ background: "#f7f7f5" }}
+                style={{ background: "#ffffff" }}
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative" style={{ aspectRatio: "3/4" }}>
                   <Image
                     src={city.image}
                     alt={city.name}
@@ -77,25 +77,36 @@ export default function BeijingPage() {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
-                </div>
-                <div className="p-5">
-                  <h3
-                    className="uppercase"
+                  {/* Gradient overlay at bottom */}
+                  <div
+                    className="absolute inset-0"
                     style={{
-                      fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                      fontSize: 22,
-                      fontWeight: 400,
-                      color: "#2d3142",
-                      letterSpacing: "0.03em",
+                      background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.65) 100%)",
                     }}
-                  >
-                    {city.name}
-                  </h3>
+                  />
+                  {/* Title on image */}
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h3
+                      className="uppercase"
+                      style={{
+                        fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+                        fontSize: 24,
+                        fontWeight: 400,
+                        color: "#ffffff",
+                        letterSpacing: "0.03em",
+                        lineHeight: 1,
+                      }}
+                    >
+                      {city.name}
+                    </h3>
+                  </div>
+                </div>
+                {/* Description below image */}
+                <div className="p-4">
                   <p
-                    className="mt-2"
                     style={{
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: 14,
+                      fontSize: 13,
                       lineHeight: 1.5,
                       color: "#6b6565",
                     }}
