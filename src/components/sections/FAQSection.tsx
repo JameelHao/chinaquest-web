@@ -4,13 +4,6 @@ import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 
-/* ── visittheusa FAQ structure:
-   Heading: "Visa & Entry"
-   Subtext: "Learn details about the USA's visa & entry policies."
-   4 Q&A items (not accordion on visittheusa, but we keep accordion for better UX)
-   CTA: "Learn More"
-── */
-
 const faqs = [
   {
     q: "What are the passport requirements for China?",
@@ -32,44 +25,90 @@ const faqs = [
 
 export default function FAQSection() {
   return (
-    <section className="w-full" style={{ background: "#f4f2f0", padding: "80px 0" }}>
-      <div className="mx-auto" style={{ maxWidth: 800, padding: "0 clamp(16px, 4vw, 48px)" }}>
-        {/* Header — matching visittheusa */}
-        <p className="uppercase tracking-[4px] font-bold mb-3"
-          style={{ fontSize: 12, color: "rgba(64,68,80,0.35)" }}>
-          Visa &amp; Entry
-        </p>
-        <h2 className="font-black uppercase tracking-wide mb-3"
-          style={{ fontSize: "clamp(24px, 3vw, 36px)", color: "#404650", lineHeight: 1.15 }}>
-          Common Questions
-        </h2>
-        <p className="mb-10" style={{ fontSize: 16, color: "rgba(64,68,80,0.55)" }}>
-          Learn details about China&apos;s visa &amp; entry policies.
-        </p>
+    <section className="w-full" style={{ background: "#404650", padding: "80px 0" }}>
+      <div
+        className="flex flex-col lg:flex-row gap-16"
+        style={{ padding: "0 clamp(32px, 6vw, 80px)" }}
+      >
+        {/* Left: Title + description + CTA */}
+        <div className="lg:w-[38%] flex-shrink-0 flex flex-col gap-8">
+          <h2
+            style={{
+              fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+              fontWeight: 400,
+              fontSize: "clamp(48px, 7vw, 96px)",
+              lineHeight: 0.95,
+              color: "#ffffff",
+              textTransform: "uppercase",
+              whiteSpace: "nowrap",
+            }}
+          >
+            Visa & Entry
+          </h2>
 
-        {/* Accordion */}
-        <Accordion.Root type="single" collapsible className="flex flex-col gap-0">
-          {faqs.map((faq, i) => (
-            <Accordion.Item key={i} value={`faq-${i}`}
-              className="overflow-hidden" style={{ borderBottom: "1px solid rgba(64,68,80,0.1)" }}>
-              <Accordion.Trigger className="group flex items-center justify-between w-full py-5 text-left cursor-pointer">
-                <span className="text-base font-bold pr-4" style={{ color: "#404650" }}>{faq.q}</span>
-                <ChevronDown size={18}
-                  className="flex-shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-180"
-                  style={{ color: "rgba(64,68,80,0.3)" }} />
-              </Accordion.Trigger>
-              <Accordion.Content className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
-                <div className="pb-5 text-sm leading-relaxed" style={{ color: "rgba(64,68,80,0.6)" }}>
-                  {faq.a}
-                </div>
-              </Accordion.Content>
-            </Accordion.Item>
-          ))}
-        </Accordion.Root>
+          <p
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: 16,
+              fontWeight: 350,
+              color: "rgba(255,255,255,0.6)",
+              lineHeight: 1.6,
+            }}
+          >
+            Learn details about China&apos;s visa & entry policies.
+          </p>
 
-        {/* CTA — "Learn More" like visittheusa */}
-        <div className="mt-8">
-          <Link href="/practical/visa" className="btn-pill btn-pill-dark">Learn More</Link>
+          <div>
+            <Link href="/practical/visa" className="btn-pill btn-pill-terra">
+              Learn More
+            </Link>
+          </div>
+        </div>
+
+        {/* Right: FAQ accordion — evenly distributed */}
+        <div className="flex-1 flex flex-col justify-between">
+          <Accordion.Root type="single" collapsible className="flex flex-col justify-between h-full">
+            {faqs.map((faq, i) => (
+              <Accordion.Item
+                key={i}
+                value={`faq-${i}`}
+                className="overflow-hidden"
+                style={{ borderBottom: "1px solid rgba(255,255,255,0.12)" }}
+              >
+                <Accordion.Trigger className="group flex items-center justify-between w-full py-8 text-left cursor-pointer">
+                  <span
+                    className="pr-4"
+                    style={{
+                      fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
+                      fontSize: "clamp(18px, 1.8vw, 26px)",
+                      fontWeight: 600,
+                      color: "#ffffff",
+                    }}
+                  >
+                    {faq.q}
+                  </span>
+                  <ChevronDown
+                    size={22}
+                    className="flex-shrink-0 transition-transform duration-300 group-data-[state=open]:rotate-180"
+                    style={{ color: "rgba(255,255,255,0.3)" }}
+                  />
+                </Accordion.Trigger>
+                <Accordion.Content className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
+                  <div
+                    className="pb-6 leading-relaxed"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: 15,
+                      fontWeight: 350,
+                      color: "rgba(255,255,255,0.5)",
+                    }}
+                  >
+                    {faq.a}
+                  </div>
+                </Accordion.Content>
+              </Accordion.Item>
+            ))}
+          </Accordion.Root>
         </div>
       </div>
     </section>

@@ -1,16 +1,12 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
-/* ── visittheusa carousel:
-   - Full width, edge-to-edge, NO rounded corners
-   - ~600-700px tall
-   - Left gradient overlay for text
-   - Text block: 01/06 counter · CATEGORY · Title · Body · CTA
-   - Arrows bottom-right, dots bottom-center
-── */
+/*
+  visittheusa card stack — scroll to reveal, each card covers the previous one.
+  Uses sticky positioning: each card sticks at top, next card scrolls up over it.
+*/
 
 const slides = [
   {
@@ -19,7 +15,7 @@ const slides = [
     body: "Discover uniquely Chinese destinations, stories, and experiences that celebrate the nation's original spirit across 5,000 years of history.",
     cta: "Discover Originals",
     href: "/experience/culture",
-    img: "https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=1920&q=80",
+    img: "/images/carousel-1.jpg",
   },
   {
     category: "ANCIENT WONDERS",
@@ -27,7 +23,7 @@ const slides = [
     body: "From the Forbidden City to the Terracotta Army, meet incredible places and welcoming people — one province, one story, one experience at a time.",
     cta: "Discover More",
     href: "/experience/heritage",
-    img: "https://images.unsplash.com/photo-1529921879218-f99546d03e27?w=1920&q=80",
+    img: "/images/carousel-2.jpg",
   },
   {
     category: "ROAD TRIPS",
@@ -35,7 +31,7 @@ const slides = [
     body: "Countless avenues of discovery unfold from China's city streets and scenic highways. Explore the Silk Road, Yunnan Highway, and more.",
     cta: "Go Explore",
     href: "/trip",
-    img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1920&q=80",
+    img: "/images/carousel-3.jpg",
   },
   {
     category: "CULINARY",
@@ -43,116 +39,142 @@ const slides = [
     body: "From fiery Sichuan hotpot to delicate Cantonese dim sum, China's regional cuisines offer an endless journey for your taste buds.",
     cta: "Taste China",
     href: "/experience/food",
-    img: "https://images.unsplash.com/photo-1555126634-323283e090fa?w=1920&q=80",
-  },
-  {
-    category: "MAJOR EVENTS",
-    title: "The Big Stage",
-    body: "The world's biggest cultural events happen here, and you're invited. Chart an action-packed vacation around festivals, food, and more.",
-    cta: "Find Events",
-    href: "/experience/festivals",
-    img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&q=80",
-  },
-  {
-    category: "VISA & ENTRY",
-    title: "Tips for Global Travelers",
-    body: "Read frequently asked questions to help ensure your next China vacation starts with a smooth and informed arrival.",
-    cta: "Learn More",
-    href: "/practical/visa",
-    img: "https://images.unsplash.com/photo-1529926706528-db9e5010cd3e?w=1920&q=80",
+    img: "/images/carousel-4.jpg",
   },
 ];
 
-export default function HeroCarousel() {
-  const [current, setCurrent] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const goTo = useCallback((index: number) => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setCurrent((index + slides.length) % slides.length);
-    setTimeout(() => setIsTransitioning(false), 700);
-  }, [isTransitioning]);
-
-  useEffect(() => {
-    const timer = setInterval(() => goTo(current + 1), 6000);
-    return () => clearInterval(timer);
-  }, [current, goTo]);
-
-  const slide = slides[current];
-  const num = String(current + 1).padStart(2, "0");
+function CardSlide({
+  slide,
+  index,
+  total,
+}: {
+  slide: (typeof slides)[0];
+  index: number;
+  total: number;
+}) {
+  const num = String(index + 1).padStart(2, "0");
+  const totalStr = String(total).padStart(2, "0");
 
   return (
-    <section className="w-full" style={{ background: "#ffffff" }}>
-      {/* Full-width carousel — edge to edge, NO rounded corners, NO padding */}
-      <div className="relative w-full overflow-hidden" style={{ height: "clamp(450px, 55vw, 700px)" }}>
-        {/* Background image */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          key={slide.img}
-          src={slide.img}
-          alt={slide.title}
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ animation: "fadeIn 0.7s ease-out" }}
-        />
-        {/* Left gradient */}
-        <div className="absolute inset-0"
-          style={{ background: "linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 45%, transparent 70%)" }}
-        />
+    <div
+      className="sticky top-0 w-full flex flex-col md:flex-row"
+      style={{
+        height: "100vh",
+        zIndex: index + 1,
+      }}
+    >
+      {/* Left panel */}
+      <div
+        className="relative flex flex-col justify-between md:w-[46%] flex-shrink-0"
+        style={{
+          background: "#404650",
+          padding: "clamp(36px, 5vw, 56px)",
+        }}
+      >
+        {/* Wave decoration */}
+        <svg
+          className="absolute top-0 right-0 h-full opacity-[0.06] pointer-events-none"
+          viewBox="0 0 200 600"
+          fill="none"
+          preserveAspectRatio="none"
+          style={{ width: "60%" }}
+        >
+          {[0, 40, 80, 120, 160, 200].map((offset) => (
+            <path
+              key={offset}
+              d={`M${offset},0 Q${offset + 30},150 ${offset},300 Q${offset - 30},450 ${offset},600`}
+              stroke="white"
+              strokeWidth="2"
+              fill="none"
+            />
+          ))}
+        </svg>
 
-        {/* Content — left side */}
-        <div className="relative z-10 h-full flex flex-col justify-center"
-          style={{ maxWidth: 580, padding: "48px clamp(24px, 5vw, 64px)" }}>
-          {/* 01/06 counter */}
-          <p className="text-sm font-bold tracking-widest mb-5" style={{ color: "rgba(255,255,255,0.5)" }}>
-            {num}/{String(slides.length).padStart(2, "0")}
-          </p>
-          {/* Category */}
-          <p className="text-xs font-bold tracking-[3px] uppercase mb-3" style={{ color: "rgba(255,255,255,0.6)" }}>
+        {/* Category — top */}
+        <div className="relative z-10">
+          <p
+            className="uppercase tracking-[4px]"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "clamp(12px, 1.2vw, 16px)",
+              fontWeight: 400,
+              color: "rgba(255,255,255,0.6)",
+            }}
+          >
             {slide.category}
           </p>
-          {/* Title */}
-          <h2 className="font-black uppercase tracking-wide mb-5"
-            style={{ color: "#fff", fontSize: "clamp(28px, 4vw, 52px)", lineHeight: 1.08 }}>
+        </div>
+
+        {/* Title + Body + CTA — center */}
+        <div className="relative z-10 flex flex-col gap-8">
+          <h2
+            className="uppercase"
+            style={{
+              fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+              fontSize: "clamp(28px, 3.5vw, 52px)",
+              fontWeight: 400,
+              lineHeight: 1.05,
+              color: "#ffffff",
+            }}
+          >
             {slide.title}
           </h2>
-          {/* Body */}
-          <p className="text-base leading-relaxed mb-7 hidden sm:block"
-            style={{ color: "rgba(255,255,255,0.8)", maxWidth: 460 }}>
+
+          <p
+            className="hidden sm:block"
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "clamp(14px, 1.2vw, 18px)",
+              fontWeight: 350,
+              lineHeight: 1.6,
+              color: "rgba(255,255,255,0.7)",
+            }}
+          >
             {slide.body}
           </p>
-          {/* CTA */}
+
           <div>
-            <Link href={slide.href} className="btn-pill btn-pill-terra">{slide.cta}</Link>
+            <Link href={slide.href} className="btn-pill btn-pill-terra">
+              {slide.cta}
+            </Link>
           </div>
         </div>
 
-        {/* Arrows — bottom right */}
-        <div className="absolute bottom-6 right-6 z-20 flex items-center gap-2">
-          <button onClick={() => goTo(current - 1)} aria-label="Previous"
-            className="w-11 h-11 rounded-full flex items-center justify-center transition-colors hover:bg-white/30 cursor-pointer"
-            style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}>
-            <ChevronLeft size={20} />
-          </button>
-          <button onClick={() => goTo(current + 1)} aria-label="Next"
-            className="w-11 h-11 rounded-full flex items-center justify-center transition-colors hover:bg-white/30 cursor-pointer"
-            style={{ background: "rgba(255,255,255,0.15)", color: "#fff" }}>
-            <ChevronRight size={20} />
-          </button>
-        </div>
-
-        {/* Dots — bottom center */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-          {slides.map((_, i) => (
-            <button key={i} onClick={() => goTo(i)} aria-label={`Slide ${i + 1}`}
-              className="transition-all duration-300 cursor-pointer"
-              style={{
-                width: i === current ? 28 : 8, height: 8, borderRadius: 4,
-                background: i === current ? "#fff" : "rgba(255,255,255,0.4)",
-              }} />
-          ))}
-        </div>
+        {/* Counter — bottom */}
+        <p
+          className="relative z-10"
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: "clamp(12px, 1.2vw, 16px)",
+            fontWeight: 400,
+            color: "rgba(255,255,255,0.35)",
+            letterSpacing: "1px",
+          }}
+        >
+          {num}/{totalStr}
+        </p>
       </div>
+
+      {/* Right panel: image */}
+      <div className="relative flex-1 min-h-[300px] md:min-h-0">
+        <Image
+          src={slide.img}
+          alt={slide.title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 54vw"
+        />
+      </div>
+    </div>
+  );
+}
+
+export default function HeroCarousel() {
+  return (
+    <section className="relative w-full">
+      {slides.map((slide, i) => (
+        <CardSlide key={i} slide={slide} index={i} total={slides.length} />
+      ))}
     </section>
   );
 }

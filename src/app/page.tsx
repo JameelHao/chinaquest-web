@@ -24,10 +24,8 @@ export default function Home() {
       <HeroSection />
       <TaglineSection />
       <HeroCarousel />
-      <SocialFollow />
       <ExploreMap />
       <TripGuideCards />
-      <FeaturedDestinations />
       <FAQSection />
     </>
   );

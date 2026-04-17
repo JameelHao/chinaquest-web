@@ -3,160 +3,179 @@
 import Link from "next/link";
 
 const footerNav = [
-  { href: "/destinations", label: "Destinations" },
+  { href: "/experience/heritage", label: "China5000" },
   { href: "/trip", label: "Road Trips" },
-  { href: "/experience/food", label: "Food & Drink" },
-  { href: "/experience/culture", label: "Culture" },
-  { href: "/experience/nature", label: "Nature" },
-  { href: "/practical/visa", label: "Visa & Entry" },
-  { href: "/practical/transport", label: "Getting Around" },
-];
-
-const socialLinks = [
-  { label: "Instagram", icon: "IG" },
-  { label: "Facebook", icon: "FB" },
-  { label: "YouTube", icon: "YT" },
-  { label: "TikTok", icon: "TT" },
+  { href: "/experience/festivals", label: "Major Events" },
 ];
 
 export default function Footer() {
   return (
     <footer className="relative w-full">
-      {/* Top section — background image with content overlay, matching visittheusa */}
-      <div className="relative" style={{ height: 500 }}>
-        {/* Background image */}
+      {/* Hero image + signup card */}
+      <div className="relative" style={{ height: "clamp(350px, 35vw, 480px)" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?q=80&w=1920"
+          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=85"
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ objectPosition: "50% 80%" }}
+          style={{ objectPosition: "50% 50%" }}
         />
-        {/* Gradient overlay */}
+
+        {/* Gold signup card — independent card, overlapping image bottom-right */}
         <div
-          className="absolute inset-0"
+          className="absolute hidden lg:flex flex-col justify-center"
           style={{
-            background:
-              "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 50%, transparent 100%)",
+            width: "clamp(380px, 35vw, 480px)",
+            right: "clamp(32px, 5vw, 80px)",
+            top: "50%",
+            transform: "translateY(-50%)",
+            background: "rgb(197, 179, 140)",
+            padding: "56px 44px",
+            borderRadius: 0,
+            boxShadow: "0 8px 40px rgba(0,0,0,0.15)",
           }}
-        />
-
-        {/* Content layer */}
-        <div
-          className="relative z-10 h-full flex items-end justify-between"
-          style={{ padding: "0 clamp(24px, 4vw, 48px) 48px" }}
         >
-          {/* Left — logo + nav */}
-          <div>
-            <Link
-              href="/"
-              className="block font-black tracking-[0.15em] uppercase mb-6"
-              style={{ color: "#ffffff", fontSize: 18 }}
-            >
-              Visit China
-            </Link>
-            <div className="flex flex-wrap gap-x-1">
-              {footerNav.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm font-medium text-white/80 hover:text-white transition-colors px-2 py-1"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Right — newsletter box */}
-          <div
-            className="hidden lg:flex flex-col justify-center flex-shrink-0"
+          <h3
             style={{
-              width: 400,
-              background: "#D5A58F",
-              padding: "36px 32px",
+              fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+              fontWeight: 400,
+              fontSize: "clamp(32px, 3.5vw, 48px)",
+              color: "#404650",
+              lineHeight: 1.1,
+              textTransform: "uppercase",
+              marginBottom: 16,
             }}
           >
-            <h3
-              className="text-2xl font-black uppercase tracking-wide mb-2"
-              style={{ color: "#404650" }}
+            Stay Inspired
+          </h3>
+
+          <p
+            style={{
+              fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
+              fontSize: 15,
+              fontWeight: 400,
+              color: "rgba(64,68,80,0.7)",
+              lineHeight: 1.6,
+              marginBottom: 28,
+            }}
+          >
+            Bring China the Beautiful to your inbox. Sign up to receive travel ideas, tips and more.
+          </p>
+
+          <label
+            className="block"
+            style={{
+              fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
+              fontSize: 14,
+              fontWeight: 600,
+              color: "#404650",
+              marginBottom: 8,
+            }}
+          >
+            Email
+          </label>
+
+          <form
+            className="relative"
+            onSubmit={(e) => e.preventDefault()}
+            style={{
+              background: "rgba(255,255,255,0.85)",
+              borderRadius: 28,
+              border: "1.5px solid #404650",
+              padding: "5px 5px 5px 18px",
+              display: "flex",
+              alignItems: "center",
+              marginBottom: 14,
+            }}
+          >
+            <input
+              type="email"
+              placeholder="your@email.com"
+              className="flex-grow outline-none bg-transparent"
+              style={{ fontSize: 14, color: "#404650", border: "none", padding: "8px 0" }}
+            />
+            <button
+              type="submit"
+              className="flex-shrink-0 font-bold hover:opacity-85 transition-opacity cursor-pointer"
+              style={{
+                background: "#404650",
+                color: "#ffffff",
+                border: "none",
+                borderRadius: 22,
+                padding: "10px 24px",
+                fontSize: 13,
+              }}
             >
-              Ready?
-            </h3>
-            <p
-              className="text-sm mb-5 leading-relaxed"
-              style={{ color: "#404650" }}
+              Signup
+            </button>
+          </form>
+
+          <label className="flex items-start gap-2 cursor-pointer">
+            <input type="checkbox" className="mt-0.5" />
+            <span
+              style={{
+                fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
+                fontSize: 12,
+                color: "rgba(64,68,80,0.5)",
+                lineHeight: 1.5,
+              }}
             >
-              Get travel inspiration and planning tips for China delivered to
-              your inbox.
-            </p>
-            <form className="flex" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-grow px-4 py-3 rounded-l-full text-sm outline-none"
-                style={{
-                  background: "#ffffff",
-                  color: "#404650",
-                  border: "none",
-                }}
-              />
-              <button
-                type="submit"
-                className="px-5 py-3 rounded-r-full text-sm font-bold hover:opacity-85 transition-opacity"
-                style={{ background: "#404650", color: "#ffffff" }}
-              >
-                Subscribe
-              </button>
-            </form>
-            <Link
-              href="/privacy"
-              className="mt-3 text-xs hover:opacity-70 transition-opacity"
-              style={{ color: "#404650" }}
-            >
-              Privacy Policy
-            </Link>
-          </div>
+              Yes, sign me up. By clicking this box, I acknowledge I have read and agreed to{" "}
+              <Link href="/privacy" className="underline">
+                privacy policy
+              </Link>
+              .
+            </span>
+          </label>
         </div>
       </div>
 
-      {/* Bottom bar — white bg matching visittheusa */}
+      {/* Nav links bar */}
       <div
-        className="flex flex-col md:flex-row items-center justify-between gap-4"
-        style={{ padding: "20px clamp(24px, 4vw, 48px)", background: "#ffffff" }}
+        className="flex items-center gap-8"
+        style={{
+          padding: "20px clamp(32px, 6vw, 80px)",
+          background: "#ffffff",
+          borderBottom: "1px solid rgba(64,68,80,0.08)",
+        }}
       >
-        <p className="text-sm" style={{ color: "rgba(64,68,80,0.6)" }}>
-          &copy; 2026 ChinaQuest. All rights reserved.
-        </p>
+        {footerNav.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="hover:opacity-60 transition-opacity"
+            style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, fontWeight: 600, color: "#404650" }}
+          >
+            {link.label}
+          </Link>
+        ))}
+      </div>
 
-        {/* Social */}
-        <div className="flex items-center gap-2">
-          {socialLinks.map((s) => (
-            <span
-              key={s.label}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold cursor-pointer hover:opacity-70 transition-opacity"
-              style={{ background: "#f4f2f0", color: "#404650" }}
-              title={s.label}
-            >
-              {s.icon}
+      {/* Bottom bar */}
+      <div
+        className="flex items-center justify-between"
+        style={{ padding: "32px clamp(32px, 6vw, 80px)", background: "#ffffff" }}
+      >
+        {/* Left: brand */}
+        <div>
+          <Link href="/" className="uppercase leading-none" style={{ color: "#404650" }}>
+            <span className="block" style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em" }}>
+              VISIT THE
             </span>
-          ))}
+            <span className="block" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 42, fontWeight: 900, lineHeight: 0.9 }}>
+              CHINA
+            </span>
+          </Link>
         </div>
 
-        {/* Legal */}
-        <div className="flex gap-4 text-sm">
-          {["Privacy Policy", "Terms of Use", "Cookie Settings"].map(
-            (label) => (
-              <Link
-                key={label}
-                href="/privacy"
-                className="hover:opacity-70 transition-opacity"
-                style={{ color: "rgba(64,68,80,0.6)" }}
-              >
-                {label}
-              </Link>
-            )
-          )}
+        {/* Right: legal */}
+        <div className="flex gap-6">
+          <Link href="/privacy" className="hover:opacity-60 transition-opacity" style={{ fontSize: 12, color: "rgba(64,68,80,0.5)" }}>
+            Privacy Policy
+          </Link>
+          <Link href="/privacy" className="hover:opacity-60 transition-opacity" style={{ fontSize: 12, color: "rgba(64,68,80,0.5)" }}>
+            Cookie Preferences
+          </Link>
         </div>
       </div>
     </footer>

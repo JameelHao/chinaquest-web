@@ -11,7 +11,7 @@ export default function TaglineSection() {
         <p
           style={{
             fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-            fontWeight: 350,
+            fontWeight: 500,
             fontSize: "clamp(26px, 3.3vw, 42px)",
             lineHeight: 1.5,
             color: "#404650",

@@ -44,11 +44,11 @@ export default function Header() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50"
+        className="fixed top-0 left-0 right-0 z-[9999]"
       >
         {/* ── Row 1: Utility bar — dark bg when scrolled ── */}
         <div
-          className="hidden lg:flex items-center justify-end gap-6 px-6 lg:px-[50px] transition-all duration-300"
+          className="hidden lg:flex items-center justify-end gap-6 px-6 lg:pl-[50px] lg:pr-[60px] transition-all duration-300"
           style={{
             height: 36,
             background: scrolled ? "#404650" : "transparent",
