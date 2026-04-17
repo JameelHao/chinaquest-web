@@ -58,6 +58,10 @@ When building pages, follow visittheusa's patterns:
 - **Typography**: Inter font family, extra-bold headlines, generous white space
 - **Navigation**: Sticky header, language switcher with flags, breadcrumb trails
 
+## Workflow
+
+- **Every push to `main` must also deploy to Vercel**: run `vercel --prod` after `git push origin main`
+
 ## Content Rules
 
 - **Q&A format** for factual content (prices, hours, durations) — AI engines cite this directly
