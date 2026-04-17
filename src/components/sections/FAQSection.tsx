@@ -48,7 +48,7 @@ export default function FAQSection() {
 
           <p
             style={{
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
               fontSize: 16,
               fontWeight: 350,
               color: "rgba(255,255,255,0.6)",
@@ -97,7 +97,7 @@ export default function FAQSection() {
                   <div
                     className="pb-6 leading-relaxed"
                     style={{
-                      fontFamily: "'Inter', sans-serif",
+                      fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
                       fontSize: 15,
                       fontWeight: 350,
                       color: "rgba(255,255,255,0.5)",

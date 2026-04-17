@@ -34,13 +34,7 @@ export default function BeijingPage() {
     <>
       <DestinationHero
         title="Beijing"
-        subtitle="Where 2,000 years of imperial history meet a buzzing modern capital"
         image="/images/hero-great-wall.jpg"
-        breadcrumb={[
-          { label: "Home", href: "/" },
-          { label: "Destinations", href: "/destinations" },
-          { label: "Beijing", href: "/destinations/beijing" },
-        ]}
       />
 
       {/* Cities section */}

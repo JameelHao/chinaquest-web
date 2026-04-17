@@ -6,15 +6,7 @@ export default function ForbiddenCityPage() {
     <>
       <DestinationHero
         title="Forbidden City"
-        subtitle="600 years of imperial history — 9,999 rooms, one uninterrupted dynasty"
         image="/images/carousel-1.jpg"
-        breadcrumb={[
-          { label: "Home", href: "/" },
-          { label: "Destinations", href: "/destinations" },
-          { label: "Beijing", href: "/destinations/beijing" },
-          { label: "Beijing", href: "/destinations/beijing/beijing" },
-          { label: "Forbidden City", href: "/destinations/beijing/beijing/forbidden-city" },
-        ]}
       />
 
       <section className="py-16 px-6 lg:px-[50px]">

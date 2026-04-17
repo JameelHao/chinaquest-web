@@ -38,14 +38,7 @@ export default function BeijingCityPage() {
     <>
       <DestinationHero
         title="Beijing"
-        subtitle="China's ancient capital — monuments, hutong alleys, and a living history"
         image="/images/carousel-1.jpg"
-        breadcrumb={[
-          { label: "Home", href: "/" },
-          { label: "Destinations", href: "/destinations" },
-          { label: "Beijing", href: "/destinations/beijing" },
-          { label: "Beijing", href: "/destinations/beijing/beijing" },
-        ]}
       />
 
       {/* POI grid */}

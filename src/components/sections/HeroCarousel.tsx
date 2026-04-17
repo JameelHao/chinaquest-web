@@ -95,7 +95,7 @@ function CardSlide({
           <p
             className="uppercase tracking-[4px]"
             style={{
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
               fontSize: "clamp(12px, 1.2vw, 16px)",
               fontWeight: 400,
               color: "rgba(255,255,255,0.6)",
@@ -123,7 +123,7 @@ function CardSlide({
           <p
             className="hidden sm:block"
             style={{
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
               fontSize: "clamp(14px, 1.2vw, 18px)",
               fontWeight: 350,
               lineHeight: 1.6,
@@ -144,7 +144,7 @@ function CardSlide({
         <p
           className="relative z-10"
           style={{
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
             fontSize: "clamp(12px, 1.2vw, 16px)",
             fontWeight: 400,
             color: "rgba(255,255,255,0.35)",

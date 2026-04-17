@@ -98,7 +98,7 @@ export default function ExploreMap() {
       <div style={{ textAlign: "center", padding: "0 24px", marginBottom: 32 }}>
         <p
           style={{
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
             fontSize: 16,
             fontWeight: 350,
             color: "rgba(64,68,80,0.6)",
@@ -167,7 +167,7 @@ export default function ExploreMap() {
                 {/* City name */}
                 <span
                   style={{
-                    fontFamily: "'Inter', sans-serif",
+                    fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
                     fontSize: 14,
                     fontWeight: activeCity === city.name ? 600 : 400,
                     color: activeCity === city.name ? "#ffffff" : "rgba(255,255,255,0.7)",

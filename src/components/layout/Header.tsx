@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ChevronDown, X, Globe, Briefcase } from "lucide-react";
+import DestinationsOverlay from "@/components/sections/DestinationsOverlay";
 
 const navItems = [
   { label: "Destinations", href: "/destinations" },
@@ -21,6 +22,7 @@ export default function Header() {
   const [langOpen, setLangOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [destinationsOpen, setDestinationsOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -35,8 +37,8 @@ export default function Header() {
     return () => document.removeEventListener("click", close);
   }, [langOpen]);
 
-  // Row 2 (main nav): white bg + dark text when scrolled
-  const navTextColor = scrolled ? "#404650" : "#ffffff";
+  // Row 2 (main nav): white bg + dark text when scrolled or overlay is open
+  const navTextColor = scrolled || destinationsOpen ? "#404650" : "#ffffff";
   // Row 1 (utility bar): stays white text always (dark bg when scrolled, transparent when not)
   const utilityTextMuted = "rgba(255,255,255,0.7)";
   const utilityTextColor = "#ffffff";
@@ -53,6 +55,7 @@ export default function Header() {
             height: 36,
             background: scrolled ? "#404650" : "transparent",
             borderBottom: scrolled ? "none" : "1px solid rgba(255,255,255,0.1)",
+            display: destinationsOpen ? "none" : undefined,
           }}
         >
           <Link
@@ -106,8 +109,8 @@ export default function Header() {
           className="flex items-center px-6 lg:px-[50px] transition-all duration-300"
           style={{
             height: 52,
-            background: scrolled ? "#ffffff" : "transparent",
-            boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.08)" : "none",
+            background: scrolled || destinationsOpen ? "#ffffff" : "transparent",
+            boxShadow: scrolled && !destinationsOpen ? "0 2px 12px rgba(0,0,0,0.08)" : "none",
           }}
         >
           {/* Logo — VISIT THE + CHINA, tight spacing */}
@@ -144,17 +147,37 @@ export default function Header() {
 
           {/* Center nav */}
           <nav className="hidden lg:flex items-center justify-center gap-8 flex-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="hover:opacity-70 transition-all flex items-center gap-1 group"
-                style={{ fontSize: 16, fontWeight: 750, color: navTextColor }}
-              >
-                {item.label}
-                <ChevronDown size={15} style={{ opacity: 0.5 }} className="group-hover:opacity-100 transition-opacity" />
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.label === "Destinations" ? (
+                <button
+                  key={item.label}
+                  onClick={() => setDestinationsOpen((v) => !v)}
+                  className="hover:opacity-70 transition-all flex items-center gap-1 group cursor-pointer"
+                  style={{
+                    fontSize: 16,
+                    fontWeight: 750,
+                    color: destinationsOpen ? "#2d3142" : navTextColor,
+                    border: destinationsOpen ? "1.5px solid #2d3142" : "1.5px solid transparent",
+                    borderRadius: 4,
+                    padding: "2px 8px",
+                    background: "transparent",
+                  }}
+                >
+                  {item.label}
+                  <ChevronDown size={15} style={{ opacity: 0.5 }} className="group-hover:opacity-100 transition-opacity" />
+                </button>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="hover:opacity-70 transition-all flex items-center gap-1 group"
+                  style={{ fontSize: 16, fontWeight: 750, color: navTextColor }}
+                >
+                  {item.label}
+                  <ChevronDown size={15} style={{ opacity: 0.5 }} className="group-hover:opacity-100 transition-opacity" />
+                </Link>
+              )
+            )}
           </nav>
 
           <div className="hidden lg:block flex-shrink-0" style={{ width: 120 }} />
@@ -168,6 +191,12 @@ export default function Header() {
           </button>
         </div>
       </header>
+
+      {/* ═══ Destinations overlay ═══ */}
+      <DestinationsOverlay
+        open={destinationsOpen}
+        onClose={() => setDestinationsOpen(false)}
+      />
 
       {/* ═══ Mobile menu overlay ═══ */}
       {mobileMenuOpen && (

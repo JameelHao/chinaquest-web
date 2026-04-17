@@ -11,17 +11,44 @@ const footerNav = [
 export default function Footer() {
   return (
     <footer className="relative w-full">
-      {/* Hero image + signup card */}
-      <div className="relative" style={{ height: "clamp(350px, 35vw, 480px)" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=85"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ objectPosition: "50% 50%" }}
-        />
+      {/* Image + card wrapper — card overlaps image and white area */}
+      <div className="relative">
+        {/* Background image — top half only */}
+        <div className="relative w-full" style={{ height: "clamp(220px, 22vw, 320px)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/footer-forbidden-city.jpg"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ objectPosition: "50% 58%" }}
+          />
+        </div>
 
-        {/* Gold signup card — independent card, overlapping image bottom-right */}
+        {/* Nav links — directly below image */}
+        <div
+          className="flex items-center gap-8"
+          style={{
+            padding: "20px clamp(32px, 6vw, 80px)",
+            background: "#ffffff",
+            borderBottom: "1px solid rgba(64,68,80,0.08)",
+          }}
+        >
+          {footerNav.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="hover:opacity-60 transition-opacity"
+              style={{ fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif", fontSize: 14, fontWeight: 600, color: "#404650" }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        {/* White area — gives space for card to overlap into */}
+        <div style={{ height: "clamp(120px, 12vw, 180px)", background: "#ffffff" }} />
+
+        {/* Gold card — positioned to overlap both image and white area */}
         <div
           className="absolute hidden lg:flex flex-col justify-center"
           style={{
@@ -30,9 +57,8 @@ export default function Footer() {
             top: "50%",
             transform: "translateY(-50%)",
             background: "rgb(197, 179, 140)",
-            padding: "56px 44px",
-            borderRadius: 0,
-            boxShadow: "0 8px 40px rgba(0,0,0,0.15)",
+            padding: "48px 40px",
+            boxShadow: "0 8px 40px rgba(0,0,0,0.12)",
           }}
         >
           <h3
@@ -130,45 +156,20 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Nav links bar */}
-      <div
-        className="flex items-center gap-8"
-        style={{
-          padding: "20px clamp(32px, 6vw, 80px)",
-          background: "#ffffff",
-          borderBottom: "1px solid rgba(64,68,80,0.08)",
-        }}
-      >
-        {footerNav.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="hover:opacity-60 transition-opacity"
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, fontWeight: 600, color: "#404650" }}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </div>
-
       {/* Bottom bar */}
       <div
         className="flex items-center justify-between"
         style={{ padding: "32px clamp(32px, 6vw, 80px)", background: "#ffffff" }}
       >
-        {/* Left: brand */}
-        <div>
-          <Link href="/" className="uppercase leading-none" style={{ color: "#404650" }}>
-            <span className="block" style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em" }}>
-              VISIT THE
-            </span>
-            <span className="block" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 42, fontWeight: 900, lineHeight: 0.9 }}>
-              CHINA
-            </span>
-          </Link>
-        </div>
+        <Link href="/" className="uppercase leading-none" style={{ color: "#404650" }}>
+          <span className="block" style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em" }}>
+            VISIT THE
+          </span>
+          <span className="block" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 42, fontWeight: 900, lineHeight: 0.9 }}>
+            CHINA
+          </span>
+        </Link>
 
-        {/* Right: legal */}
         <div className="flex gap-6">
           <Link href="/privacy" className="hover:opacity-60 transition-opacity" style={{ fontSize: 12, color: "rgba(64,68,80,0.5)" }}>
             Privacy Policy
