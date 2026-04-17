@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronDown, X, Globe, Briefcase } from "lucide-react";
+import { ChevronDown, ChevronUp, X, Globe, Briefcase } from "lucide-react";
 import DestinationsOverlay from "@/components/sections/DestinationsOverlay";
 
 const navItems = [
@@ -48,20 +48,19 @@ export default function Header() {
       <header
         className="fixed top-0 left-0 right-0 z-[9999]"
       >
-        {/* ── Row 1: Utility bar — dark bg when scrolled ── */}
+        {/* ── Row 1: Utility bar — dark bg when scrolled or Destinations open ── */}
         <div
           className="hidden lg:flex items-center justify-end gap-6 px-6 lg:pl-[50px] lg:pr-[60px] transition-all duration-300"
           style={{
             height: 36,
-            background: scrolled ? "#404650" : "transparent",
-            borderBottom: scrolled ? "none" : "1px solid rgba(255,255,255,0.1)",
-            display: destinationsOpen ? "none" : undefined,
+            background: scrolled || destinationsOpen ? "#404650" : "transparent",
+            borderBottom: (scrolled || destinationsOpen) ? "none" : "1px solid rgba(255,255,255,0.1)",
           }}
         >
           <Link
             href="/practical/visa"
             className="hover:opacity-80 transition-all flex items-center gap-1.5"
-            style={{ fontSize: 15, fontWeight: 500, color: utilityTextMuted }}
+            style={{ fontSize: 15, fontWeight: 500, color: destinationsOpen ? "rgba(255,255,255,0.7)" : utilityTextMuted }}
           >
             <Globe size={13} />
             Visa & Entry
@@ -69,7 +68,7 @@ export default function Header() {
           <Link
             href="/travel-trade"
             className="hover:opacity-80 transition-all flex items-center gap-1.5"
-            style={{ fontSize: 15, fontWeight: 500, color: utilityTextMuted }}
+            style={{ fontSize: 15, fontWeight: 500, color: destinationsOpen ? "rgba(255,255,255,0.7)" : utilityTextMuted }}
           >
             <Briefcase size={13} />
             Travel Trade
@@ -164,7 +163,11 @@ export default function Header() {
                   }}
                 >
                   {item.label}
-                  <ChevronDown size={15} style={{ opacity: 0.5 }} className="group-hover:opacity-100 transition-opacity" />
+                  {destinationsOpen ? (
+                    <ChevronUp size={15} style={{ opacity: 0.5 }} className="group-hover:opacity-100 transition-opacity" />
+                  ) : (
+                    <ChevronDown size={15} style={{ opacity: 0.5 }} className="group-hover:opacity-100 transition-opacity" />
+                  )}
                 </button>
               ) : (
                 <Link
