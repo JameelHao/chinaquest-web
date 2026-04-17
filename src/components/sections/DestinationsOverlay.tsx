@@ -54,7 +54,7 @@ export default function DestinationsOverlay({
       </div>
 
       {/* City grid — centered */}
-      <div className="flex items-start justify-center w-full" style={{ minHeight: "calc(100vh - 120px)", padding: "36px 48px 48px" }}>
+      <div className="flex items-start justify-center w-full" style={{ minHeight: "calc(100vh - 120px)", padding: "48px 48px 48px" }}>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 lg:gap-6 w-full max-w-[1200px]">
           {cities.map((city) => (
             <Link
