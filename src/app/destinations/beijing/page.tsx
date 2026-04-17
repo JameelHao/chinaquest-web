@@ -69,7 +69,7 @@ export default function BeijingPage() {
                 className="group block rounded-xl overflow-hidden"
                 style={{ background: "#ffffff" }}
               >
-                <div className="relative" style={{ aspectRatio: "3/4" }}>
+                <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
                   <Image
                     src={city.image}
                     alt={city.name}
@@ -81,16 +81,16 @@ export default function BeijingPage() {
                   <div
                     className="absolute inset-0"
                     style={{
-                      background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.65) 100%)",
+                      background: "linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%)",
                     }}
                   />
                   {/* Title on image */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
                     <h3
                       className="uppercase"
                       style={{
                         fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: 400,
                         color: "#ffffff",
                         letterSpacing: "0.03em",
@@ -106,7 +106,7 @@ export default function BeijingPage() {
                   <p
                     style={{
                       fontFamily: "'Inter', sans-serif",
-                      fontSize: 13,
+                      fontSize: 12,
                       lineHeight: 1.5,
                       color: "#6b6565",
                     }}
