@@ -66,12 +66,15 @@ export default function ExperiencesPanel() {
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
-    const card = scrollRef.current.querySelector("[data-card]") as HTMLElement;
+    const el = scrollRef.current;
+    const card = el.querySelector("[data-card]") as HTMLElement;
     const cardWidth = card?.offsetWidth || 280;
-    scrollRef.current.scrollBy({
-      left: dir === "right" ? cardWidth + 24 : -(cardWidth + 24),
-      behavior: "smooth",
-    });
+    const amount = cardWidth + 24;
+    if (dir === "left") {
+      el.scrollTo({ left: Math.max(0, el.scrollLeft - amount), behavior: "smooth" });
+    } else {
+      el.scrollTo({ left: el.scrollLeft + amount, behavior: "smooth" });
+    }
   };
 
   return (
@@ -193,12 +196,12 @@ export default function ExperiencesPanel() {
                   className="uppercase"
                   style={{
                     fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                    fontSize: 15,
+                    fontSize: 18,
                     fontWeight: 900,
                     letterSpacing: 1,
                     color: "rgb(64, 68, 80)",
                     lineHeight: 1.3,
-                    marginBottom: 8,
+                    marginBottom: 10,
                   }}
                 >
                   {exp.name}
@@ -207,11 +210,11 @@ export default function ExperiencesPanel() {
                   className="line-clamp-3"
                   style={{
                     fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                    fontSize: 14,
+                    fontSize: 16,
                     fontWeight: 400,
-                    lineHeight: "20px",
+                    lineHeight: "24px",
                     color: "rgba(64, 68, 80, 0.6)",
-                    marginBottom: 10,
+                    marginBottom: 12,
                   }}
                 >
                   {exp.desc}
@@ -220,7 +223,7 @@ export default function ExperiencesPanel() {
                   className="group-hover:opacity-70 transition-opacity"
                   style={{
                     fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                    fontSize: 14,
+                    fontSize: 16,
                     fontWeight: 600,
                     color: "rgb(64, 68, 80)",
                     textDecoration: "underline",
