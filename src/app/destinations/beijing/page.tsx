@@ -5,6 +5,7 @@ import BeijingIntro from "@/components/sections/BeijingIntro";
 import HighlightAccordion from "@/components/sections/HighlightAccordion";
 import TripIdeasSlider from "@/components/sections/TripIdeasSlider";
 import ExploreNearby from "@/components/sections/ExploreNearby";
+import ExperiencesPanel from "@/components/sections/ExperiencesPanel";
 
 export default function BeijingPage() {
   return (
@@ -152,106 +153,7 @@ export default function BeijingPage() {
       </section>
 
       {/* Experiences — full-width hero image + floating panel card */}
-      <section className="relative">
-        {/* Background image — full width, extends behind the panel */}
-        <div className="relative" style={{ height: "clamp(400px, 50vw, 600px)" }}>
-          <Image
-            src="/images/carousel-2.jpg"
-            alt="Beijing experiences"
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div>
-
-        {/* Floating panel — inset card with all-corner rounding, overlapping image */}
-        <div
-          className="mx-auto"
-          style={{
-            maxWidth: 1680,
-            margin: "-100px auto 0",
-            padding: "0 48px",
-            position: "relative",
-            zIndex: 1,
-          }}
-        >
-          <div
-            style={{
-              background: "rgba(244, 242, 240, 0.95)",
-              backdropFilter: "blur(8px)",
-              borderRadius: 20,
-              padding: "48px 48px 40px",
-            }}
-          >
-            {/* Title row */}
-            <div className="flex items-end justify-between" style={{ marginBottom: 32 }}>
-              <h2
-                className="uppercase"
-                style={{
-                  fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                  fontSize: "clamp(48px, 7vw, 96px)",
-                  fontWeight: 900,
-                  color: "rgb(64, 68, 80)",
-                  lineHeight: 1,
-                  letterSpacing: 2,
-                }}
-              >
-                Experiences
-              </h2>
-            </div>
-
-            {/* Horizontal scrolling cards — overflow visible so right cards bleed into image */}
-            <div
-              className="flex gap-6 overflow-x-auto pb-4"
-              style={{ scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
-            >
-              {[
-                { name: "Imperial Palace Tour", img: "/images/carousel-1.jpg", href: "/experience/imperial-palace-tour" },
-                { name: "Great Wall Hiking", img: "/images/carousel-2.jpg", href: "/experience/great-wall-hiking" },
-                { name: "Hutong Food Walk", img: "/images/carousel-3.jpg", href: "/experience/hutong-food-walk" },
-                { name: "Traditional Tea Ceremony", img: "/images/carousel-4.jpg", href: "/experience/tea-ceremony" },
-                { name: "Beijing Opera Night", img: "/images/carousel-1.jpg", href: "/experience/beijing-opera" },
-              ].map((exp) => (
-                <Link
-                  key={exp.name}
-                  href={exp.href}
-                  className="group flex-shrink-0"
-                  style={{
-                    width: "clamp(220px, 22vw, 300px)",
-                    scrollSnapAlign: "start",
-                  }}
-                >
-                  <div
-                    className="relative rounded-xl overflow-hidden"
-                    style={{ aspectRatio: "4/3", marginBottom: 12 }}
-                  >
-                    <Image
-                      src={exp.img}
-                      alt={exp.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="300px"
-                    />
-                  </div>
-                  <p
-                    className="uppercase"
-                    style={{
-                      fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                      fontSize: 14,
-                      fontWeight: 900,
-                      letterSpacing: 1,
-                      color: "rgb(64, 68, 80)",
-                      lineHeight: 1.3,
-                    }}
-                  >
-                    {exp.name}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <ExperiencesPanel />
 
       {/* Trip Ideas — left text + right card slider */}
       <TripIdeasSlider
