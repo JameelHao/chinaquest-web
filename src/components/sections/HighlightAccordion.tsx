@@ -102,33 +102,47 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
             >
               <button
                 onClick={() => setActiveIndex(i)}
-                className="w-full flex items-center gap-3 cursor-pointer"
+                className="w-full flex items-start gap-4 cursor-pointer"
                 style={{
                   padding: "20px 0",
                   background: "transparent",
                   textAlign: "left",
                 }}
               >
-                {/* Dot indicator */}
-                <span
-                  style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: "50%",
-                    background:
-                      activeIndex === i
-                        ? "#D5A58F"
-                        : "rgba(255,255,255,0.3)",
-                    flexShrink: 0,
-                    transition: "background 0.2s",
-                  }}
-                />
+                {/* Timeline: dot + dashed line */}
+                <div className="flex flex-col items-center flex-shrink-0" style={{ paddingTop: 4 }}>
+                  {/* Dot — solid filled when active, hollow outline when inactive */}
+                  <span
+                    style={{
+                      width: 12,
+                      height: 12,
+                      borderRadius: "50%",
+                      background: activeIndex === i ? "#D5A58F" : "transparent",
+                      border: activeIndex === i ? "2px solid #D5A58F" : "2px solid rgba(255,255,255,0.5)",
+                      flexShrink: 0,
+                      transition: "all 0.2s",
+                    }}
+                  />
+                  {/* Dashed vertical line connecting to next dot */}
+                  {i < items.length - 1 && (
+                    <span
+                      style={{
+                        width: 0,
+                        flexGrow: 1,
+                        minHeight: 24,
+                        borderLeft: "1.5px dashed rgba(255,255,255,0.25)",
+                      }}
+                    />
+                  )}
+                </div>
+
+                {/* Title + chevron */}
                 <span
                   className="flex-1"
                   style={{
-                    fontFamily: "'Inter', sans-serif",
+                    fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
                     fontSize: 16,
-                    fontWeight: 500,
+                    fontWeight: activeIndex === i ? 600 : 500,
                     color: activeIndex === i ? "#ffffff" : "rgba(255,255,255,0.6)",
                     transition: "color 0.2s",
                   }}
@@ -149,6 +163,7 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
                     transition: "transform 0.3s, stroke 0.2s",
                     transform: activeIndex === i ? "rotate(180deg)" : "rotate(0deg)",
                     flexShrink: 0,
+                    marginTop: 2,
                   }}
                 >
                   <path d="M6 9l6 6 6-6" />
@@ -165,13 +180,13 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
               >
                 <p
                   style={{
-                    fontFamily: "'Inter', sans-serif",
+                    fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
                     fontSize: 14,
                     fontWeight: 400,
                     lineHeight: "22px",
                     color: "rgba(255,255,255,0.7)",
                     paddingBottom: 16,
-                    paddingLeft: 22,
+                    paddingLeft: 28,
                   }}
                 >
                   {item.description}
