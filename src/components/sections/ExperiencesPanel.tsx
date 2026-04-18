@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useCarouselScroll } from "@/hooks/useCarouselScroll";
+import ScrollNav from "@/components/ui/ScrollNav";
 
 const experiences = [
   {
@@ -57,44 +57,10 @@ const experiences = [
 ];
 
 export default function ExperiencesPanel() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(1);
-
-  const updateIndex = () => {
-    if (!scrollRef.current) return;
-    const el = scrollRef.current;
-    const cards = el.querySelectorAll<HTMLElement>("[data-card]");
-    if (!cards.length) return;
-    const containerLeft = el.getBoundingClientRect().left;
-    let closest = 0;
-    let minDist = Infinity;
-    cards.forEach((card, i) => {
-      const dist = Math.abs(card.getBoundingClientRect().left - containerLeft);
-      if (dist < minDist) { minDist = dist; closest = i; }
-    });
-    setCurrentIndex(closest + 1);
-  };
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateIndex, { passive: true });
-    return () => el.removeEventListener("scroll", updateIndex);
-  });
-
-  const scroll = (dir: "left" | "right") => {
-    if (!scrollRef.current) return;
-    const cardWidth = scrollRef.current.querySelector("a")?.offsetWidth || 280;
-    const amount = cardWidth + 24;
-    scrollRef.current.scrollBy({
-      left: dir === "right" ? amount : -amount,
-      behavior: "smooth",
-    });
-  };
+  const { scrollRef, canScrollLeft, canScrollRight, currentIndex, totalVisible, scroll } = useCarouselScroll();
 
   return (
     <section className="relative">
-      {/* Background image */}
       <div className="relative" style={{ height: "clamp(400px, 50vw, 600px)" }}>
         <Image
           src="/images/carousel-2.jpg"
@@ -105,7 +71,6 @@ export default function ExperiencesPanel() {
         />
       </div>
 
-      {/* Floating panel */}
       <div
         className="mx-auto"
         style={{
@@ -124,7 +89,6 @@ export default function ExperiencesPanel() {
             padding: "48px 48px 40px",
           }}
         >
-          {/* Title row — title left, pagination + arrows right */}
           <div className="flex items-center justify-between" style={{ marginBottom: 32 }}>
             <h2
               className="uppercase"
@@ -140,45 +104,16 @@ export default function ExperiencesPanel() {
               Experiences
             </h2>
 
-            <div className="flex items-center gap-4 flex-shrink-0">
-              <span
-                style={{
-                  fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                  fontSize: 20,
-                  fontWeight: 350,
-                  color: "rgba(64,68,80,0.35)",
-                }}
-              >
-                {String(currentIndex).padStart(2, "0")}/{String(experiences.length).padStart(2, "0")}
-              </span>
-              <button
-                onClick={() => scroll("left")}
-                disabled={currentIndex <= 1}
-                className="w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer"
-                style={currentIndex <= 1
-                  ? { border: "1.5px solid rgba(64,68,80,0.15)", color: "rgba(64,68,80,0.2)", background: "transparent", cursor: "default" }
-                  : { background: "#404650", color: "#ffffff", border: "none" }
-                }
-                aria-label="Scroll left"
-              >
-                <ChevronLeft size={22} />
-              </button>
-              <button
-                onClick={() => scroll("right")}
-                disabled={currentIndex >= experiences.length}
-                className="w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer"
-                style={currentIndex >= experiences.length
-                  ? { border: "1.5px solid rgba(64,68,80,0.15)", color: "rgba(64,68,80,0.2)", background: "transparent", cursor: "default" }
-                  : { background: "#404650", color: "#ffffff", border: "none" }
-                }
-                aria-label="Scroll right"
-              >
-                <ChevronRight size={22} />
-              </button>
-            </div>
+            <ScrollNav
+              currentIndex={currentIndex}
+              total={totalVisible}
+              canScrollLeft={canScrollLeft}
+              canScrollRight={canScrollRight}
+              onScrollLeft={() => scroll("left")}
+              onScrollRight={() => scroll("right")}
+            />
           </div>
 
-          {/* Horizontal scrolling cards with descriptions */}
           <div
             ref={scrollRef}
             className="flex gap-6 overflow-x-auto"

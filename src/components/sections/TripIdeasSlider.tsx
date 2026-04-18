@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useCarouselScroll } from "@/hooks/useCarouselScroll";
+import ScrollNav from "@/components/ui/ScrollNav";
 
 interface TripIdea {
   title: string;
@@ -22,42 +22,7 @@ export default function TripIdeasSlider({
   description,
   items,
 }: TripIdeasSliderProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const totalCards = items.length;
-
-  const updateIndex = () => {
-    if (!scrollRef.current) return;
-    const el = scrollRef.current;
-    const cards = el.querySelectorAll<HTMLElement>("[data-card]");
-    if (!cards.length) return;
-    const containerLeft = el.getBoundingClientRect().left;
-    let closest = 0;
-    let minDist = Infinity;
-    cards.forEach((card, i) => {
-      const dist = Math.abs(card.getBoundingClientRect().left - containerLeft);
-      if (dist < minDist) { minDist = dist; closest = i; }
-    });
-    setCurrentIndex(closest + 1);
-  };
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateIndex, { passive: true });
-    return () => el.removeEventListener("scroll", updateIndex);
-  });
-
-  const scroll = (dir: "left" | "right") => {
-    if (!scrollRef.current) return;
-    const card = scrollRef.current.querySelector("[data-card]") as HTMLElement;
-    const cardWidth = card?.offsetWidth || 400;
-    const amount = cardWidth + 20;
-    scrollRef.current.scrollBy({
-      left: dir === "right" ? amount : -amount,
-      behavior: "smooth",
-    });
-  };
+  const { scrollRef, canScrollLeft, canScrollRight, currentIndex, totalVisible, scroll } = useCarouselScroll();
 
   return (
     <section style={{ padding: "80px 0 64px" }}>
@@ -66,7 +31,6 @@ export default function TripIdeasSlider({
         style={{ maxWidth: 1680, padding: "0 48px" }}
       >
         <div className="flex flex-col md:flex-row items-start gap-8">
-          {/* Left column — title + description + pagination */}
           <div className="md:flex-shrink-0" style={{ width: "clamp(240px, 28%, 360px)" }}>
             <h2
               className="uppercase"
@@ -98,46 +62,16 @@ export default function TripIdeasSlider({
               </p>
             )}
 
-            {/* Pagination — matches homepage style */}
-            <div className="flex items-center gap-4">
-              <span
-                style={{
-                  fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                  fontSize: 20,
-                  fontWeight: 350,
-                  color: "rgba(64,68,80,0.35)",
-                }}
-              >
-                {String(currentIndex).padStart(2, "0")}/{String(totalCards).padStart(2, "0")}
-              </span>
-              <button
-                onClick={() => scroll("left")}
-                disabled={currentIndex <= 1}
-                className="w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer"
-                style={currentIndex <= 1
-                  ? { border: "1.5px solid rgba(64,68,80,0.15)", color: "rgba(64,68,80,0.2)", background: "transparent", cursor: "default" }
-                  : { background: "#404650", color: "#ffffff", border: "none" }
-                }
-                aria-label="Scroll left"
-              >
-                <ChevronLeft size={22} />
-              </button>
-              <button
-                onClick={() => scroll("right")}
-                disabled={currentIndex >= totalCards}
-                className="w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer"
-                style={currentIndex >= totalCards
-                  ? { border: "1.5px solid rgba(64,68,80,0.15)", color: "rgba(64,68,80,0.2)", background: "transparent", cursor: "default" }
-                  : { background: "#404650", color: "#ffffff", border: "none" }
-                }
-                aria-label="Scroll right"
-              >
-                <ChevronRight size={22} />
-              </button>
-            </div>
+            <ScrollNav
+              currentIndex={currentIndex}
+              total={totalVisible}
+              canScrollLeft={canScrollLeft}
+              canScrollRight={canScrollRight}
+              onScrollLeft={() => scroll("left")}
+              onScrollRight={() => scroll("right")}
+            />
           </div>
 
-          {/* Right column — scrolling cards */}
           <div className="flex-1 min-w-0 overflow-hidden">
             <div
               ref={scrollRef}
