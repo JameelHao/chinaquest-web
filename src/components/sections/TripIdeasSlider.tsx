@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface TripIdea {
   title: string;
@@ -21,23 +22,41 @@ export default function TripIdeasSlider({
   description,
   items,
 }: TripIdeasSliderProps) {
-  const [page, setPage] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const totalCards = items.length;
 
-  // Show 2 cards per page
-  const perPage = 2;
-  const totalPages = Math.ceil(items.length / perPage);
+  const updateIndex = () => {
+    if (!scrollRef.current) return;
+    const el = scrollRef.current;
+    const cards = el.querySelectorAll<HTMLElement>("[data-card]");
+    if (!cards.length) return;
+    const containerLeft = el.getBoundingClientRect().left;
+    let closest = 0;
+    let minDist = Infinity;
+    cards.forEach((card, i) => {
+      const dist = Math.abs(card.getBoundingClientRect().left - containerLeft);
+      if (dist < minDist) { minDist = dist; closest = i; }
+    });
+    setCurrentIndex(closest + 1);
+  };
 
-  const scrollToPage = (p: number) => {
-    const next = Math.max(0, Math.min(p, totalPages - 1));
-    setPage(next);
-    if (scrollRef.current) {
-      const cardWidth = scrollRef.current.scrollWidth / items.length;
-      scrollRef.current.scrollTo({
-        left: next * perPage * cardWidth,
-        behavior: "smooth",
-      });
-    }
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", updateIndex, { passive: true });
+    return () => el.removeEventListener("scroll", updateIndex);
+  });
+
+  const scroll = (dir: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const card = scrollRef.current.querySelector("[data-card]") as HTMLElement;
+    const cardWidth = card?.offsetWidth || 400;
+    const amount = cardWidth + 20;
+    scrollRef.current.scrollBy({
+      left: dir === "right" ? amount : -amount,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -53,12 +72,12 @@ export default function TripIdeasSlider({
               className="uppercase"
               style={{
                 fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                fontSize: "clamp(48px, 7vw, 96px)",
+                fontSize: "clamp(32px, 4vw, 48px)",
                 fontWeight: 900,
                 color: "rgb(64, 68, 80)",
-                lineHeight: 1,
-                letterSpacing: 2,
-                marginBottom: 24,
+                lineHeight: 1.1,
+                letterSpacing: 1,
+                marginBottom: 20,
               }}
             >
               {title}
@@ -68,9 +87,9 @@ export default function TripIdeasSlider({
               <p
                 style={{
                   fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                  fontSize: 16,
-                  fontWeight: 400,
-                  lineHeight: "26px",
+                  fontSize: 20,
+                  fontWeight: 350,
+                  lineHeight: "30px",
                   color: "rgba(64, 68, 80, 0.6)",
                   marginBottom: 32,
                 }}
@@ -79,50 +98,41 @@ export default function TripIdeasSlider({
               </p>
             )}
 
-            {/* Pagination */}
-            <div className="flex items-center gap-3">
+            {/* Pagination — matches homepage style */}
+            <div className="flex items-center gap-4">
               <span
                 style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: 14,
-                  fontWeight: 600,
-                  color: "rgb(64, 68, 80)",
+                  fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
+                  fontSize: 20,
+                  fontWeight: 350,
+                  color: "rgba(64,68,80,0.35)",
                 }}
               >
-                {String(page + 1).padStart(2, "0")}/{String(totalPages).padStart(2, "0")}
+                {String(currentIndex).padStart(2, "0")}/{String(totalCards).padStart(2, "0")}
               </span>
               <button
-                onClick={() => scrollToPage(page - 1)}
-                disabled={page === 0}
-                className="flex items-center justify-center rounded-full cursor-pointer"
-                style={{
-                  width: 36,
-                  height: 36,
-                  border: "1.5px solid rgb(64, 68, 80)",
-                  background: "transparent",
-                  opacity: page === 0 ? 0.3 : 1,
-                  transition: "opacity 0.2s",
-                }}
+                onClick={() => scroll("left")}
+                disabled={currentIndex <= 1}
+                className="w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer"
+                style={currentIndex <= 1
+                  ? { border: "1.5px solid rgba(64,68,80,0.15)", color: "rgba(64,68,80,0.2)", background: "transparent", cursor: "default" }
+                  : { background: "#404650", color: "#ffffff", border: "none" }
+                }
+                aria-label="Scroll left"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgb(64,68,80)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
+                <ChevronLeft size={22} />
               </button>
               <button
-                onClick={() => scrollToPage(page + 1)}
-                disabled={page >= totalPages - 1}
-                className="flex items-center justify-center rounded-full cursor-pointer"
-                style={{
-                  width: 36,
-                  height: 36,
-                  background: "rgb(64, 68, 80)",
-                  opacity: page >= totalPages - 1 ? 0.3 : 1,
-                  transition: "opacity 0.2s",
-                }}
+                onClick={() => scroll("right")}
+                disabled={currentIndex >= totalCards}
+                className="w-12 h-12 rounded-full flex items-center justify-center transition-all cursor-pointer"
+                style={currentIndex >= totalCards
+                  ? { border: "1.5px solid rgba(64,68,80,0.15)", color: "rgba(64,68,80,0.2)", background: "transparent", cursor: "default" }
+                  : { background: "#404650", color: "#ffffff", border: "none" }
+                }
+                aria-label="Scroll right"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
+                <ChevronRight size={22} />
               </button>
             </div>
           </div>
@@ -142,6 +152,7 @@ export default function TripIdeasSlider({
                 <Link
                   key={item.title}
                   href={item.href}
+                  data-card
                   className="group relative flex-shrink-0 block overflow-hidden rounded-2xl"
                   style={{
                     width: i % 2 === 0 ? "58%" : "38%",
