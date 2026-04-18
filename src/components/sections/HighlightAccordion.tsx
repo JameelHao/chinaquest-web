@@ -93,6 +93,7 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
           {items.map((item, i) => (
             <div
               key={item.title}
+              className="flex"
               style={{
                 borderBottom:
                   i < items.length - 1
@@ -100,97 +101,106 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
                     : "none",
               }}
             >
-              <button
-                onClick={() => setActiveIndex(i)}
-                className="w-full flex items-start gap-4 cursor-pointer"
-                style={{
-                  padding: "20px 0",
-                  background: "transparent",
-                  textAlign: "left",
-                }}
+              {/* Timeline column — dot + line, independent from content */}
+              <div
+                className="flex flex-col items-center flex-shrink-0"
+                style={{ width: 20, paddingTop: 24 }}
               >
-                {/* Timeline: dot + dashed line */}
-                <div className="flex flex-col items-center flex-shrink-0" style={{ paddingTop: 4 }}>
-                  {/* Dot — solid filled when active, hollow outline when inactive */}
+                {/* Dot */}
+                <span
+                  style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: "50%",
+                    background: activeIndex === i ? "#D5A58F" : "transparent",
+                    border: activeIndex === i ? "2px solid #D5A58F" : "2px solid rgba(255,255,255,0.5)",
+                    flexShrink: 0,
+                    transition: "all 0.3s ease",
+                  }}
+                />
+                {/* Vertical line — stretches with content height */}
+                {i < items.length - 1 && (
                   <span
                     style={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: "50%",
-                      background: activeIndex === i ? "#D5A58F" : "transparent",
-                      border: activeIndex === i ? "2px solid #D5A58F" : "2px solid rgba(255,255,255,0.5)",
-                      flexShrink: 0,
-                      transition: "all 0.2s",
+                      width: 0,
+                      flexGrow: 1,
+                      borderLeft: "1.5px solid rgba(255,255,255,0.2)",
+                      marginTop: 6,
+                      marginBottom: -1,
                     }}
                   />
-                  {/* Dashed vertical line connecting to next dot */}
-                  {i < items.length - 1 && (
-                    <span
+                )}
+              </div>
+
+              {/* Content column — title row + expandable description */}
+              <div className="flex-1 min-w-0" style={{ paddingLeft: 12 }}>
+                {/* Title row */}
+                <button
+                  onClick={() => setActiveIndex(i)}
+                  className="w-full flex items-center cursor-pointer"
+                  style={{
+                    padding: "20px 0",
+                    background: "transparent",
+                    textAlign: "left",
+                    gap: 8,
+                  }}
+                >
+                  <span
+                    className="flex-1"
+                    style={{
+                      fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
+                      fontSize: 16,
+                      fontWeight: activeIndex === i ? 600 : 500,
+                      color: activeIndex === i ? "#ffffff" : "rgba(255,255,255,0.6)",
+                      transition: "color 0.3s ease",
+                    }}
+                  >
+                    {item.title}
+                  </span>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke={activeIndex === i ? "#ffffff" : "rgba(255,255,255,0.4)"}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{
+                      transition: "transform 0.4s ease, stroke 0.3s ease",
+                      transform: activeIndex === i ? "rotate(180deg)" : "rotate(0deg)",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
+
+                {/* Expandable description */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateRows: activeIndex === i ? "1fr" : "0fr",
+                    transition: "grid-template-rows 0.4s ease",
+                  }}
+                >
+                  <div style={{ overflow: "hidden" }}>
+                    <p
                       style={{
-                        width: 0,
-                        flexGrow: 1,
-                        minHeight: 24,
-                        borderLeft: "1.5px dashed rgba(255,255,255,0.25)",
+                        fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
+                        fontSize: 14,
+                        fontWeight: 400,
+                        lineHeight: "22px",
+                        color: "rgba(255,255,255,0.7)",
+                        paddingBottom: 20,
+                        opacity: activeIndex === i ? 1 : 0,
+                        transition: "opacity 0.3s ease 0.1s",
                       }}
-                    />
-                  )}
+                    >
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-
-                {/* Title + chevron */}
-                <span
-                  className="flex-1"
-                  style={{
-                    fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                    fontSize: 16,
-                    fontWeight: activeIndex === i ? 600 : 500,
-                    color: activeIndex === i ? "#ffffff" : "rgba(255,255,255,0.6)",
-                    transition: "color 0.2s",
-                  }}
-                >
-                  {item.title}
-                </span>
-                {/* Chevron */}
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke={activeIndex === i ? "#ffffff" : "rgba(255,255,255,0.4)"}
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{
-                    transition: "transform 0.3s, stroke 0.2s",
-                    transform: activeIndex === i ? "rotate(180deg)" : "rotate(0deg)",
-                    flexShrink: 0,
-                    marginTop: 2,
-                  }}
-                >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
-              </button>
-
-              {/* Expanded content */}
-              <div
-                style={{
-                  maxHeight: activeIndex === i ? 200 : 0,
-                  overflow: "hidden",
-                  transition: "max-height 0.3s ease",
-                }}
-              >
-                <p
-                  style={{
-                    fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                    fontSize: 14,
-                    fontWeight: 400,
-                    lineHeight: "22px",
-                    color: "rgba(255,255,255,0.7)",
-                    paddingBottom: 16,
-                    paddingLeft: 28,
-                  }}
-                >
-                  {item.description}
-                </p>
               </div>
             </div>
           ))}
