@@ -3,6 +3,7 @@ import Link from "next/link";
 import DestinationHero from "@/components/sections/DestinationHero";
 import BeijingIntro from "@/components/sections/BeijingIntro";
 import HighlightAccordion from "@/components/sections/HighlightAccordion";
+import TripIdeasSlider from "@/components/sections/TripIdeasSlider";
 
 export default function BeijingPage() {
   return (
@@ -250,6 +251,18 @@ export default function BeijingPage() {
           </div>
         </div>
       </section>
+
+      {/* Trip Ideas — left text + right card slider */}
+      <TripIdeasSlider
+        description="Browse articles featuring the best of Beijing from imperial landmarks to hidden local gems."
+        items={[
+          { title: "Through the Vermilion Gates: A Day Inside the Forbidden City", href: "/trip/forbidden-city-day", image: "/images/trip-1.jpg" },
+          { title: "Sunrise on the Great Wall: Mutianyu to Jinshanling Trek", href: "/trip/great-wall-trek", image: "/images/trip-2.jpg" },
+          { title: "Temple of Heaven in Snow: Beijing's Most Beautiful Season", href: "/trip/temple-heaven-winter", image: "/images/trip-3.jpg" },
+          { title: "Golden Hour at the Summer Palace: Kunming Lake by Boat", href: "/trip/summer-palace-boat", image: "/images/trip-4.jpg" },
+          { title: "Guardian of the Empire: Discovering Beijing's Stone Sentinels", href: "/trip/stone-lions", image: "/images/trip-5.jpg" },
+        ]}
+      />
 
       {/* Essential Information */}
       <section style={{ background: "#f4f2f0", padding: "64px 0" }}>
