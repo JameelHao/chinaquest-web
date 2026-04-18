@@ -120,6 +120,32 @@ export default function BeijingPage() {
             ]}
           />
 
+          {/* Sub-section: An Empress's Playground — reversed */}
+          <HighlightAccordion
+            heading="An Empress's Playground"
+            reverse
+            items={[
+              {
+                title: "Summer Palace",
+                description: "Cixi spent the navy's budget building a marble boat that cannot sail. Whatever you think of her, she had taste — Kunming Lake is Beijing's most beautiful lie.",
+                href: "/destinations/beijing/beijing/summer-palace",
+                image: "/images/carousel-4.jpg",
+              },
+              {
+                title: "Yuanmingyuan (Old Summer Palace)",
+                description: "Walk the ruins of \"the Versailles of the East\" — burned in 1860, deliberately left in pieces, a national wound frozen in marble.",
+                href: "/destinations/beijing/beijing/yuanmingyuan",
+                image: "/images/carousel-2.jpg",
+              },
+              {
+                title: "798 Art District",
+                description: "From Mao-era munitions factories to China's most electric contemporary art scene — Beijing's answer to Berlin, painted in rebellion.",
+                href: "/destinations/beijing/beijing/798-art",
+                image: "/images/carousel-3.jpg",
+              },
+            ]}
+          />
+
           {/* Sub-section: Must-Do Experiences */}
           <div style={{ marginBottom: 48 }}>
             <h3
