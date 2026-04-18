@@ -24,12 +24,20 @@ export function useCarouselScroll() {
     const pages = Math.max(1, Math.ceil(maxScroll / step) + 1);
     setTotalPages(pages);
 
-    // Current page based on scroll position
-    const page = Math.round(el.scrollLeft / step) + 1;
-    setCurrentPage(Math.min(page, pages));
+    const atStart = el.scrollLeft <= 10;
+    const atEnd = el.scrollLeft >= maxScroll - 10;
 
-    setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft < maxScroll - 10);
+    setCanScrollLeft(!atStart);
+    setCanScrollRight(!atEnd);
+
+    // Current page: if at end → last page, if at start → 1, otherwise calculate
+    if (atEnd) {
+      setCurrentPage(pages);
+    } else if (atStart) {
+      setCurrentPage(1);
+    } else {
+      setCurrentPage(Math.round(el.scrollLeft / step) + 1);
+    }
   }, [getStepSize]);
 
   useEffect(() => {
