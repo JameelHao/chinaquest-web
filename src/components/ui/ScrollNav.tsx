@@ -3,8 +3,8 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ScrollNavProps {
-  currentIndex: number;
-  total: number;
+  currentPage: number;
+  totalPages: number;
   canScrollLeft: boolean;
   canScrollRight: boolean;
   onScrollLeft: () => void;
@@ -12,8 +12,8 @@ interface ScrollNavProps {
 }
 
 export default function ScrollNav({
-  currentIndex,
-  total,
+  currentPage,
+  totalPages,
   canScrollLeft,
   canScrollRight,
   onScrollLeft,
@@ -29,7 +29,7 @@ export default function ScrollNav({
           color: "rgba(64,68,80,0.35)",
         }}
       >
-        {String(currentIndex).padStart(2, "0")}/{String(total).padStart(2, "0")}
+        {String(currentPage).padStart(2, "0")}/{String(totalPages).padStart(2, "0")}
       </span>
       <button
         onClick={onScrollLeft}

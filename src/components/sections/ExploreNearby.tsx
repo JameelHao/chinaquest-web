@@ -15,7 +15,7 @@ const nearby = [
 ];
 
 export default function ExploreNearby() {
-  const { scrollRef, canScrollLeft, canScrollRight, currentIndex, totalVisible, scroll } = useCarouselScroll();
+  const { scrollRef, canScrollLeft, canScrollRight, currentPage, totalPages, scroll } = useCarouselScroll();
 
   return (
     <section style={{ background: "#f4f2f0", padding: "64px 0 80px" }}>
@@ -37,8 +37,8 @@ export default function ExploreNearby() {
 
           <div className="mt-2">
             <ScrollNav
-              currentIndex={currentIndex}
-              total={totalVisible}
+              currentPage={currentPage}
+              totalPages={totalPages}
               canScrollLeft={canScrollLeft}
               canScrollRight={canScrollRight}
               onScrollLeft={() => scroll("left")}

@@ -4,42 +4,39 @@ export function useCarouselScroll() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [totalVisible, setTotalVisible] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const getStepSize = useCallback(() => {
+    if (!scrollRef.current) return 300;
+    const card = scrollRef.current.querySelector("[data-card]") as HTMLElement;
+    return (card?.offsetWidth || 300) + 24; // card width + gap
+  }, []);
 
   const updateState = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
 
-    // Can scroll left/right based on scroll position
+    const step = getStepSize();
+    const maxScroll = el.scrollWidth - el.clientWidth;
+
+    // How many clicks to reach the end
+    const pages = Math.max(1, Math.ceil(maxScroll / step) + 1);
+    setTotalPages(pages);
+
+    // Current page based on scroll position
+    const page = Math.round(el.scrollLeft / step) + 1;
+    setCurrentPage(Math.min(page, pages));
+
     setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
-
-    // Calculate current card index
-    const cards = el.querySelectorAll<HTMLElement>("[data-card]");
-    if (!cards.length) return;
-    setTotalVisible(cards.length);
-
-    const containerLeft = el.getBoundingClientRect().left;
-    let closest = 0;
-    let minDist = Infinity;
-    cards.forEach((card, i) => {
-      const dist = Math.abs(card.getBoundingClientRect().left - containerLeft);
-      if (dist < minDist) {
-        minDist = dist;
-        closest = i;
-      }
-    });
-    setCurrentIndex(closest + 1);
-  }, []);
+    setCanScrollRight(el.scrollLeft < maxScroll - 10);
+  }, [getStepSize]);
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     el.addEventListener("scroll", updateState, { passive: true });
-    // Initial check
     updateState();
-    // Also check on resize
     window.addEventListener("resize", updateState);
     return () => {
       el.removeEventListener("scroll", updateState);
@@ -49,21 +46,19 @@ export function useCarouselScroll() {
 
   const scroll = useCallback((dir: "left" | "right") => {
     if (!scrollRef.current) return;
-    const card = scrollRef.current.querySelector("[data-card]") as HTMLElement;
-    const cardWidth = card?.offsetWidth || 300;
-    const gap = 24;
+    const step = getStepSize();
     scrollRef.current.scrollBy({
-      left: dir === "right" ? cardWidth + gap : -(cardWidth + gap),
+      left: dir === "right" ? step : -step,
       behavior: "smooth",
     });
-  }, []);
+  }, [getStepSize]);
 
   return {
     scrollRef,
     canScrollLeft,
     canScrollRight,
-    currentIndex,
-    totalVisible,
+    currentPage,
+    totalPages,
     scroll,
   };
 }

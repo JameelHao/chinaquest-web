@@ -22,7 +22,7 @@ export default function TripIdeasSlider({
   description,
   items,
 }: TripIdeasSliderProps) {
-  const { scrollRef, canScrollLeft, canScrollRight, currentIndex, totalVisible, scroll } = useCarouselScroll();
+  const { scrollRef, canScrollLeft, canScrollRight, currentPage, totalPages, scroll } = useCarouselScroll();
 
   return (
     <section style={{ padding: "80px 0 64px" }}>
@@ -63,8 +63,8 @@ export default function TripIdeasSlider({
             )}
 
             <ScrollNav
-              currentIndex={currentIndex}
-              total={totalVisible}
+              currentPage={currentPage}
+              totalPages={totalPages}
               canScrollLeft={canScrollLeft}
               canScrollRight={canScrollRight}
               onScrollLeft={() => scroll("left")}

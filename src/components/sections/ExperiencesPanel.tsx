@@ -57,7 +57,7 @@ const experiences = [
 ];
 
 export default function ExperiencesPanel() {
-  const { scrollRef, canScrollLeft, canScrollRight, currentIndex, totalVisible, scroll } = useCarouselScroll();
+  const { scrollRef, canScrollLeft, canScrollRight, currentPage, totalPages, scroll } = useCarouselScroll();
 
   return (
     <section className="relative">
@@ -105,8 +105,8 @@ export default function ExperiencesPanel() {
             </h2>
 
             <ScrollNav
-              currentIndex={currentIndex}
-              total={totalVisible}
+              currentPage={currentPage}
+              totalPages={totalPages}
               canScrollLeft={canScrollLeft}
               canScrollRight={canScrollRight}
               onScrollLeft={() => scroll("left")}
