@@ -105,36 +105,41 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
                 className="flex flex-col items-center"
                 style={{ gridColumn: 1 }}
               >
-                {/* Dot — vertically centered with title line */}
-                <div
-                  style={{
-                    height: 48,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <span
+                {/* Line above dot — connects from previous item */}
+                {i > 0 && (
+                  <div
                     style={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: "50%",
-                      background: activeIndex === i ? "#D5A58F" : "transparent",
-                      border: activeIndex === i
-                        ? "2px solid #D5A58F"
-                        : "2px solid rgba(255,255,255,0.5)",
-                      transition: "all 0.3s ease",
+                      width: 0,
+                      height: 18,
+                      borderLeft: "1.5px dashed rgba(255,255,255,0.25)",
+                      flexShrink: 0,
                     }}
                   />
-                </div>
-                {/* Line — fills remaining row height, stretches with content */}
+                )}
+                {/* Spacer above dot for first item to align with title */}
+                {i === 0 && <div style={{ height: 18, flexShrink: 0 }} />}
+                {/* Dot */}
+                <span
+                  style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: "50%",
+                    background: activeIndex === i ? "#D5A58F" : "transparent",
+                    border: activeIndex === i
+                      ? "2px solid #D5A58F"
+                      : "2px solid rgba(255,255,255,0.5)",
+                    flexShrink: 0,
+                    transition: "all 0.3s ease",
+                  }}
+                />
+                {/* Line below dot — stretches to fill remaining row height */}
                 {i < items.length - 1 && (
                   <div
                     style={{
-                      width: 1.5,
+                      width: 0,
                       flexGrow: 1,
-                      background: "rgba(255,255,255,0.2)",
-                      transition: "height 0.4s ease",
+                      borderLeft: "1.5px dashed rgba(255,255,255,0.25)",
+                      marginTop: 0,
                     }}
                   />
                 )}
