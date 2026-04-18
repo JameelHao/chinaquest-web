@@ -66,15 +66,12 @@ export default function ExperiencesPanel() {
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
-    const el = scrollRef.current;
-    const card = el.querySelector("[data-card]") as HTMLElement;
-    const cardWidth = card?.offsetWidth || 280;
+    const cardWidth = scrollRef.current.querySelector("a")?.offsetWidth || 280;
     const amount = cardWidth + 24;
-    if (dir === "left") {
-      el.scrollTo({ left: Math.max(0, el.scrollLeft - amount), behavior: "smooth" });
-    } else {
-      el.scrollTo({ left: el.scrollLeft + amount, behavior: "smooth" });
-    }
+    scrollRef.current.scrollBy({
+      left: dir === "right" ? amount : -amount,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -196,7 +193,7 @@ export default function ExperiencesPanel() {
                   className="uppercase"
                   style={{
                     fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                    fontSize: 18,
+                    fontSize: 22,
                     fontWeight: 900,
                     letterSpacing: 1,
                     color: "rgb(64, 68, 80)",
