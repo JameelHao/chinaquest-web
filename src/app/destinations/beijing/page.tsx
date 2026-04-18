@@ -149,10 +149,10 @@ export default function BeijingPage() {
         </div>
       </section>
 
-      {/* Experiences — full-width hero image + horizontal card slider */}
-      <section className="relative">
-        {/* Background image */}
-        <div className="relative" style={{ height: "clamp(300px, 40vw, 500px)" }}>
+      {/* Experiences — full-width hero image + large-radius panel overlay */}
+      <section className="relative" style={{ paddingBottom: 64 }}>
+        {/* Background image — extends behind the panel */}
+        <div className="relative" style={{ height: "clamp(400px, 50vw, 600px)" }}>
           <Image
             src="/images/carousel-2.jpg"
             alt="Beijing experiences"
@@ -162,14 +162,15 @@ export default function BeijingPage() {
           />
         </div>
 
-        {/* White card area overlapping the image */}
+        {/* White panel with top rounded corners, overlapping into image */}
         <div
           style={{
             background: "#ffffff",
-            marginTop: -40,
+            borderRadius: "24px 24px 0 0",
+            marginTop: -80,
             position: "relative",
             zIndex: 1,
-            padding: "40px 0 64px",
+            padding: "48px 0 0",
           }}
         >
           <div
@@ -193,10 +194,10 @@ export default function BeijingPage() {
               </h2>
             </div>
 
-            {/* Horizontal scrolling cards */}
+            {/* Horizontal scrolling cards — overflow visible so right cards bleed into image */}
             <div
               className="flex gap-6 overflow-x-auto pb-4"
-              style={{ scrollSnapType: "x mandatory" }}
+              style={{ scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
             >
               {[
                 { name: "Imperial Palace Tour", img: "/images/carousel-1.jpg", href: "/experience/imperial-palace-tour" },
