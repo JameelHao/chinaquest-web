@@ -265,67 +265,6 @@ export default function BeijingPage() {
         ]}
       />
 
-      {/* Essential Information */}
-      <section style={{ background: "#f4f2f0", padding: "64px 0" }}>
-        <div
-          className="mx-auto"
-          style={{ maxWidth: 1680, padding: "0 48px" }}
-        >
-          <h2
-            className="uppercase"
-            style={{
-              fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-              fontSize: "clamp(48px, 7vw, 96px)",
-              fontWeight: 900,
-              color: "rgb(64, 68, 80)",
-              lineHeight: 1,
-              letterSpacing: 2,
-              marginBottom: 48,
-            }}
-          >
-            Essential Information
-          </h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { label: "Best Time to Visit", value: "Mar – May, Sep – Oct" },
-              { label: "Getting There", value: "PEK & PKX airports" },
-              { label: "Metro System", value: "27 lines, 800+ stations" },
-              { label: "Avg. Trip Length", value: "4 – 6 days" },
-            ].map((info) => (
-              <div
-                key={info.label}
-                className="p-6 rounded-xl"
-                style={{ background: "#ffffff" }}
-              >
-                <p
-                  className="uppercase mb-3"
-                  style={{
-                    fontSize: 13,
-                    fontWeight: 600,
-                    color: "rgba(64,68,80,0.5)",
-                    letterSpacing: "0.1em",
-                    fontFamily: "'Inter', sans-serif",
-                  }}
-                >
-                  {info.label}
-                </p>
-                <p
-                  style={{
-                    fontSize: 18,
-                    fontWeight: 500,
-                    color: "rgb(64, 68, 80)",
-                    fontFamily: "'Inter', sans-serif",
-                  }}
-                >
-                  {info.value}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Explore Nearby */}
       <ExploreNearby />
     </>
