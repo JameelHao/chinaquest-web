@@ -173,7 +173,7 @@ export default function TripIdeasSlider({
                       background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)",
                     }}
                   />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <div className="absolute bottom-0 left-0 right-0" style={{ padding: "24px 24px 24px 40px" }}>
                     <h3
                       className="uppercase"
                       style={{
