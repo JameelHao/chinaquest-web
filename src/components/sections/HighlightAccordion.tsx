@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 interface AccordionItem {
   title: string;
@@ -22,11 +21,14 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
 
   return (
     <div
-      className="flex flex-col md:flex-row gap-8"
+      className="flex flex-col md:flex-row items-start gap-8"
       style={{ marginBottom: 48 }}
     >
-      {/* Left — image */}
-      <div className="md:w-1/2 relative rounded-xl overflow-hidden" style={{ minHeight: 400 }}>
+      {/* Left — image, square with rounded corners, top-aligned */}
+      <div
+        className="md:w-1/2 relative rounded-2xl overflow-hidden"
+        style={{ aspectRatio: "1/1" }}
+      >
         <Image
           src={active.image}
           alt={active.title}
@@ -34,46 +36,10 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
           className="object-cover transition-all duration-500"
           sizes="(max-width: 768px) 100vw, 50vw"
         />
-        {/* Bottom overlay link */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <div
-            className="flex items-center justify-between"
-            style={{
-              background: "rgba(213, 165, 143, 0.85)",
-              backdropFilter: "blur(4px)",
-              padding: "16px 24px",
-            }}
-          >
-            <Link
-              href={active.href}
-              style={{
-                fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                fontSize: 14,
-                fontWeight: 500,
-                color: "rgb(64, 68, 80)",
-              }}
-            >
-              ← See {active.title}
-            </Link>
-            <Link
-              href={active.href}
-              className="flex items-center justify-center rounded-full"
-              style={{
-                width: 36,
-                height: 36,
-                background: "rgb(64, 68, 80)",
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
-        </div>
       </div>
 
-      {/* Right — sub-heading + accordion */}
-      <div className="md:w-1/2 flex flex-col justify-center">
+      {/* Right — sub-heading + accordion, top-aligned */}
+      <div className="md:w-1/2 flex flex-col">
         <h3
           className="uppercase"
           style={{
