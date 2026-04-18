@@ -149,9 +149,9 @@ export default function BeijingPage() {
         </div>
       </section>
 
-      {/* Experiences — full-width hero image + large-radius panel overlay */}
-      <section className="relative" style={{ paddingBottom: 64 }}>
-        {/* Background image — extends behind the panel */}
+      {/* Experiences — full-width hero image + floating panel card */}
+      <section className="relative">
+        {/* Background image — full width, extends behind the panel */}
         <div className="relative" style={{ height: "clamp(400px, 50vw, 600px)" }}>
           <Image
             src="/images/carousel-2.jpg"
@@ -162,20 +162,24 @@ export default function BeijingPage() {
           />
         </div>
 
-        {/* White panel with top rounded corners, overlapping into image */}
+        {/* Floating panel — inset card with all-corner rounding, overlapping image */}
         <div
+          className="mx-auto"
           style={{
-            background: "#ffffff",
-            borderRadius: "24px 24px 0 0",
-            marginTop: -80,
+            maxWidth: 1680,
+            margin: "-100px auto 0",
+            padding: "0 48px",
             position: "relative",
             zIndex: 1,
-            padding: "48px 0 0",
           }}
         >
           <div
-            className="mx-auto"
-            style={{ maxWidth: 1680, padding: "0 48px" }}
+            style={{
+              background: "rgba(244, 242, 240, 0.95)",
+              backdropFilter: "blur(8px)",
+              borderRadius: 20,
+              padding: "48px 48px 40px",
+            }}
           >
             {/* Title row */}
             <div className="flex items-end justify-between" style={{ marginBottom: 32 }}>
