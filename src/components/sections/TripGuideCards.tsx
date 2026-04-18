@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useCarouselScroll } from "@/hooks/useCarouselScroll";
+import ScrollNav from "@/components/ui/ScrollNav";
 
 const guides = [
   {
@@ -81,40 +81,7 @@ const catColor: Record<string, string> = {
 const sidePadding = "clamp(32px, 6vw, 80px)";
 
 export default function TripGuideCards() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(1);
-
-  const updateIndex = () => {
-    if (!scrollRef.current) return;
-    const el = scrollRef.current;
-    const cards = el.querySelectorAll<HTMLElement>("[data-card]");
-    if (!cards.length) return;
-    const containerLeft = el.getBoundingClientRect().left;
-    let closest = 0;
-    let minDist = Infinity;
-    cards.forEach((card, i) => {
-      const dist = Math.abs(card.getBoundingClientRect().left - containerLeft);
-      if (dist < minDist) { minDist = dist; closest = i; }
-    });
-    setCurrentIndex(closest + 1);
-  };
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateIndex, { passive: true });
-    return () => el.removeEventListener("scroll", updateIndex);
-  });
-
-  const scroll = (dir: "left" | "right") => {
-    if (!scrollRef.current) return;
-    const cardWidth = scrollRef.current.querySelector("a")?.offsetWidth || 360;
-    const amount = cardWidth + 24;
-    scrollRef.current.scrollBy({
-      left: dir === "right" ? amount : -amount,
-      behavior: "smooth",
-    });
-  };
+  const { scrollRef, canScrollLeft, canScrollRight, currentPage, totalPages, scroll } = useCarouselScroll();
 
   return (
     <section className="w-full" style={{ background: "#f4f2f0", padding: "64px 0 80px" }}>
@@ -135,41 +102,15 @@ export default function TripGuideCards() {
             Your Next Bold Move? Explore China Your Way
           </h2>
 
-          <div className="flex items-center gap-4 flex-shrink-0 mt-2">
-            <span
-              style={{
-                fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                fontSize: 20,
-                fontWeight: 350,
-                color: "rgba(64,68,80,0.35)",
-              }}
-            >
-              {String(currentIndex).padStart(2, "0")}/06
-            </span>
-            <button
-              onClick={() => scroll("left")}
-              disabled={currentIndex <= 1}
-              className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
-              style={currentIndex <= 1
-                ? { border: "1.5px solid rgba(64,68,80,0.15)", color: "rgba(64,68,80,0.2)", background: "transparent", cursor: "default" }
-                : { background: "#404650", color: "#ffffff", border: "none", cursor: "pointer" }
-              }
-              aria-label="Scroll left"
-            >
-              <ChevronLeft size={22} />
-            </button>
-            <button
-              onClick={() => scroll("right")}
-              disabled={currentIndex >= 6}
-              className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
-              style={currentIndex >= 6
-                ? { border: "1.5px solid rgba(64,68,80,0.15)", color: "rgba(64,68,80,0.2)", background: "transparent", cursor: "default" }
-                : { background: "#404650", color: "#ffffff", border: "none", cursor: "pointer" }
-              }
-              aria-label="Scroll right"
-            >
-              <ChevronRight size={22} />
-            </button>
+          <div className="mt-2">
+            <ScrollNav
+              currentPage={currentPage}
+              totalPages={totalPages}
+              canScrollLeft={canScrollLeft}
+              canScrollRight={canScrollRight}
+              onScrollLeft={() => scroll("left")}
+              onScrollRight={() => scroll("right")}
+            />
           </div>
         </div>
       </div>
