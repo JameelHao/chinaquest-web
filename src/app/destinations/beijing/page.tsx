@@ -1,33 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import DestinationHero from "@/components/sections/DestinationHero";
-
-const beijingCities = [
-  {
-    name: "Beijing",
-    slug: "beijing",
-    description: "The capital — ancient temples, modern skylines, and everything in between.",
-    image: "/images/carousel-1.jpg",
-  },
-  {
-    name: "Yanqing",
-    slug: "yanqing",
-    description: "Mountains, wild scenery and the iconic Badaling section of the Great Wall.",
-    image: "/images/carousel-2.jpg",
-  },
-  {
-    name: "Miyun",
-    slug: "miyun",
-    description: "Gubei Water Town and unspoiled natural landscapes northeast of the capital.",
-    image: "/images/carousel-3.jpg",
-  },
-  {
-    name: "Huairou",
-    slug: "huairou",
-    description: "Mutianyu and Jinshanling — the most beautiful Great Wall sections.",
-    image: "/images/carousel-4.jpg",
-  },
-];
+import BeijingIntro from "@/components/sections/BeijingIntro";
 
 export default function BeijingPage() {
   return (
@@ -37,175 +11,176 @@ export default function BeijingPage() {
         image="/images/hero-great-wall.jpg"
       />
 
-      {/* Cities section */}
-      <section className="py-16 px-6 lg:px-[50px]">
-        <div className="max-w-[1400px] mx-auto">
-          {/* Section label */}
-          <p
-            className="uppercase tracking-[3px] mb-6"
-            style={{ fontSize: 12, fontWeight: 600, color: "#9a9696", fontFamily: "'Inter', sans-serif" }}
-          >
-            01 / EXPLORE
-          </p>
+      {/* Intro — title + highlights + cities + map */}
+      <BeijingIntro />
 
-          <h2
-            className="uppercase mb-10"
-            style={{
-              fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-              fontSize: "clamp(32px, 4vw, 52px)",
-              fontWeight: 400,
-              color: "#2d3142",
-              lineHeight: 1,
-            }}
-          >
-            Cities & Districts
-          </h2>
+      {/* Must-See Attractions — dark bg */}
+      <section
+        style={{
+          background: "rgb(64, 68, 80)",
+          padding: "32px 0",
+        }}
+      >
+        <div
+          className="mx-auto"
+          style={{ maxWidth: 1680, padding: "0 48px" }}
+        >
+          {/* Section title */}
+          <div style={{ marginTop: 48 }}>
+            <h2
+              className="uppercase text-center"
+              style={{
+                fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+                fontSize: "clamp(48px, 7vw, 96px)",
+                fontWeight: 900,
+                color: "#ffffff",
+                lineHeight: 1,
+                letterSpacing: 2,
+                marginBottom: 48,
+              }}
+            >
+              Beijing Highlights
+            </h2>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {beijingCities.map((city) => (
-              <Link
-                key={city.slug}
-                href={`/destinations/beijing/${city.slug}`}
-                className="group block rounded-xl overflow-hidden"
-                style={{ background: "#ffffff" }}
-              >
-                <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+          {/* Sub-section: Awe-Inspiring Attractions */}
+          <div style={{ marginBottom: 48 }}>
+            <h3
+              className="uppercase"
+              style={{
+                fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+                fontSize: "clamp(32px, 4vw, 48px)",
+                fontWeight: 900,
+                color: "#ffffff",
+                lineHeight: 1.1,
+                letterSpacing: 1,
+                marginBottom: 16,
+              }}
+            >
+              Awe-Inspiring Attractions
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { name: "Forbidden City", href: "/destinations/beijing/beijing/forbidden-city", img: "/images/carousel-1.jpg" },
+                { name: "Great Wall", href: "/destinations/beijing/yanqing/badaling", img: "/images/carousel-2.jpg" },
+                { name: "Tiananmen Square", href: "/destinations/beijing/beijing/tiananmen-square", img: "/images/carousel-3.jpg" },
+              ].map((poi) => (
+                <Link
+                  key={poi.name}
+                  href={poi.href}
+                  className="group relative block overflow-hidden rounded-xl"
+                  style={{ aspectRatio: "5/6" }}
+                >
                   <Image
-                    src={city.image}
-                    alt={city.name}
+                    src={poi.img}
+                    alt={poi.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                  {/* Gradient overlay at bottom */}
                   <div
                     className="absolute inset-0"
                     style={{
-                      background: "linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%)",
+                      background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)",
                     }}
                   />
-                  {/* Title on image */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h4
                       className="uppercase"
                       style={{
                         fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                        fontSize: 20,
-                        fontWeight: 400,
+                        fontSize: 24,
+                        fontWeight: 900,
                         color: "#ffffff",
-                        letterSpacing: "0.03em",
-                        lineHeight: 1,
+                        letterSpacing: 1,
                       }}
                     >
-                      {city.name}
-                    </h3>
+                      {poi.name}
+                    </h4>
                   </div>
-                </div>
-                {/* Description below image */}
-                <div className="p-4">
-                  <p
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Sub-section: Must-Do Experiences */}
+          <div style={{ marginBottom: 48 }}>
+            <h3
+              className="uppercase"
+              style={{
+                fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+                fontSize: "clamp(32px, 4vw, 48px)",
+                fontWeight: 900,
+                color: "#ffffff",
+                lineHeight: 1.1,
+                letterSpacing: 1,
+                marginBottom: 16,
+              }}
+            >
+              Must-Do Experiences
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { name: "Hutong Walking Tour", href: "/destinations/beijing/beijing/hutong-tour", img: "/images/carousel-4.jpg" },
+                { name: "Peking Duck Feast", href: "/destinations/beijing/beijing/peking-duck", img: "/images/carousel-1.jpg" },
+                { name: "798 Art District", href: "/destinations/beijing/beijing/798-art", img: "/images/carousel-3.jpg" },
+              ].map((exp) => (
+                <Link
+                  key={exp.name}
+                  href={exp.href}
+                  className="group relative block overflow-hidden rounded-xl"
+                  style={{ aspectRatio: "5/6" }}
+                >
+                  <Image
+                    src={exp.img}
+                    alt={exp.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div
+                    className="absolute inset-0"
                     style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: 12,
-                      lineHeight: 1.5,
-                      color: "#6b6565",
+                      background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)",
                     }}
-                  >
-                    {city.description}
-                  </p>
-                </div>
-              </Link>
-            ))}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <h4
+                      className="uppercase"
+                      style={{
+                        fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+                        fontSize: 24,
+                        fontWeight: 900,
+                        color: "#ffffff",
+                        letterSpacing: 1,
+                      }}
+                    >
+                      {exp.name}
+                    </h4>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Notables section */}
-      <section className="py-16 px-6 lg:px-[50px]" style={{ background: "#f0efed" }}>
-        <div className="max-w-[1400px] mx-auto">
-          <p
-            className="uppercase tracking-[3px] mb-6"
-            style={{ fontSize: 12, fontWeight: 600, color: "#9a9696", fontFamily: "'Inter', sans-serif" }}
-          >
-            02 / HIGHLIGHTS
-          </p>
-
+      {/* Essential Information */}
+      <section style={{ background: "#f4f2f0", padding: "64px 0" }}>
+        <div
+          className="mx-auto"
+          style={{ maxWidth: 1680, padding: "0 48px" }}
+        >
           <h2
-            className="uppercase mb-10"
+            className="uppercase"
             style={{
               fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-              fontSize: "clamp(32px, 4vw, 52px)",
-              fontWeight: 400,
-              color: "#2d3142",
+              fontSize: "clamp(48px, 7vw, 96px)",
+              fontWeight: 900,
+              color: "rgb(64, 68, 80)",
               lineHeight: 1,
-            }}
-          >
-            Must-See Attractions
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { name: "Forbidden City", href: "/destinations/beijing/beijing/forbidden-city", img: "/images/carousel-1.jpg" },
-              { name: "Great Wall", href: "/destinations/beijing/yanqing/badaling", img: "/images/carousel-2.jpg" },
-              { name: "Tiananmen Square", href: "/destinations/beijing/beijing/tiananmen-square", img: "/images/carousel-3.jpg" },
-            ].map((poi) => (
-              <Link
-                key={poi.name}
-                href={poi.href}
-                className="group relative block overflow-hidden rounded-xl"
-                style={{ aspectRatio: "5/6" }}
-              >
-                <Image
-                  src={poi.img}
-                  alt={poi.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)",
-                  }}
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3
-                    className="uppercase"
-                    style={{
-                      fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                      fontSize: 24,
-                      fontWeight: 400,
-                      color: "#ffffff",
-                      letterSpacing: "0.03em",
-                    }}
-                  >
-                    {poi.name}
-                  </h3>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Practical info teaser */}
-      <section className="py-16 px-6 lg:px-[50px]">
-        <div className="max-w-[1400px] mx-auto">
-          <p
-            className="uppercase tracking-[3px] mb-6"
-            style={{ fontSize: 12, fontWeight: 600, color: "#9a9696", fontFamily: "'Inter', sans-serif" }}
-          >
-            03 / PLAN
-          </p>
-
-          <h2
-            className="uppercase mb-8"
-            style={{
-              fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-              fontSize: "clamp(32px, 4vw, 52px)",
-              fontWeight: 400,
-              color: "#2d3142",
-              lineHeight: 1,
+              letterSpacing: 2,
+              marginBottom: 48,
             }}
           >
             Essential Information
@@ -220,17 +195,28 @@ export default function BeijingPage() {
             ].map((info) => (
               <div
                 key={info.label}
-                className="p-5 rounded-xl"
-                style={{ background: "#f7f7f5" }}
+                className="p-6 rounded-xl"
+                style={{ background: "#ffffff" }}
               >
                 <p
-                  className="uppercase mb-2"
-                  style={{ fontSize: 11, fontWeight: 600, color: "#9a9696", letterSpacing: "0.1em" }}
+                  className="uppercase mb-3"
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: "rgba(64,68,80,0.5)",
+                    letterSpacing: "0.1em",
+                    fontFamily: "'Inter', sans-serif",
+                  }}
                 >
                   {info.label}
                 </p>
                 <p
-                  style={{ fontSize: 15, fontWeight: 500, color: "#2d3142", fontFamily: "'Inter', sans-serif" }}
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 500,
+                    color: "rgb(64, 68, 80)",
+                    fontFamily: "'Inter', sans-serif",
+                  }}
                 >
                   {info.value}
                 </p>
