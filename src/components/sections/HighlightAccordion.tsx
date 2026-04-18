@@ -171,8 +171,8 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
                     className="flex-1"
                     style={{
                       fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                      fontSize: 16,
-                      fontWeight: activeIndex === i ? 600 : 500,
+                      fontSize: 18,
+                      fontWeight: activeIndex === i ? 700 : 600,
                       color: activeIndex === i ? "#ffffff" : "rgba(255,255,255,0.6)",
                       transition: "color 0.3s ease",
                     }}
@@ -210,9 +210,9 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
                     <p
                       style={{
                         fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
-                        fontSize: 14,
+                        fontSize: 16,
                         fontWeight: 400,
-                        lineHeight: "22px",
+                        lineHeight: "26px",
                         color: "rgba(255,255,255,0.7)",
                         paddingBottom: 16,
                         opacity: activeIndex === i ? 1 : 0,
