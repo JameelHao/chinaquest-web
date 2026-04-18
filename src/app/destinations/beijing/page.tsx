@@ -95,6 +95,31 @@ export default function BeijingPage() {
             ]}
           />
 
+          {/* Sub-section: The Living City — accordion, image left */}
+          <HighlightAccordion
+            heading="The Living City"
+            items={[
+              {
+                title: "Temple of Heaven",
+                description: "Arrive at dawn. Find Beijing's grandparents practicing tai chi beneath ancient cypresses — the ritual of the Son of Heaven, quietly alive.",
+                href: "/destinations/beijing/beijing/temple-of-heaven",
+                image: "/images/carousel-3.jpg",
+              },
+              {
+                title: "Hutong & Houhai",
+                description: "Get lost in Beijing's last medieval neighborhoods. Cycle past courtyard homes, stop for a bowl of zhajiangmian, and emerge at a lake where locals still swim in winter.",
+                href: "/destinations/beijing/beijing/hutong-houhai",
+                image: "/images/carousel-4.jpg",
+              },
+              {
+                title: "Peking Duck Dinner",
+                description: "End the day the only way Beijing ends a day — with a crispy lacquered bird, sliced tableside, wrapped in a paper-thin pancake.",
+                href: "/destinations/beijing/beijing/peking-duck",
+                image: "/images/carousel-1.jpg",
+              },
+            ]}
+          />
+
           {/* Sub-section: Must-Do Experiences */}
           <div style={{ marginBottom: 48 }}>
             <h3
