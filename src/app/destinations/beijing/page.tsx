@@ -146,61 +146,99 @@ export default function BeijingPage() {
             ]}
           />
 
-          {/* Sub-section: Must-Do Experiences */}
-          <div style={{ marginBottom: 48 }}>
-            <h3
-              className="uppercase"
-              style={{
-                fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                fontSize: "clamp(32px, 4vw, 48px)",
-                fontWeight: 900,
-                color: "#ffffff",
-                lineHeight: 1.1,
-                letterSpacing: 1,
-                marginBottom: 16,
-              }}
+        </div>
+      </section>
+
+      {/* Experiences — full-width hero image + horizontal card slider */}
+      <section className="relative">
+        {/* Background image */}
+        <div className="relative" style={{ height: "clamp(300px, 40vw, 500px)" }}>
+          <Image
+            src="/images/carousel-2.jpg"
+            alt="Beijing experiences"
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
+
+        {/* White card area overlapping the image */}
+        <div
+          style={{
+            background: "#ffffff",
+            marginTop: -40,
+            position: "relative",
+            zIndex: 1,
+            padding: "40px 0 64px",
+          }}
+        >
+          <div
+            className="mx-auto"
+            style={{ maxWidth: 1680, padding: "0 48px" }}
+          >
+            {/* Title row */}
+            <div className="flex items-end justify-between" style={{ marginBottom: 32 }}>
+              <h2
+                className="uppercase"
+                style={{
+                  fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+                  fontSize: "clamp(48px, 7vw, 96px)",
+                  fontWeight: 900,
+                  color: "rgb(64, 68, 80)",
+                  lineHeight: 1,
+                  letterSpacing: 2,
+                }}
+              >
+                Experiences
+              </h2>
+            </div>
+
+            {/* Horizontal scrolling cards */}
+            <div
+              className="flex gap-6 overflow-x-auto pb-4"
+              style={{ scrollSnapType: "x mandatory" }}
             >
-              Must-Do Experiences
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { name: "Hutong Walking Tour", href: "/destinations/beijing/beijing/hutong-tour", img: "/images/carousel-4.jpg" },
-                { name: "Peking Duck Feast", href: "/destinations/beijing/beijing/peking-duck", img: "/images/carousel-1.jpg" },
-                { name: "798 Art District", href: "/destinations/beijing/beijing/798-art", img: "/images/carousel-3.jpg" },
+                { name: "Imperial Palace Tour", img: "/images/carousel-1.jpg", href: "/experience/imperial-palace-tour" },
+                { name: "Great Wall Hiking", img: "/images/carousel-2.jpg", href: "/experience/great-wall-hiking" },
+                { name: "Hutong Food Walk", img: "/images/carousel-3.jpg", href: "/experience/hutong-food-walk" },
+                { name: "Traditional Tea Ceremony", img: "/images/carousel-4.jpg", href: "/experience/tea-ceremony" },
+                { name: "Beijing Opera Night", img: "/images/carousel-1.jpg", href: "/experience/beijing-opera" },
               ].map((exp) => (
                 <Link
                   key={exp.name}
                   href={exp.href}
-                  className="group relative block overflow-hidden rounded-xl"
-                  style={{ aspectRatio: "5/6" }}
+                  className="group flex-shrink-0"
+                  style={{
+                    width: "clamp(220px, 22vw, 300px)",
+                    scrollSnapAlign: "start",
+                  }}
                 >
-                  <Image
-                    src={exp.img}
-                    alt={exp.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
                   <div
-                    className="absolute inset-0"
-                    style={{
-                      background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)",
-                    }}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h4
-                      className="uppercase"
-                      style={{
-                        fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                        fontSize: 24,
-                        fontWeight: 900,
-                        color: "#ffffff",
-                        letterSpacing: 1,
-                      }}
-                    >
-                      {exp.name}
-                    </h4>
+                    className="relative rounded-xl overflow-hidden"
+                    style={{ aspectRatio: "4/3", marginBottom: 12 }}
+                  >
+                    <Image
+                      src={exp.img}
+                      alt={exp.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="300px"
+                    />
                   </div>
+                  <p
+                    className="uppercase"
+                    style={{
+                      fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+                      fontSize: 14,
+                      fontWeight: 900,
+                      letterSpacing: 1,
+                      color: "rgb(64, 68, 80)",
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    {exp.name}
+                  </p>
                 </Link>
               ))}
             </div>
