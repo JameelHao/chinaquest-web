@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 const highlights = [
@@ -46,13 +47,11 @@ const highlights = [
   },
 ];
 
-const cities = [
-  { name: "Beijing", slug: "beijing" },
-  { name: "Yanqing", slug: "yanqing" },
-  { name: "Miyun", slug: "miyun" },
-  { name: "Huairou", slug: "huairou" },
-  { name: "Changping", slug: "changping" },
-  { name: "Mentougou", slug: "mentougou" },
+const places = [
+  { name: "Forbidden City", slug: "forbidden-city", image: "/images/carousel-1.jpg" },
+  { name: "Great Wall", slug: "great-wall", image: "/images/carousel-2.jpg" },
+  { name: "Temple of Heaven", slug: "temple-of-heaven", image: "/images/carousel-3.jpg" },
+  { name: "Summer Palace", slug: "summer-palace", image: "/images/carousel-4.jpg" },
 ];
 
 export default function BeijingIntro() {
@@ -189,7 +188,7 @@ export default function BeijingIntro() {
             ))}
           </div>
 
-          {/* Cities sub-section */}
+          {/* Places to Go sub-section */}
           <div style={{ marginTop: 16 }}>
             <h2
               className="uppercase"
@@ -203,30 +202,44 @@ export default function BeijingIntro() {
                 marginBottom: 32,
               }}
             >
-              Cities
+              Places to Go
             </h2>
 
-            <div
-              className="grid grid-cols-2 gap-x-6 gap-y-3"
-            >
-              {cities.map((city) => (
+            <div className="grid grid-cols-2 gap-4">
+              {places.map((place) => (
                 <Link
-                  key={city.slug}
-                  href={`/destinations/beijing/${city.slug}`}
-                  className="group uppercase"
+                  key={place.slug}
+                  href={`/destinations/beijing/beijing/${place.slug}`}
+                  className="group flex items-center gap-3 rounded-lg overflow-hidden transition-shadow hover:shadow-md"
                   style={{
-                    fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                    fontSize: 16,
-                    fontWeight: 900,
-                    letterSpacing: 1,
-                    color: "rgb(64, 68, 80)",
-                    padding: "12px 0",
-                    borderBottom: "1px solid rgba(64,68,80,0.12)",
-                    display: "block",
-                    transition: "color 0.2s",
+                    background: "#ffffff",
+                    padding: "8px 12px",
                   }}
                 >
-                  <span className="group-hover:underline">{city.name}</span>
+                  <div
+                    className="flex-shrink-0 relative rounded overflow-hidden"
+                    style={{ width: 48, height: 48 }}
+                  >
+                    <Image
+                      src={place.image}
+                      alt={place.name}
+                      fill
+                      className="object-cover"
+                      sizes="48px"
+                    />
+                  </div>
+                  <span
+                    className="uppercase"
+                    style={{
+                      fontFamily: "'Anton', 'Bebas Neue', sans-serif",
+                      fontSize: 14,
+                      fontWeight: 900,
+                      letterSpacing: 1,
+                      color: "rgb(64, 68, 80)",
+                    }}
+                  >
+                    {place.name}
+                  </span>
                 </Link>
               ))}
             </div>
