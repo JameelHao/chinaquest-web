@@ -69,6 +69,32 @@ export default function BeijingPage() {
             ]}
           />
 
+          {/* Sub-section: Walk the Dragon's Spine — reversed accordion */}
+          <HighlightAccordion
+            heading="Walk the Dragon's Spine"
+            reverse
+            items={[
+              {
+                title: "Mutianyu Great Wall",
+                description: "Climb the dragon that snakes across mountains. Stand on stones older than the United States by two thousand years — and see no end in either direction.",
+                href: "/destinations/beijing/huairou/mutianyu",
+                image: "/images/carousel-2.jpg",
+              },
+              {
+                title: "Ming Tombs",
+                description: "Descend into the Sacred Way, where stone generals and camels have stood guard over 13 emperors for 600 years.",
+                href: "/destinations/beijing/changping/ming-tombs",
+                image: "/images/carousel-4.jpg",
+              },
+              {
+                title: "Olympic Park by Night",
+                description: "Return to the city and watch the Bird's Nest and Water Cube light up — the new Beijing, built in 8 years, now 15 years old.",
+                href: "/destinations/beijing/beijing/olympic-park",
+                image: "/images/carousel-1.jpg",
+              },
+            ]}
+          />
+
           {/* Sub-section: Must-Do Experiences */}
           <div style={{ marginBottom: 48 }}>
             <h3
