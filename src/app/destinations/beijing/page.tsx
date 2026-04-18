@@ -4,6 +4,7 @@ import DestinationHero from "@/components/sections/DestinationHero";
 import BeijingIntro from "@/components/sections/BeijingIntro";
 import HighlightAccordion from "@/components/sections/HighlightAccordion";
 import TripIdeasSlider from "@/components/sections/TripIdeasSlider";
+import ExploreNearby from "@/components/sections/ExploreNearby";
 
 export default function BeijingPage() {
   return (
@@ -324,6 +325,9 @@ export default function BeijingPage() {
           </div>
         </div>
       </section>
+
+      {/* Explore Nearby */}
+      <ExploreNearby />
     </>
   );
 }
