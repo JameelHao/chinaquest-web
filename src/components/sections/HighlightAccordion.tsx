@@ -89,61 +89,74 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
           {heading}
         </h3>
 
-        {/* Accordion — two independent columns */}
-        <div className="flex">
-          {/* LEFT: Timeline column — dots + lines, completely independent */}
-          <div
-            className="flex flex-col items-center flex-shrink-0"
-            style={{ width: 24 }}
-          >
-            {items.map((_, i) => (
-              <div key={i} className="flex flex-col items-center">
-                {/* Dot */}
-                <span
+        {/* Accordion — CSS Grid: timeline col + content col share rows */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "24px 1fr",
+            columnGap: 12,
+          }}
+        >
+          {items.map((item, i) => (
+            <>
+              {/* Grid cell: timeline — col 1, row-aligned with content */}
+              <div
+                key={`tl-${i}`}
+                className="flex flex-col items-center"
+                style={{ gridColumn: 1 }}
+              >
+                {/* Dot — vertically centered with title line */}
+                <div
                   style={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: "50%",
-                    background: activeIndex === i ? "#D5A58F" : "transparent",
-                    border: activeIndex === i
-                      ? "2px solid #D5A58F"
-                      : "2px solid rgba(255,255,255,0.5)",
-                    flexShrink: 0,
-                    transition: "all 0.3s ease",
+                    height: 48,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
-                />
-                {/* Connector line to next dot */}
-                {i < items.length - 1 && (
+                >
                   <span
                     style={{
-                      width: 0,
-                      height: 40,
-                      borderLeft: "1.5px solid rgba(255,255,255,0.2)",
+                      width: 12,
+                      height: 12,
+                      borderRadius: "50%",
+                      background: activeIndex === i ? "#D5A58F" : "transparent",
+                      border: activeIndex === i
+                        ? "2px solid #D5A58F"
+                        : "2px solid rgba(255,255,255,0.5)",
+                      transition: "all 0.3s ease",
+                    }}
+                  />
+                </div>
+                {/* Line — fills remaining row height, stretches with content */}
+                {i < items.length - 1 && (
+                  <div
+                    style={{
+                      width: 1.5,
+                      flexGrow: 1,
+                      background: "rgba(255,255,255,0.2)",
+                      transition: "height 0.4s ease",
                     }}
                   />
                 )}
               </div>
-            ))}
-          </div>
 
-          {/* RIGHT: Content column — titles + expandable descriptions */}
-          <div className="flex-1 min-w-0" style={{ paddingLeft: 12 }}>
-            {items.map((item, i) => (
+              {/* Grid cell: content — col 2, same row */}
               <div
-                key={item.title}
+                key={`ct-${i}`}
                 style={{
+                  gridColumn: 2,
                   borderBottom:
                     i < items.length - 1
                       ? "1px solid rgba(255,255,255,0.1)"
                       : "none",
                 }}
               >
-                {/* Title row */}
+                {/* Title row — 48px to match dot container */}
                 <button
                   onClick={() => setActiveIndex(i)}
                   className="w-full flex items-center cursor-pointer"
                   style={{
-                    padding: "14px 0",
+                    height: 48,
                     background: "transparent",
                     textAlign: "left",
                     gap: 8,
@@ -152,14 +165,10 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
                   <span
                     className="flex-1"
                     style={{
-                      fontFamily:
-                        "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
+                      fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
                       fontSize: 16,
                       fontWeight: activeIndex === i ? 600 : 500,
-                      color:
-                        activeIndex === i
-                          ? "#ffffff"
-                          : "rgba(255,255,255,0.6)",
+                      color: activeIndex === i ? "#ffffff" : "rgba(255,255,255,0.6)",
                       transition: "color 0.3s ease",
                     }}
                   >
@@ -170,20 +179,13 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
                     height="20"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke={
-                      activeIndex === i
-                        ? "#ffffff"
-                        : "rgba(255,255,255,0.4)"
-                    }
+                    stroke={activeIndex === i ? "#ffffff" : "rgba(255,255,255,0.4)"}
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     style={{
                       transition: "transform 0.4s ease, stroke 0.3s ease",
-                      transform:
-                        activeIndex === i
-                          ? "rotate(180deg)"
-                          : "rotate(0deg)",
+                      transform: activeIndex === i ? "rotate(180deg)" : "rotate(0deg)",
                       flexShrink: 0,
                     }}
                   >
@@ -202,8 +204,7 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
                   <div style={{ overflow: "hidden" }}>
                     <p
                       style={{
-                        fontFamily:
-                          "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
+                        fontFamily: "'Avenir Next', 'Avenir', 'Segoe UI', 'Inter', sans-serif",
                         fontSize: 14,
                         fontWeight: 400,
                         lineHeight: "22px",
@@ -218,8 +219,8 @@ export default function HighlightAccordion({ heading, items }: HighlightAccordio
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </>
+          ))}
         </div>
       </div>
     </div>
