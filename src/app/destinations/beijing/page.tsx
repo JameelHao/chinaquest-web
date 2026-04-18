@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DestinationHero from "@/components/sections/DestinationHero";
 import BeijingIntro from "@/components/sections/BeijingIntro";
+import HighlightAccordion from "@/components/sections/HighlightAccordion";
 
 export default function BeijingPage() {
   return (
@@ -43,65 +44,30 @@ export default function BeijingPage() {
             </h2>
           </div>
 
-          {/* Sub-section: Awe-Inspiring Attractions */}
-          <div style={{ marginBottom: 48 }}>
-            <h3
-              className="uppercase"
-              style={{
-                fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                fontSize: "clamp(32px, 4vw, 48px)",
-                fontWeight: 900,
-                color: "#ffffff",
-                lineHeight: 1.1,
-                letterSpacing: 1,
-                marginBottom: 16,
-              }}
-            >
-              Awe-Inspiring Attractions
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { name: "Forbidden City", href: "/destinations/beijing/beijing/forbidden-city", img: "/images/carousel-1.jpg" },
-                { name: "Great Wall", href: "/destinations/beijing/yanqing/badaling", img: "/images/carousel-2.jpg" },
-                { name: "Tiananmen Square", href: "/destinations/beijing/beijing/tiananmen-square", img: "/images/carousel-3.jpg" },
-              ].map((poi) => (
-                <Link
-                  key={poi.name}
-                  href={poi.href}
-                  className="group relative block overflow-hidden rounded-xl"
-                  style={{ aspectRatio: "5/6" }}
-                >
-                  <Image
-                    src={poi.img}
-                    alt={poi.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)",
-                    }}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h4
-                      className="uppercase"
-                      style={{
-                        fontFamily: "'Anton', 'Bebas Neue', sans-serif",
-                        fontSize: 24,
-                        fontWeight: 900,
-                        color: "#ffffff",
-                        letterSpacing: 1,
-                      }}
-                    >
-                      {poi.name}
-                    </h4>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
+          {/* Sub-section: Where Emperors Walked — accordion */}
+          <HighlightAccordion
+            heading="Where Emperors Walked"
+            items={[
+              {
+                title: "Tiananmen Square",
+                description: "Stand on the world's largest public square where six centuries of Chinese history converge — the beating heart of a nation of 1.4 billion.",
+                href: "/destinations/beijing/beijing/tiananmen-square",
+                image: "/images/carousel-3.jpg",
+              },
+              {
+                title: "The Forbidden City",
+                description: "Step through the Meridian Gate into 500 years of dynastic secrets. 9,999 rooms of lacquered halls, golden roofs, and whispered intrigue.",
+                href: "/destinations/beijing/beijing/forbidden-city",
+                image: "/images/carousel-1.jpg",
+              },
+              {
+                title: "Jingshan Park",
+                description: "Climb the hill where the last Ming emperor met his end. Watch the sun set over a sea of golden rooftops — the only place to truly see the scale of the palace below.",
+                href: "/destinations/beijing/beijing/jingshan-park",
+                image: "/images/carousel-2.jpg",
+              },
+            ]}
+          />
 
           {/* Sub-section: Must-Do Experiences */}
           <div style={{ marginBottom: 48 }}>
