@@ -36,6 +36,24 @@ const experiences = [
     img: "/images/carousel-1.jpg",
     href: "/experience/beijing-opera",
   },
+  {
+    name: "Temple of Heaven at Dawn",
+    desc: "Join locals practicing tai chi under ancient cypresses as the first light hits the prayer hall.",
+    img: "/images/carousel-3.jpg",
+    href: "/experience/temple-of-heaven-dawn",
+  },
+  {
+    name: "Summer Palace Boat Ride",
+    desc: "Glide across Kunming Lake and take in the marble boat, pagodas, and willow-lined shores.",
+    img: "/images/carousel-4.jpg",
+    href: "/experience/summer-palace-boat",
+  },
+  {
+    name: "798 Art District",
+    desc: "Explore China's most vibrant contemporary art scene in converted Mao-era factory spaces.",
+    img: "/images/carousel-2.jpg",
+    href: "/experience/798-art-district",
+  },
 ];
 
 export default function ExperiencesPanel() {
